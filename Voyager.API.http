@@ -1,0 +1,6 @@
+@Voyager.API_HostAddress = http://localhost:5287
+
+GET {{Voyager.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
