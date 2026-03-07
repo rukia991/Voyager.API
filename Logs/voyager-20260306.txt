@@ -1,0 +1,1132 @@
+2026-03-06 18:45:57.957 +08:00 [INF] User profile is available. Using 'C:\Users\63910\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-06 18:46:37.311 +08:00 [INF] Executed DbCommand (3,151ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 18:46:38.571 +08:00 [INF] Executed DbCommand (627ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 18:46:38.619 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 18:46:38.635 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 18:46:38.704 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 18:46:39.003 +08:00 [INF] Executed DbCommand (194ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 18:46:39.313 +08:00 [INF] Executed DbCommand (72ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 18:46:39.322 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 18:46:39.329 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 18:46:39.341 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 18:46:39.507 +08:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [CampaignLocations] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 18:46:39.560 +08:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'SuperAdmin'
+2026-03-06 18:46:39.594 +08:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Campaigns] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 18:46:39.611 +08:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmailTemplates] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 18:46:41.287 +08:00 [INF] Now listening on: https://localhost:7070
+2026-03-06 18:46:41.297 +08:00 [INF] Now listening on: http://localhost:5287
+2026-03-06 18:46:41.481 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-06 18:46:41.489 +08:00 [INF] Hosting environment: Development
+2026-03-06 18:46:41.496 +08:00 [INF] Content root path: C:\Users\63910\source\repos\Voyager.API
+2026-03-06 18:46:44.739 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-06 18:46:46.915 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 2356.1051ms
+2026-03-06 18:46:47.226 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-06 18:46:47.228 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-06 18:46:47.288 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 60.9385ms
+2026-03-06 18:46:47.241 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-06 18:46:47.412 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 184.0767ms
+2026-03-06 18:46:48.213 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 972.0923ms
+2026-03-06 18:46:48.408 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-06 18:46:48.884 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 476.5609ms
+2026-03-06 18:47:22.488 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 18:47:25.023 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:47:25.690 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 18:47:37.653 +08:00 [INF] Executed DbCommand (1,872ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 18:47:38.385 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 18:47:39.532 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 13718.1908ms
+2026-03-06 18:47:39.546 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:47:39.643 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 17180.1117ms
+2026-03-06 18:47:47.532 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 18:47:47.842 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:47:47.863 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 18:47:48.147 +08:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 18:47:51.078 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 18:47:51.562 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 3609.8355ms
+2026-03-06 18:47:52.198 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:47:53.004 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 5481.9733ms
+2026-03-06 18:48:08.724 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:7070/api/auth/login - application/json 62
+2026-03-06 18:48:08.773 +08:00 [INF] CORS policy execution successful.
+2026-03-06 18:48:08.803 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-06 18:48:08.862 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-06 18:48:09.183 +08:00 [INF] Executed DbCommand (117ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-06 18:48:09.644 +08:00 [INF] Executed DbCommand (30ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2026-03-06 18:48:09.685 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AuthResponseDTO'.
+2026-03-06 18:48:09.696 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 825.1382ms
+2026-03-06 18:48:09.704 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-06 18:48:09.710 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:7070/api/auth/login - 200 null application/json; charset=utf-8 987.9014ms
+2026-03-06 18:48:09.850 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 18:48:09.889 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:09.899 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 18:48:10.045 +08:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 18:48:10.093 +08:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 18:48:10.128 +08:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 18:48:10.226 +08:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 18:48:10.241 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 18:48:10.263 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 354.1459ms
+2026-03-06 18:48:10.296 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 18:48:10.307 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:10.335 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:10.335 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 484.8942ms
+2026-03-06 18:48:10.340 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 18:48:10.365 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 18:48:10.378 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 18:48:10.391 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 18:48:10.403 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 18:48:10.409 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 18:48:10.412 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 56.3119ms
+2026-03-06 18:48:10.416 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:10.419 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 123.7696ms
+2026-03-06 18:48:24.800 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 18:48:24.817 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:24.819 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 18:48:25.118 +08:00 [INF] Executed DbCommand (287ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 18:48:25.130 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 18:48:25.142 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 18:48:25.155 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 18:48:25.162 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 18:48:25.165 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 338.7599ms
+2026-03-06 18:48:25.173 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:25.180 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 376.6967ms
+2026-03-06 18:48:25.181 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 18:48:25.202 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:25.205 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 18:48:25.231 +08:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 18:48:25.259 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 18:48:25.291 +08:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 18:48:25.314 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 18:48:25.341 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 18:48:25.348 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 138.2679ms
+2026-03-06 18:48:25.357 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:48:25.361 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 179.7136ms
+2026-03-06 18:49:03.004 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:7070/api/auth/login - application/json 62
+2026-03-06 18:49:03.069 +08:00 [INF] CORS policy execution successful.
+2026-03-06 18:49:03.117 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-06 18:49:03.289 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-06 18:49:04.011 +08:00 [INF] Executed DbCommand (23ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-06 18:49:04.333 +08:00 [INF] Executed DbCommand (9ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2026-03-06 18:49:04.344 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AuthResponseDTO'.
+2026-03-06 18:49:04.350 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 597.9591ms
+2026-03-06 18:49:04.356 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-06 18:49:04.361 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:7070/api/auth/login - 200 null application/json; charset=utf-8 1359.8549ms
+2026-03-06 18:49:04.506 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 18:49:04.542 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:49:04.547 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 18:49:04.576 +08:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 18:49:04.602 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 18:49:04.617 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 18:49:04.635 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 18:49:04.664 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 18:49:04.686 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 132.7461ms
+2026-03-06 18:49:04.719 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:49:04.720 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 18:49:04.724 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 217.6896ms
+2026-03-06 18:49:04.732 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:49:04.744 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 18:49:04.757 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 18:49:04.770 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 18:49:04.786 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 18:49:04.803 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 18:49:05.086 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 18:49:05.142 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 392.3516ms
+2026-03-06 18:49:05.153 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 18:49:05.158 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 437.4769ms
+2026-03-06 18:49:09.013 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - null null
+2026-03-06 18:49:09.067 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 18:49:09.120 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 18:49:09.334 +08:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 18:49:09.378 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 18:49:09.458 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 320.271ms
+2026-03-06 18:49:09.489 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - null null
+2026-03-06 18:49:09.493 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 18:49:09.502 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 18:49:09.522 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - 200 null application/json; charset=utf-8 509.7085ms
+2026-03-06 18:49:09.526 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 18:49:09.598 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 18:49:09.734 +08:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 18:49:09.765 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:09.798 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 18:49:09.828 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 18:49:09.912 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 252.3547ms
+2026-03-06 18:49:09.957 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 18:49:09.966 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 18:49:10.016 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - 200 null application/json; charset=utf-8 526.2655ms
+2026-03-06 18:49:10.023 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 69.1118ms
+2026-03-06 18:49:10.052 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 18:49:10.162 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:10.192 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:10.197 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 599.3056ms
+2026-03-06 18:49:10.233 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 18:49:10.450 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 18:49:10.462 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 13.9464ms
+2026-03-06 18:49:10.468 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:10.473 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 420.9817ms
+2026-03-06 18:49:16.972 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 18:49:16.995 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:49:17.000 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 18:49:17.030 +08:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 18:49:17.104 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 18:49:17.125 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 117.8264ms
+2026-03-06 18:49:17.137 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:49:17.147 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 174.7581ms
+2026-03-06 18:49:17.149 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 18:49:17.206 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 18:49:17.210 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:49:17.245 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:17.246 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 18:49:17.257 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 18:49:17.285 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 18:49:18.003 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 18:49:18.560 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 18:49:20.171 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 18:49:19.761 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 1812.9179ms
+2026-03-06 18:49:20.253 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 2977.1925ms
+2026-03-06 18:49:20.294 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:20.325 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:20.403 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 18:49:20.437 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 18:49:20.441 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 3234.88ms
+2026-03-06 18:49:20.462 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 3313.1986ms
+2026-03-06 18:49:20.644 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 18:49:23.947 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 3304.1063ms
+2026-03-06 18:49:24.108 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 18:49:24.123 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 3953.2199ms
+2026-03-06 19:10:12.798 +08:00 [INF] User profile is available. Using 'C:\Users\63910\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-06 19:10:23.132 +08:00 [INF] Executed DbCommand (1,277ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:10:23.448 +08:00 [INF] Executed DbCommand (24ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:10:23.471 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:10:23.489 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:10:23.501 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:10:23.605 +08:00 [INF] Executed DbCommand (53ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:10:23.842 +08:00 [INF] Executed DbCommand (11ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:10:23.860 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:10:23.883 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:10:23.910 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:10:24.021 +08:00 [INF] Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [CampaignLocations] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 19:10:24.348 +08:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'SuperAdmin'
+2026-03-06 19:10:24.379 +08:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Campaigns] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 19:10:24.398 +08:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmailTemplates] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 19:10:26.324 +08:00 [INF] Now listening on: https://localhost:7070
+2026-03-06 19:10:26.328 +08:00 [INF] Now listening on: http://localhost:5287
+2026-03-06 19:10:26.624 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-06 19:10:26.648 +08:00 [INF] Hosting environment: Development
+2026-03-06 19:10:26.672 +08:00 [INF] Content root path: C:\Users\63910\source\repos\Voyager.API
+2026-03-06 19:10:31.915 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-06 19:10:32.765 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 895.862ms
+2026-03-06 19:10:33.147 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-06 19:10:33.147 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-06 19:10:33.147 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-06 19:10:33.374 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 226.9493ms
+2026-03-06 19:10:33.389 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 241.7373ms
+2026-03-06 19:10:33.577 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 430.6432ms
+2026-03-06 19:10:33.779 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-06 19:10:33.999 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 221.8539ms
+2026-03-06 19:11:46.642 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:11:48.627 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:11:49.205 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:11:51.099 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 19:11:51.181 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/campaigns - null null
+2026-03-06 19:11:51.242 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 19:11:51.281 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetCampaignMetrics (Voyager.API)'
+2026-03-06 19:11:51.308 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 19:11:51.336 +08:00 [INF] Route matched with {action = "GetCampaignMetrics", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignMetricDTO]]] GetCampaignMetrics() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 19:11:52.577 +08:00 [INF] Executed DbCommand (136ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 19:11:52.577 +08:00 [INF] Executed DbCommand (70ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignName], [a].[EngagementRate], [a].[ConversionRate], [a].[CostPerLead], [a].[Revenue]
+FROM [Analytics] AS [a]
+INNER JOIN [Campaigns] AS [c] ON [a].[CampaignID] = [c].[CampaignID]
+2026-03-06 19:11:52.578 +08:00 [INF] Executed DbCommand (566ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:11:52.635 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignMetricDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:11:52.655 +08:00 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 19:11:52.726 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:11:52.762 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetCampaignMetrics (Voyager.API) in 1314.8082ms
+2026-03-06 19:11:52.769 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetCampaignMetrics (Voyager.API)'
+2026-03-06 19:11:52.797 +08:00 [INF] Executed DbCommand (102ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 19:11:52.825 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/campaigns - 200 null application/json; charset=utf-8 1638.5681ms
+2026-03-06 19:11:52.918 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/campaigns - null null
+2026-03-06 19:11:52.937 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetCampaignMetrics (Voyager.API)'
+2026-03-06 19:11:52.946 +08:00 [INF] Route matched with {action = "GetCampaignMetrics", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignMetricDTO]]] GetCampaignMetrics() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 19:11:53.034 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 3632.0797ms
+2026-03-06 19:11:53.071 +08:00 [INF] Executed DbCommand (103ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignName], [a].[EngagementRate], [a].[ConversionRate], [a].[CostPerLead], [a].[Revenue]
+FROM [Analytics] AS [a]
+INNER JOIN [Campaigns] AS [c] ON [a].[CampaignID] = [c].[CampaignID]
+2026-03-06 19:11:53.083 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:11:53.089 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:11:53.120 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignMetricDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:11:53.120 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:11:53.122 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 6629.0741ms
+2026-03-06 19:11:53.140 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:11:53.143 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetCampaignMetrics (Voyager.API) in 191.7018ms
+2026-03-06 19:11:53.182 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetCampaignMetrics (Voyager.API)'
+2026-03-06 19:11:53.210 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/campaigns - 200 null application/json; charset=utf-8 291.5261ms
+2026-03-06 19:11:53.268 +08:00 [INF] Executed DbCommand (70ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:11:53.298 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:11:53.314 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 130.9315ms
+2026-03-06 19:11:53.337 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:11:53.337 +08:00 [INF] Executed DbCommand (265ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 19:11:53.349 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 265.8137ms
+2026-03-06 19:11:53.362 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 19:11:53.421 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 2059.6327ms
+2026-03-06 19:11:53.440 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 19:11:53.440 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 19:11:53.452 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 19:11:53.457 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 2357.4893ms
+2026-03-06 19:11:53.463 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 19:11:53.515 +08:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 19:11:53.535 +08:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 19:11:53.549 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 19:11:53.563 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 19:11:53.567 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 19:11:53.571 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 86.6167ms
+2026-03-06 19:11:53.587 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 19:11:53.595 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 155.6058ms
+2026-03-06 19:11:54.027 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - null null
+2026-03-06 19:11:54.038 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:11:54.052 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 19:11:54.145 +08:00 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:11:54.162 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:11:54.200 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 143.0467ms
+2026-03-06 19:11:54.239 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - null null
+2026-03-06 19:11:54.245 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:11:54.265 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:11:54.272 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - 200 null application/json; charset=utf-8 245.3722ms
+2026-03-06 19:11:54.287 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 19:11:54.345 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:11:54.364 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:11:54.376 +08:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:11:54.378 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:11:54.382 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:11:54.390 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:11:54.391 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 39.5167ms
+2026-03-06 19:11:54.407 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 21.4717ms
+2026-03-06 19:11:54.415 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:11:54.422 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:11:54.432 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - 200 null application/json; charset=utf-8 193.0275ms
+2026-03-06 19:11:54.434 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:11:54.437 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 91.6302ms
+2026-03-06 19:11:54.470 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:11:54.484 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:11:54.495 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:11:54.501 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 6.6379ms
+2026-03-06 19:11:54.510 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:11:54.514 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 79.9158ms
+2026-03-06 19:12:06.058 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:12:06.154 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:12:06.170 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:12:06.359 +08:00 [INF] Executed DbCommand (145ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:12:06.389 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:12:06.412 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 234.2107ms
+2026-03-06 19:12:06.424 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:12:06.445 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 393.1543ms
+2026-03-06 19:12:06.489 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:12:06.502 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:12:06.507 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:12:06.570 +08:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:12:06.616 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:12:06.621 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 101.0267ms
+2026-03-06 19:12:06.625 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:12:06.630 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 141.0923ms
+2026-03-06 19:12:06.699 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:12:06.710 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:12:06.725 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:12:06.772 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:12:06.789 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 17.9591ms
+2026-03-06 19:12:06.819 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:12:06.841 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 139.6918ms
+2026-03-06 19:12:06.850 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:12:06.886 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:12:06.968 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:12:06.998 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:12:07.013 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 16.5783ms
+2026-03-06 19:12:07.024 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:12:07.040 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 183.1617ms
+2026-03-06 19:30:11.013 +08:00 [INF] User profile is available. Using 'C:\Users\63910\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-06 19:30:21.888 +08:00 [INF] Executed DbCommand (1,037ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:30:22.505 +08:00 [INF] Executed DbCommand (325ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:30:22.528 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:30:22.544 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:30:22.649 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-06 19:30:22.807 +08:00 [INF] Executed DbCommand (60ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:30:23.068 +08:00 [INF] Executed DbCommand (43ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:30:23.256 +08:00 [INF] Executed DbCommand (35ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:30:23.321 +08:00 [INF] Executed DbCommand (29ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:30:23.536 +08:00 [INF] Executed DbCommand (41ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-06 19:30:23.744 +08:00 [INF] Executed DbCommand (83ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [CampaignLocations] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 19:30:23.804 +08:00 [INF] Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'SuperAdmin'
+2026-03-06 19:30:23.872 +08:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Campaigns] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 19:30:23.931 +08:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmailTemplates] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-06 19:30:25.427 +08:00 [INF] Now listening on: https://localhost:7070
+2026-03-06 19:30:25.438 +08:00 [INF] Now listening on: http://localhost:5287
+2026-03-06 19:30:25.719 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-06 19:30:25.763 +08:00 [INF] Hosting environment: Development
+2026-03-06 19:30:25.798 +08:00 [INF] Content root path: C:\Users\63910\source\repos\Voyager.API
+2026-03-06 19:30:32.051 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-06 19:30:33.185 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 1169.3152ms
+2026-03-06 19:30:33.587 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-06 19:30:33.588 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-06 19:30:33.593 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-06 19:30:33.701 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 117.0993ms
+2026-03-06 19:30:33.704 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 117.1129ms
+2026-03-06 19:30:34.201 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 607.4845ms
+2026-03-06 19:30:34.372 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-06 19:30:34.679 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 312.998ms
+2026-03-06 19:31:49.973 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:31:53.299 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:31:53.517 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:31:54.456 +08:00 [INF] Executed DbCommand (335ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:31:54.590 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:31:54.774 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 1241.5491ms
+2026-03-06 19:31:54.799 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:31:54.800 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:31:54.818 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:31:54.826 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:31:54.839 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 4910.3331ms
+2026-03-06 19:31:54.913 +08:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:31:54.926 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:31:54.931 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:31:54.942 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 108.7273ms
+2026-03-06 19:31:54.948 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:31:54.950 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:31:54.958 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 158.7176ms
+2026-03-06 19:31:54.973 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:31:55.040 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:31:55.054 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 23.9379ms
+2026-03-06 19:31:55.094 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:31:55.095 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:31:55.111 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 184.8634ms
+2026-03-06 19:31:55.127 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:31:55.138 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:31:55.168 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:31:55.172 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 31.3867ms
+2026-03-06 19:31:55.175 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:31:55.178 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 83.5527ms
+2026-03-06 19:32:07.944 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/leads?search=&showArchived=false - null null
+2026-03-06 19:32:07.944 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns - null null
+2026-03-06 19:32:08.151 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API)'
+2026-03-06 19:32:08.151 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:08.259 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 19:32:08.260 +08:00 [INF] Route matched with {action = "GetLeads", controller = "Leads"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.LeadDTO]]] GetLeads(System.String, System.String, System.String, Boolean) on controller Voyager.API.Controllers.LeadsController (Voyager.API).
+2026-03-06 19:32:09.098 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - null null
+2026-03-06 19:32:09.144 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:09.166 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 19:32:09.568 +08:00 [INF] Executed DbCommand (143ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:09.568 +08:00 [INF] Executed DbCommand (702ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:09.593 +08:00 [INF] Executed DbCommand (230ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadID], [l].[UserID], CASE
+    WHEN [u].[Id] IS NOT NULL THEN COALESCE([u].[FirstName], N'') + N' ' + COALESCE([u].[LastName], N'')
+    ELSE N'Unknown'
+END AS [UserName], [l].[CampaignID], [c].[CampaignName], [l].[LeadStatus], [l].[LeadScore], [l].[Source], [l].[Notes], [l].[CreatedDate], [l].[LastContactDate], [l].[IsArchived]
+FROM [Leads] AS [l]
+LEFT JOIN [Users] AS [u] ON [l].[UserID] = [u].[Id]
+INNER JOIN [Campaigns] AS [c] ON [l].[CampaignID] = [c].[CampaignID]
+WHERE [l].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:09.602 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:09.602 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:09.613 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.LeadDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:09.670 +08:00 [INF] Executed action Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API) in 1343.7728ms
+2026-03-06 19:32:09.678 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API)'
+2026-03-06 19:32:09.681 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 1372.5462ms
+2026-03-06 19:32:09.681 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 480.4517ms
+2026-03-06 19:32:09.725 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/leads?search=&showArchived=false - 200 null application/json; charset=utf-8 1788.3067ms
+2026-03-06 19:32:09.734 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:09.761 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/leads?search=&showArchived=false - null null
+2026-03-06 19:32:09.750 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:09.813 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns - null null
+2026-03-06 19:32:09.815 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - null null
+2026-03-06 19:32:09.816 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns - 200 null application/json; charset=utf-8 1879.1803ms
+2026-03-06 19:32:09.828 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API)'
+2026-03-06 19:32:09.830 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - 200 null application/json; charset=utf-8 732.0702ms
+2026-03-06 19:32:09.844 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:09.858 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:09.881 +08:00 [INF] Route matched with {action = "GetLeads", controller = "Leads"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.LeadDTO]]] GetLeads(System.String, System.String, System.String, Boolean) on controller Voyager.API.Controllers.LeadsController (Voyager.API).
+2026-03-06 19:32:09.898 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 19:32:09.900 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-06 19:32:09.952 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:32:10.043 +08:00 [INF] Executed DbCommand (128ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadID], [l].[UserID], CASE
+    WHEN [u].[Id] IS NOT NULL THEN COALESCE([u].[FirstName], N'') + N' ' + COALESCE([u].[LastName], N'')
+    ELSE N'Unknown'
+END AS [UserName], [l].[CampaignID], [c].[CampaignName], [l].[LeadStatus], [l].[LeadScore], [l].[Source], [l].[Notes], [l].[CreatedDate], [l].[LastContactDate], [l].[IsArchived]
+FROM [Leads] AS [l]
+LEFT JOIN [Users] AS [u] ON [l].[UserID] = [u].[Id]
+INNER JOIN [Campaigns] AS [c] ON [l].[CampaignID] = [c].[CampaignID]
+WHERE [l].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:10.054 +08:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:10.056 +08:00 [INF] Executed DbCommand (105ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [c0].[LocationName], [c0].[Latitude], [c0].[Longitude], [c].[IsArchived]
+FROM [Campaigns] AS [c]
+INNER JOIN [CampaignLocations] AS [c0] ON [c].[LocationID] = [c0].[LocationID]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:10.056 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:10.061 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.LeadDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:10.067 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:10.074 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:10.078 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:32:10.082 +08:00 [INF] Executed action Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API) in 171.3958ms
+2026-03-06 19:32:10.099 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 127.2688ms
+2026-03-06 19:32:10.117 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 174.483ms
+2026-03-06 19:32:10.131 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:32:10.133 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API)'
+2026-03-06 19:32:10.141 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:10.148 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-06 19:32:10.188 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 59.374ms
+2026-03-06 19:32:10.188 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns?search=&showArchived=false - 200 null application/json; charset=utf-8 372.4431ms
+2026-03-06 19:32:10.188 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/leads?search=&showArchived=false - 200 null application/json; charset=utf-8 426.9897ms
+2026-03-06 19:32:10.215 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:10.188 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/campaigns - 200 null application/json; charset=utf-8 374.9402ms
+2026-03-06 19:32:10.308 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 356.5867ms
+2026-03-06 19:32:10.319 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:32:10.341 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:10.343 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:32:10.348 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:32:10.351 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 3.5853ms
+2026-03-06 19:32:10.354 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:10.356 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 37.6999ms
+2026-03-06 19:32:14.322 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:32:14.446 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:32:14.468 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:32:15.928 +08:00 [INF] Executed DbCommand (1,374ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:15.992 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:16.015 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 1527.5963ms
+2026-03-06 19:32:16.022 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:32:16.037 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 1731.2188ms
+2026-03-06 19:32:16.104 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:32:16.119 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:32:16.127 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:32:16.185 +08:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:16.242 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:16.294 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 138.2266ms
+2026-03-06 19:32:16.359 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:32:16.368 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 265.0823ms
+2026-03-06 19:32:16.499 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:32:16.508 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:16.512 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:32:16.525 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:32:16.534 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 15.5493ms
+2026-03-06 19:32:16.583 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:32:16.619 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:16.671 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:16.677 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 177.9344ms
+2026-03-06 19:32:16.696 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:32:16.723 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:32:16.727 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 5.7484ms
+2026-03-06 19:32:16.731 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:32:16.734 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 151.3914ms
+2026-03-06 19:32:35.934 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:7070/api/locations - application/json 97
+2026-03-06 19:32:35.997 +08:00 [INF] CORS policy execution successful.
+2026-03-06 19:32:36.017 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.CreateLocation (Voyager.API)'
+2026-03-06 19:32:36.121 +08:00 [INF] Route matched with {action = "CreateLocation", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.Models.CampaignLocation]] CreateLocation(Voyager.API.Models.CampaignLocation) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:32:37.320 +08:00 [INF] Executed DbCommand (247ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Boolean), @p4='?' (Precision = 10) (Scale = 8) (DbType = Decimal), @p5='?' (Size = 4000), @p6='?' (Precision = 11) (Scale = 8) (DbType = Decimal)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [CampaignLocations] ([Country], [CreatedDate], [Description], [IsArchived], [Latitude], [LocationName], [Longitude])
+OUTPUT INSERTED.[LocationID]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-03-06 19:32:37.406 +08:00 [INF] Executing CreatedAtActionResult, writing value of type 'Voyager.API.Models.CampaignLocation'.
+2026-03-06 19:32:37.545 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.CreateLocation (Voyager.API) in 1420.8003ms
+2026-03-06 19:32:37.552 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.CreateLocation (Voyager.API)'
+2026-03-06 19:32:37.557 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:7070/api/locations - 201 null application/json; charset=utf-8 1626.6165ms
+2026-03-06 19:32:37.594 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:32:37.603 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:32:37.607 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:32:37.643 +08:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:32:37.653 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:32:37.659 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 41.6672ms
+2026-03-06 19:32:37.664 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:32:37.666 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 71.9676ms
+2026-03-06 19:35:30.110 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:35:30.557 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:35:30.614 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:35:31.548 +08:00 [INF] Executed DbCommand (491ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:35:31.660 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:35:31.712 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 1085.8608ms
+2026-03-06 19:35:31.717 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:35:31.730 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 1645.0088ms
+2026-03-06 19:35:31.788 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 19:35:31.822 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:35:31.827 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 19:35:31.875 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:35:31.886 +08:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 19:35:31.890 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:35:31.899 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:35:31.900 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 19:35:31.926 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 92.7561ms
+2026-03-06 19:35:31.931 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:35:31.940 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 19:35:31.943 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 38.2384ms
+2026-03-06 19:35:31.946 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 158.6858ms
+2026-03-06 19:35:31.958 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:35:31.992 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 19:35:31.994 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 118.652ms
+2026-03-06 19:35:32.012 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:35:32.022 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 19:35:32.028 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 19:35:32.032 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 5.5798ms
+2026-03-06 19:35:32.036 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 19:35:32.040 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 48.5874ms
+2026-03-06 20:36:48.725 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:36:48.890 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:36:48.914 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:36:49.434 +08:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:36:49.488 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:36:49.533 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 612.079ms
+2026-03-06 20:36:49.557 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:36:49.572 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:36:49.587 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 880.8299ms
+2026-03-06 20:36:49.607 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:36:49.645 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:36:49.660 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:36:49.682 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:36:49.707 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:36:49.723 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:36:49.740 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 21.4691ms
+2026-03-06 20:36:49.779 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:36:49.752 +08:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:36:49.790 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:36:49.822 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:36:49.837 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:36:49.855 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:36:49.840 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 195.2914ms
+2026-03-06 20:36:49.877 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 181.6097ms
+2026-03-06 20:36:49.885 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:36:49.902 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:36:49.907 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 24.4182ms
+2026-03-06 20:36:49.918 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 346.7258ms
+2026-03-06 20:36:49.920 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:36:49.940 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 160.8188ms
+2026-03-06 20:37:02.009 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:37:02.061 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:02.076 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:37:02.406 +08:00 [INF] Executed DbCommand (201ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:37:02.468 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:37:02.489 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 401.7397ms
+2026-03-06 20:37:02.502 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:02.510 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:37:02.511 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 507.6172ms
+2026-03-06 20:37:02.530 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:02.549 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:37:02.581 +08:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:37:02.607 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:37:02.607 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:37:02.622 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 64.197ms
+2026-03-06 20:37:02.632 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:02.638 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:02.642 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 132.2367ms
+2026-03-06 20:37:02.649 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:37:02.695 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:37:02.708 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 31.2493ms
+2026-03-06 20:37:02.724 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:02.731 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 123.5579ms
+2026-03-06 20:37:02.740 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:37:02.762 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:02.765 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:37:02.785 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:37:02.806 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 32.9197ms
+2026-03-06 20:37:02.831 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:02.849 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 112.8452ms
+2026-03-06 20:37:18.334 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:7070/api/auth/login - application/json 62
+2026-03-06 20:37:18.362 +08:00 [INF] CORS policy execution successful.
+2026-03-06 20:37:18.372 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-06 20:37:18.462 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-06 20:37:19.595 +08:00 [INF] Executed DbCommand (611ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-06 20:37:20.739 +08:00 [INF] Executed DbCommand (88ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2026-03-06 20:37:20.819 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AuthResponseDTO'.
+2026-03-06 20:37:20.832 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 2351.4915ms
+2026-03-06 20:37:20.837 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-06 20:37:20.842 +08:00 [INF] Request finished HTTP/1.1 POST https://localhost:7070/api/auth/login - 200 null application/json; charset=utf-8 2508.2131ms
+2026-03-06 20:37:20.935 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 20:37:20.949 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 20:37:20.961 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 20:37:21.100 +08:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 20:37:21.124 +08:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 20:37:21.148 +08:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 20:37:21.293 +08:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 20:37:21.301 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 20:37:21.320 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 353.9379ms
+2026-03-06 20:37:21.327 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 20:37:21.335 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 399.9684ms
+2026-03-06 20:37:21.336 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/analytics/summary - null null
+2026-03-06 20:37:21.354 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 20:37:21.357 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-06 20:37:21.368 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+2026-03-06 20:37:21.378 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+2026-03-06 20:37:21.395 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE [l].[LeadStatus] = N'Converted'
+2026-03-06 20:37:21.407 +08:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+GROUP BY [l].[LeadStatus]
+2026-03-06 20:37:21.414 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-06 20:37:21.420 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 59.5548ms
+2026-03-06 20:37:21.431 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-06 20:37:21.459 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/analytics/summary - 200 null application/json; charset=utf-8 122.1106ms
+2026-03-06 20:37:23.899 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:37:23.910 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:23.913 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:37:23.926 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:37:23.934 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:37:23.939 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 20.3848ms
+2026-03-06 20:37:23.943 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:23.948 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 48.8011ms
+2026-03-06 20:37:23.958 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:37:23.966 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:23.969 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:37:23.977 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:37:23.985 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:37:23.990 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 16.3126ms
+2026-03-06 20:37:23.994 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:37:24.001 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 43.5671ms
+2026-03-06 20:37:24.007 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:37:24.016 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:24.019 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:37:24.025 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:37:24.032 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 7.4688ms
+2026-03-06 20:37:24.036 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:24.039 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 32.1512ms
+2026-03-06 20:37:24.046 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:37:24.059 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:24.061 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:37:24.069 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:37:24.072 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 3.5002ms
+2026-03-06 20:37:24.075 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:37:24.077 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 32.1995ms
+2026-03-06 20:43:03.400 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:43:04.144 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:04.242 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:43:06.958 +08:00 [INF] Executed DbCommand (2,076ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:43:07.220 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:43:07.455 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 3183.7814ms
+2026-03-06 20:43:07.473 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:07.564 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 4291.8548ms
+2026-03-06 20:43:07.760 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:43:07.767 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:07.771 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:43:07.899 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:43:07.912 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:07.918 +08:00 [INF] Executed DbCommand (111ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:43:07.918 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:43:07.938 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:43:07.949 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 168.8223ms
+2026-03-06 20:43:07.950 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:43:07.955 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:07.961 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 16.921ms
+2026-03-06 20:43:07.969 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 208.2997ms
+2026-03-06 20:43:07.975 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:08.007 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:43:08.019 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 120.7653ms
+2026-03-06 20:43:08.032 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:08.042 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:43:08.048 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:43:08.052 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 3.8831ms
+2026-03-06 20:43:08.059 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:08.062 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 54.7193ms
+2026-03-06 20:43:54.632 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:43:54.823 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:54.846 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:43:55.497 +08:00 [INF] Executed DbCommand (348ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:43:55.562 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:43:55.589 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 702.1769ms
+2026-03-06 20:43:55.597 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:55.653 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 1040.1774ms
+2026-03-06 20:43:55.654 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - null null
+2026-03-06 20:43:55.707 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:55.709 +08:00 [INF] Route matched with {action = "GetLocations", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.Models.CampaignLocation]]] GetLocations(Boolean) on controller Voyager.API.Controllers.LocationsController (Voyager.API).
+2026-03-06 20:43:55.756 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:43:55.772 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:55.778 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:43:55.789 +08:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[LocationID], [c].[Country], [c].[CreatedDate], [c].[Description], [c].[IsArchived], [c].[Latitude], [c].[LocationName], [c].[Longitude]
+FROM [CampaignLocations] AS [c]
+WHERE [c].[IsArchived] = CAST(0 AS bit)
+2026-03-06 20:43:55.804 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.Models.CampaignLocation, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-06 20:43:55.822 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:43:55.823 +08:00 [INF] Executed action Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API) in 105.6133ms
+2026-03-06 20:43:55.826 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 39.3048ms
+2026-03-06 20:43:55.845 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LocationsController.GetLocations (Voyager.API)'
+2026-03-06 20:43:55.856 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:43:55.858 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:55.866 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/locations?showArchived=false - 200 null application/json; charset=utf-8 212.541ms
+2026-03-06 20:43:55.904 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 148.2474ms
+2026-03-06 20:43:55.901 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:55.944 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:43:55.949 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:43:55.952 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 4.1977ms
+2026-03-06 20:43:55.956 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:43:55.959 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 103.3496ms
+2026-03-06 20:49:52.672 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - null null
+2026-03-06 20:49:52.986 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:49:53.041 +08:00 [INF] Route matched with {action = "GetSystemSettings", controller = "WorkflowRules"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.SystemSettingsDTO]] GetSystemSettings() on controller Voyager.API.Controllers.WorkflowRulesController (Voyager.API).
+2026-03-06 20:49:53.130 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.SystemSettingsDTO'.
+2026-03-06 20:49:53.152 +08:00 [INF] Executed action Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API) in 95.2246ms
+2026-03-06 20:49:53.163 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.WorkflowRulesController.GetSystemSettings (Voyager.API)'
+2026-03-06 20:49:53.243 +08:00 [INF] Request finished HTTP/1.1 GET https://localhost:7070/api/workflowrules/settings - 200 null application/json; charset=utf-8 601.9325ms

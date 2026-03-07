@@ -28,8 +28,8 @@ const Users: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
-  const [sortKey, setSortKey] = useState<keyof UserDTO>('lastName');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortKey, setSortKey] = useState<keyof UserDTO>('id');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState(1);
   const pageSize = 5;
 

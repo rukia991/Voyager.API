@@ -82,15 +82,27 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize]
         [HttpGet("settings")]
-        public async Task<IActionResult> GetSystemSettings()
+        public ActionResult<SystemSettingsDTO> GetSystemSettings()
         {
-            return Ok(new
+            // Resolve Mapbox token from common configuration keys (appsettings, user-secrets, env vars).
+            string? mapboxToken = _config["Mapbox:AccessToken"];
+            if (string.IsNullOrWhiteSpace(mapboxToken))
             {
-                MapboxAccessToken = _config["Mapbox:AccessToken"] ?? "pk.eyJ1IjoibW9jay1rZXktMTIzNDU2In0.fake",
-                EmailProtocol = "SMTP",
-                MaxBatchSize = 100
+                mapboxToken = _config["MapboxToken"];
+            }
+            if (string.IsNullOrWhiteSpace(mapboxToken))
+            {
+                mapboxToken = _config["MAPBOX_ACCESS_TOKEN"];
+            }
+
+            return Ok(new SystemSettingsDTO
+            {
+                MapboxAccessToken = mapboxToken?.Trim() ?? string.Empty,
+                EmailSmtpHost = _config["Email:SmtpHost"] ?? "smtp.example.com",
+                EmailSmtpPort = int.Parse(_config["Email:SmtpPort"] ?? "587"),
+                EmailSender = _config["Email:Sender"] ?? "noreply@voyager.com"
             });
         }
     }

@@ -16,6 +16,8 @@ export interface CampaignDTO {
   latitude?: number;
   longitude?: number;
   isArchived: boolean;
+  archivedDate?: string;
+  archivedByUserName?: string;
 }
 
 export interface CreateCampaignDTO {

@@ -16,6 +16,8 @@ namespace Voyager.API.DTOs
         public DateTime CreatedDate { get; set; }
         public DateTime? LastContactDate { get; set; }
         public bool IsArchived { get; set; }
+        public DateTime? ArchivedDate { get; set; }
+        public string? ArchivedByUserName { get; set; }
     }
 
     public class CreateLeadDTO

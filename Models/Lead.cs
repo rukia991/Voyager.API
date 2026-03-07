@@ -11,10 +11,13 @@
         public string? Notes { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public bool IsArchived { get; set; } = false;
+        public DateTime? ArchivedDate { get; set; }
+        public int? ArchivedBy { get; set; }
         public DateTime? LastContactDate { get; set; }
 
         // Navigation
         public User? User { get; set; }
+        public User? Archiver { get; set; }
         public Campaign Campaign { get; set; } = null!;
         public ICollection<CampaignLead> CampaignLeads { get; set; } = new List<CampaignLead>();
         public ICollection<EmailLog> EmailLogs { get; set; } = new List<EmailLog>();

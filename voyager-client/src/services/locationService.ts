@@ -5,7 +5,10 @@ export interface LocationDTO {
   locationName: string;
   latitude: number;
   longitude: number;
+  country: string;
   isArchived?: boolean; // flag controlled by archive/restore
+  archivedDate?: string;
+  archivedByUserName?: string;
 }
 
 const locationService = {

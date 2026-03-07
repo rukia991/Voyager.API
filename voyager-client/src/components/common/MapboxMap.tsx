@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as mapboxgl from 'mapbox-gl';
+import { createPortal } from 'react-dom';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import automationService from '../../services/automationService';
 
@@ -8,185 +9,231 @@ interface MapboxMapProps {
   lng: number;
   title: string;
   description?: string;
-  showRoute?: boolean;          // draw a line between user location and target
-  showTravelInfo?: boolean;     // display estimated travel hours overlay
+  showRoute?: boolean;
+  showTravelInfo?: boolean;
   onLocationSelect?: (lat: number, lng: number, address?: string) => void;
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, showRoute = true, showTravelInfo = false, onLocationSelect }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
+  const mapPortalContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [tokenError, setTokenError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalExpanded, setIsModalExpanded] = useState(false);
   const [travelHours, setTravelHours] = useState<number | null>(null);
 
-  // fetch token on mount
+  const markerRef = useRef<mapboxgl.Marker | null>(null);
+
+  const onSelectRef = useRef(onLocationSelect);
+  useEffect(() => { onSelectRef.current = onLocationSelect; }, [onLocationSelect]);
+
+  // Fetch token
   useEffect(() => {
     const fetchToken = async () => {
       try {
         const settings = await automationService.getSettings();
-        if (settings.mapboxAccessToken) {
-          setToken(settings.mapboxAccessToken);
-          (window as any).mapboxToken = settings.mapboxAccessToken;
-        } else {
-          console.warn("Mapbox Access Token not found in settings");
+        const rawToken = (settings as any).mapboxAccessToken ?? (settings as any).MapboxAccessToken ?? '';
+        const normalizedToken = typeof rawToken === 'string' ? rawToken.trim() : '';
+
+        if (!normalizedToken) {
+          setTokenError("Missing Mapbox Access Token.");
           setIsLoading(false);
+          return;
         }
+
+        (mapboxgl as any).accessToken = normalizedToken;
+        (window as any).mapboxToken = normalizedToken;
+        setToken(normalizedToken);
       } catch (e) {
-        console.error("Failed to fetch Mapbox Token", e);
+        setTokenError("Failed to fetch map settings.");
         setIsLoading(false);
       }
     };
     fetchToken();
   }, []);
 
-  // initialize map once token is available
+  // Initialize Map
   useEffect(() => {
-    if (!token || !mapContainer.current || map.current) return;
+    const container = isModalExpanded ? mapPortalContainer.current : mapContainer.current;
+    if (!token || !container) return;
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [lng, lat],
-      zoom: 12,
-      antialias: true,
-      accessToken: token
-    });
+    // Clean up previous map if container changes
+    if (map.current) {
+      map.current.remove();
+      map.current = null;
+    }
 
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-    map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
-    new mapboxgl.Marker({ color: '#a78bfa' })
-      .setLngLat([lng, lat])
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`
-        <div style="color: #1e293b; padding: 5px;">
-          <strong style="display: block; font-size: 14px; margin-bottom: 4px;">${title}</strong>
-          ${description ? `<p style="font-size: 12px; margin: 0; color: #64748b;">${description}</p>` : ''}
-        </div>
-      `))
-      .addTo(map.current);
-    map.current.on('load', () => {
-      setIsLoading(false);
+    try {
+      const mapInstance = new mapboxgl.Map({
+        container: container,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [lng, lat],
+        zoom: isModalExpanded ? 14 : 12,
+        antialias: true,
+      });
 
-      if (showRoute && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
+      map.current = mapInstance;
+
+      mapInstance.on('load', () => {
+        setIsLoading(false);
+        mapInstance.resize();
+
+        // Initial Marker
+        const marker = new mapboxgl.Marker({ color: '#a78bfa' })
+          .setLngLat([lng, lat])
+          .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`
+            <div style="color: #1e293b; padding: 5px;">
+              <strong style="display: block; font-size: 14px; margin-bottom: 4px;">${title}</strong>
+              ${description ? `<p style="font-size: 11px; margin: 0; color: #64748b;">${description}</p>` : ''}
+            </div>
+          `))
+          .addTo(mapInstance);
+        
+        markerRef.current = marker;
+
+        // Geolocation & Route
+        if (showRoute && navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((pos) => {
             if (!map.current) return;
-            const userLngLat: [number, number] = [position.coords.longitude, position.coords.latitude];
-
-            new mapboxgl.Marker({ color: '#10b981', scale: 0.8 })
-              .setLngLat(userLngLat)
-              .setPopup(new mapboxgl.Popup().setText('Your Location'))
-              .addTo(map.current);
-
-            map.current.addSource('route', {
-              'type': 'geojson',
-              'data': {
-                'type': 'Feature',
-                'properties': {},
-                'geometry': {
-                  'type': 'LineString',
-                  'coordinates': [userLngLat, [lng, lat]]
+            const userLoc: [number, number] = [pos.coords.longitude, pos.coords.latitude];
+            new mapboxgl.Marker({ color: '#10b981', scale: 0.8 }).setLngLat(userLoc).addTo(map.current);
+            
+            try {
+              map.current.addSource('route', {
+                type: 'geojson',
+                data: {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: { type: 'LineString', coordinates: [userLoc, [lng, lat]] }
                 }
-              }
-            });
-
-            map.current.addLayer({
-              'id': 'route',
-              'type': 'line',
-              'source': 'route',
-              'layout': { 'line-join': 'round', 'line-cap': 'round' },
-              'paint': {
-                'line-color': '#a78bfa',
-                'line-width': 4,
-                'line-opacity': 0.7,
-                'line-dasharray': [2, 1]
-              }
-            });
-
-            const bounds = new mapboxgl.LngLatBounds()
-              .extend(userLngLat)
-              .extend([lng, lat]);
-            map.current.fitBounds(bounds, { padding: 50 });
+              });
+              map.current.addLayer({
+                id: 'route', type: 'line', source: 'route',
+                paint: { 'line-color': '#a78bfa', 'line-width': 4, 'line-opacity': 0.7, 'line-dasharray': [2, 1] }
+              });
+            } catch (err) {}
 
             if (showTravelInfo) {
               const toRad = (d: number) => d * Math.PI / 180;
-              const R = 6371;
-              const dLat = toRad(lat - userLngLat[1]);
-              const dLon = toRad(lng - userLngLat[0]);
-              const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(toRad(userLngLat[1])) * Math.cos(toRad(lat)) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-              const d = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+              const dLat = toRad(lat - userLoc[1]);
+              const dLon = toRad(lng - userLoc[0]);
+              const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(toRad(userLoc[1])) * Math.cos(toRad(lat)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+              const d = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
               setTravelHours(d / 50);
             }
-          },
-          (err) => console.warn("Geolocation failed", err)
-        );
-      }
-
-      map.current?.on('click', (e) => {
-        if (onLocationSelect) {
-          onLocationSelect(e.lngLat.lat, e.lngLat.lng);
+          });
         }
       });
-    });
+
+      mapInstance.on('click', (e) => {
+        if (onSelectRef.current) {
+          onSelectRef.current(e.lngLat.lat, e.lngLat.lng);
+        }
+      });
+
+    } catch (e) {
+      console.error("Map initialization failed", e);
+      setIsLoading(false);
+    }
 
     return () => {
-      map.current?.remove();
-      map.current = null;
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+        markerRef.current = null;
+      }
     };
-  }, [token, showRoute, showTravelInfo, onLocationSelect, lat, lng, title, description]);
+  }, [token, isModalExpanded]); // ONLY re-init on token or expansion change
 
-  // Handle dynamic coordinate changes without remounting
+  // Sync Marker & View
   useEffect(() => {
     if (!map.current || !token) return;
 
+    // Move marker if it exists
+    if (markerRef.current) {
+      markerRef.current.setLngLat([lng, lat]);
+    }
+
+    // Fly to new position
     map.current.flyTo({
       center: [lng, lat],
       essential: true,
-      duration: 1500,
-      zoom: 14
+      zoom: map.current.getZoom()
     });
+  }, [lat, lng, token]);
 
-    new mapboxgl.Marker({ color: '#a78bfa' })
-      .setLngLat([lng, lat])
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`
-        <div style="color: #1e293b; padding: 5px;">
-          <strong style="display: block; font-size: 14px; margin-bottom: 4px;">${title}</strong>
-          ${description ? `<p style="font-size: 12px; margin: 0; color: #64748b;">${description}</p>` : ''}
-        </div>
-      `))
-      .addTo(map.current);
+  const isCoordsValid = !isNaN(lat) && lat >= -90 && lat <= 90 && !isNaN(lng) && lng >= -180 && lng <= 180;
 
-  }, [lat, lng, title, description, token]);
+  const renderMapContent = () => (
+    <div className={`relative w-full h-full bg-slate-900 rounded-xl border border-white/10 overflow-hidden`}>
 
-  return (
-    <div className="relative w-full h-full min-h-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+      {/* Toggle Layout Button */}
+      <button 
+        onClick={(e) => { e.stopPropagation(); setIsModalExpanded(!isModalExpanded); }}
+        className="absolute top-4 right-4 z-[50] w-10 h-10 flex items-center justify-center bg-slate-900/90 hover:bg-purple-600 backdrop-blur-md border border-white/10 rounded-2xl text-white transition-all shadow-2xl group"
+      >
+        {isModalExpanded ? (
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M8 3v5H3M16 3v5h5M16 21v-5h5M8 21v-5H3" /></svg>
+        ) : (
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 3h6v6M9 21H3v-6M21 15v6h-6M3 9V3h6" /></svg>
+        )}
+      </button>
+
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm z-10 text-white">
-          <div className="flex flex-col items-center">
-            <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-            Loading Mapbox...
-          </div>
+        <div className="absolute inset-0 z-40 flex items-center justify-center bg-slate-900/90 backdrop-blur-md">
+          <div className="w-12 h-12 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin"></div>
         </div>
       )}
-      {!token && !isLoading && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-slate-500 p-8 text-center italic">
-          <span className="text-3xl mb-4">🗺️</span>
-          Mapbox Access Token required.<br /><small>Please check system settings.</small>
+
+      {tokenError && (
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-slate-900 text-slate-400 p-6 text-center">
+          <span className="text-4xl mb-4">⚠️</span>
+          <p>{tokenError}</p>
         </div>
       )}
-      <div ref={mapContainer} className="w-full h-full" style={{ minHeight: '400px' }} />
+
+      {token && !isCoordsValid && !isLoading && (
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-slate-900 text-slate-400 p-6 text-center">
+          <span className="text-4xl mb-4">📍</span>
+          <p>Invalid coordinates: {lat.toFixed(4)}, {lng.toFixed(4)}</p>
+        </div>
+      )}
+
+      <div ref={isModalExpanded ? mapPortalContainer : mapContainer} className="w-full h-full" style={{ minHeight: isModalExpanded ? '100%' : '435px' }} />
+
+
       {showTravelInfo && travelHours !== null && (
-        <div className="absolute bottom-4 right-4 bg-slate-900/90 border border-purple-500/30 text-white p-3 rounded-xl shadow-2xl backdrop-blur-md anim-slide-up flex items-center gap-3">
-          <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-xl">🚗</div>
+        <div className="absolute bottom-6 right-6 z-30 bg-slate-900/95 border border-purple-500/30 text-white p-4 rounded-2xl shadow-2xl backdrop-blur-xl flex items-center gap-4 anim-slide-up">
+          <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl">🚗</div>
           <div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Estimated Travel</div>
-            <div className="text-lg font-bold text-purple-400 font-mono">{travelHours.toFixed(1)} <span className="text-xs">hours</span></div>
+            <div className="text-[10px] text-purple-300 uppercase tracking-widest font-black">Travel Est.</div>
+            <div className="text-2xl font-black">{travelHours.toFixed(1)} <span className="text-xs opacity-50">HRS</span></div>
           </div>
         </div>
       )}
     </div>
+  );
+
+  return (
+    <>
+      {/* Normal View */}
+      <div className={`w-full h-full ${isModalExpanded ? 'hidden' : 'block'}`}>
+        {renderMapContent()}
+      </div>
+
+      {/* Expanded Modal View via Portal */}
+      {isModalExpanded && createPortal(
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-6 sm:p-12">
+          <div className="absolute inset-0 bg-black/1000 backdrop-blur-lg animate-fade-in" onClick={() => setIsModalExpanded(false)} />
+          <div className="relative w-[95%] h-[90vh] max-w-11xl animate-scale-in">
+            {renderMapContent()}
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 };
 

@@ -19,6 +19,8 @@ namespace Voyager.API.DTOs
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
         public bool IsArchived { get; set; }
+        public DateTime? ArchivedDate { get; set; }
+        public string? ArchivedByUserName { get; set; }
     }
 
     public class CreateCampaignDTO

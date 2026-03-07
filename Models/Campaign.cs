@@ -11,6 +11,8 @@
         public string? TargetGoal { get; set; }
         public string Status { get; set; } = "Active";
         public bool IsArchived { get; set; } = false;
+        public DateTime? ArchivedDate { get; set; }
+        public int? ArchivedBy { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         // Foreign Keys
@@ -19,6 +21,7 @@
 
         // Navigation
         public User Creator { get; set; } = null!;
+        public User? Archiver { get; set; }
         public CampaignLocation Location { get; set; } = null!;
         public ICollection<CampaignLead> CampaignLeads { get; set; } = new List<CampaignLead>();
         public ICollection<EmailLog> EmailLogs { get; set; } = new List<EmailLog>();

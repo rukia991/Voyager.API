@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using Voyager.API.Data;
 using Voyager.API.DTOs;
 using Voyager.API.Models;
@@ -61,7 +62,9 @@ namespace Voyager.API.Controllers
                 Notes = l.Notes,
                 CreatedDate = l.CreatedDate,
                 LastContactDate = l.LastContactDate,
-                IsArchived = l.IsArchived
+                IsArchived = l.IsArchived,
+                ArchivedDate = l.ArchivedDate,
+                ArchivedByUserName = l.Archiver != null ? l.Archiver.FirstName + " " + l.Archiver.LastName : null
             })
             .ToListAsync();
 
@@ -92,7 +95,9 @@ namespace Voyager.API.Controllers
                 Notes = lead.Notes,
                 CreatedDate = lead.CreatedDate,
                 LastContactDate = lead.LastContactDate,
-                IsArchived = lead.IsArchived
+                IsArchived = lead.IsArchived,
+                ArchivedDate = lead.ArchivedDate,
+                ArchivedByUserName = lead.Archiver != null ? lead.Archiver.FirstName + " " + lead.Archiver.LastName : null
             };
         }
 
@@ -156,7 +161,10 @@ namespace Voyager.API.Controllers
             var lead = await _context.Leads.FindAsync(id);
             if (lead == null) return NotFound();
 
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
             lead.IsArchived = true;
+            lead.ArchivedDate = DateTime.UtcNow;
+            lead.ArchivedBy = userId;
             await _context.SaveChangesAsync();
             return NoContent();
         }

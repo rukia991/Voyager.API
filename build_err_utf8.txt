@@ -1,0 +1,9 @@
+﻿C:\Users\63910\source\repos\Voyager.API\Controllers\LeadsController.cs(163,51): error CS0103: The name 'ClaimTypes' does not exist in the current context [C:\Users\63910\source\repos\Voyager.API\Voyager.API.csproj]
+
+Build FAILED.
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:03.95
+
+Workload updates are available. Run `dotnet workload list` for more information.

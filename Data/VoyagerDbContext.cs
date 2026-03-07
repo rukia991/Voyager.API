@@ -39,6 +39,10 @@ namespace Voyager.API.Data
                       .WithMany(l => l.Campaigns)
                       .HasForeignKey(e => e.LocationID)
                       .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Archiver)
+                      .WithMany()
+                      .HasForeignKey(e => e.ArchivedBy)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // CampaignLocation
@@ -47,6 +51,10 @@ namespace Voyager.API.Data
                 entity.HasKey(e => e.LocationID);
                 entity.Property(e => e.Latitude).HasColumnType("decimal(10,8)");
                 entity.Property(e => e.Longitude).HasColumnType("decimal(11,8)");
+                entity.HasOne(e => e.Archiver)
+                      .WithMany()
+                      .HasForeignKey(e => e.ArchivedBy)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Lead
@@ -60,6 +68,10 @@ namespace Voyager.API.Data
                 entity.HasOne(e => e.Campaign)
                       .WithMany()
                       .HasForeignKey(e => e.CampaignID)
+                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Archiver)
+                      .WithMany()
+                      .HasForeignKey(e => e.ArchivedBy)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 

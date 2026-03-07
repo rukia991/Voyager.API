@@ -40,7 +40,7 @@ const Leads: React.FC = () => {
   const fetchLeads = async () => {
     try { 
       const data = await leadService.getLeads({ search, showArchived: false });
-      setLeads(data.filter(l => !l.isArchived)); 
+      setLeads(data.filter(l => !l.isArchived).sort((a, b) => b.leadID - a.leadID)); 
     } catch (_) { 
       console.error("Error fetching leads"); 
     }
@@ -203,8 +203,8 @@ const Leads: React.FC = () => {
                 
                 <div style={{ height: "200px", borderRadius: "12px", overflow: "hidden", marginBottom: "20px", border: "1px solid var(--border)" }}>
                   <MapboxMap 
-                    lat={selectedLead.leadScore} // Placeholder use of leadScore for demo visualization
-                    lng={0}
+                    lat={selectedLead.campaignID > 0 ? 14.5995 : 0} // Standard lat for PH if campaign exists, or 0
+                    lng={selectedLead.campaignID > 0 ? 120.9842 : 0} // Standard lng for PH
                     title={selectedLead.userName || 'Lead'}
                     showRoute={false}
                   />

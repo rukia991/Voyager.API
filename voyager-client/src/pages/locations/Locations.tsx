@@ -12,7 +12,7 @@ const Locations: React.FC = () => {
   const [selectedLocation, setSelectedLocation] = useState<LocationDTO | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<LocationDTO, 'locationID'>>({
-    locationName: '', latitude: 0, longitude: 0
+    locationName: '', latitude: 0, longitude: 0, country: 'Philippines'
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -25,7 +25,7 @@ const Locations: React.FC = () => {
   const fetchLocations = async () => {
     try { 
       const data = await locationService.getLocations({ showArchived: false });
-      setLocations(data.filter(l => !l.isArchived)); 
+      setLocations(data.filter(l => !l.isArchived).sort((a, b) => b.locationID - a.locationID)); 
     } catch (_) { 
       console.error("Error occurred"); 
     }
@@ -51,7 +51,8 @@ const Locations: React.FC = () => {
       if (data.features && data.features.length > 0) {
         const [lng, lat] = data.features[0].center;
         const name = data.features[0].text;
-        setFormData(prev => ({ ...prev, latitude: lat, longitude: lng, locationName: name }));
+        const country = data.features[0].context?.find((c: any) => c.id.startsWith('country'))?.text || 'Philippines';
+        setFormData(prev => ({ ...prev, latitude: lat, longitude: lng, locationName: name, country }));
       }
     } catch (e) {
       console.error("Search failed", e);
@@ -67,7 +68,7 @@ const Locations: React.FC = () => {
       setIsModalOpen(false);
       fetchLocations();
       setSelectedLocation(newLoc);
-      setFormData({ locationName: '', latitude: 0, longitude: 0 });
+      setFormData({ locationName: '', latitude: 0, longitude: 0, country: 'Philippines' });
       setSearchQuery('');
     } catch (_) { 
       console.error("Error creating location"); 
@@ -96,46 +97,119 @@ const Locations: React.FC = () => {
       </div>
 
       <div className="grid-3" style={{ gridTemplateColumns: "320px 1fr", gap: "24px" }}>
-        {/* Left Side: List */}
+        {/* Left Side: List or Add Form */}
         <div className="anim-slide-up delay-1" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <div style={{ height: "calc(100vh - 280px)", overflowY: "auto", display: "flex", flexDirection: "column", gap: "12px", paddingRight: "4px" }}>
-            {filtered.map((loc) => (
-              <div 
-                key={loc.locationID} 
-                className={`card ${selectedLocation?.locationID === loc.locationID ? 'border-purple-500/50 bg-purple-500/5' : ''}`}
-                style={{ padding: "16px", cursor: "pointer", transition: "all 0.2s" }}
-                onClick={() => setSelectedLocation(loc)}
-              >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+          {isModalOpen ? (
+            <div className="card" style={{ padding: "24px", height: "434px", overflowY: "auto", position: "relative" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+                <h3 style={{ fontSize: "16px", fontWeight: "800", color: "white" }}>Add Location</h3>
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "18px" }}
+                >✕</button>
+              </div>
+
+              <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+                <input 
+                  style={{ flex: 1, height: "38px", fontSize: "13px" }}
+                  placeholder="Search a place..." 
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSearchPlace()}
+                />
+                <button className="btn btn-primary btn-sm" onClick={handleSearchPlace} disabled={isSearching}>
+                  {isSearching ? '...' : '📍'}
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div>
+                  <label style={{ fontSize: "11px" }}>Location Name</label>
+                  <input 
+                    style={{ height: "38px" }}
+                    value={formData.locationName} 
+                    onChange={e => setFormData({ ...formData, locationName: e.target.value })} 
+                    required 
+                  />
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                   <div>
-                    <h3 style={{ fontSize: "14px", fontWeight: "700", color: "white" }}>{loc.locationName}</h3>
-                    <div style={{ fontSize: "10px", color: "var(--text-muted)", marginTop: "2px" }}>ID: #{loc.locationID}</div>
+                    <label style={{ fontSize: "11px" }}>Latitude</label>
+                    <input 
+                      style={{ height: "38px" }}
+                      type="number" step="any" 
+                      value={formData.latitude} 
+                      onChange={e => setFormData({ ...formData, latitude: parseFloat(e.target.value) })} 
+                      required 
+                    />
                   </div>
-                  <button 
-                    className="btn btn-sm btn-ghost" 
-                    onClick={(e) => { e.stopPropagation(); handleArchive(loc.locationID); }}
-                    style={{ height: "28px", padding: "0 8px", fontSize: "11px" }}
-                  >
-                    Archive
-                  </button>
+                  <div>
+                    <label style={{ fontSize: "11px" }}>Longitude</label>
+                    <input 
+                      style={{ height: "38px" }}
+                      type="number" step="any" 
+                      value={formData.longitude} 
+                      onChange={e => setFormData({ ...formData, longitude: parseFloat(e.target.value) })} 
+                      required 
+                    />
+                  </div>
                 </div>
-                <div style={{ fontSize: "11px", color: "var(--text-muted)", fontFamily: "monospace" }}>
-                  {loc.latitude.toFixed(4)}, {loc.longitude.toFixed(4)}
+                <div style={{ fontSize: "10px", color: "var(--text-muted)", fontStyle: "italic", marginTop: "4px" }}>
+                  Tip: You can also click on the map to pin this location.
                 </div>
-              </div>
-            ))}
-            {filtered.length === 0 && (
-              <div style={{ textAlign: "center", padding: "40px", color: "var(--text-muted)", fontSize: "12px", fontStyle: "italic" }}>
-                No locations found.
-              </div>
-            )}
-          </div>
+                <button type="submit" className="btn btn-primary" style={{ marginTop: "10px", width: "100%" }}>
+                  Save Location
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div style={{ height: "443px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "12px", paddingRight: "4px" }}>
+              {filtered.map((loc) => (
+                <div 
+                  key={loc.locationID} 
+                  className={`card ${selectedLocation?.locationID === loc.locationID ? 'border-purple-500/50 bg-purple-500/5' : ''}`}
+                  style={{ padding: "16px", cursor: "pointer", transition: "all 0.2s" }}
+                  onClick={() => setSelectedLocation(loc)}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+                    <div>
+                      <h3 style={{ fontSize: "14px", fontWeight: "700", color: "white" }}>{loc.locationName}</h3>
+                      <div style={{ fontSize: "10px", color: "var(--text-muted)", marginTop: "2px" }}>ID: #{loc.locationID}</div>
+                    </div>
+                    <button 
+                      className="btn btn-sm btn-ghost" 
+                      onClick={(e) => { e.stopPropagation(); handleArchive(loc.locationID); }}
+                      style={{ height: "28px", padding: "0 8px", fontSize: "11px" }}
+                    >
+                      Archive
+                    </button>
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--text-muted)", fontFamily: "monospace" }}>
+                    {loc.latitude.toFixed(4)}, {loc.longitude.toFixed(4)}
+                  </div>
+                </div>
+              ))}
+              {filtered.length === 0 && (
+                <div style={{ textAlign: "center", padding: "40px", color: "var(--text-muted)", fontSize: "12px", fontStyle: "italic" }}>
+                  No locations found.
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Right Side: Map */}
-        <div className="anim-slide-up delay-2 h-full">
-          <div className="card h-full" style={{ padding: "0", overflow: "hidden", minHeight: "500px" }}>
-            {(selectedLocation || filtered.length > 0) ? (
+        <div className="h-full">
+          <div className="card" style={{ padding: "0", overflow: "visible", height: "434px", borderRadius: "24px" }}>
+            {isModalOpen ? (
+              <MapboxMap 
+                lat={formData.latitude} 
+                lng={formData.longitude} 
+                title={formData.locationName || "New Location Pin"} 
+                showRoute={false}
+                onLocationSelect={(lat, lng) => setFormData(prev => ({ ...prev, latitude: lat, longitude: lng }))}
+              />
+            ) : (selectedLocation || filtered.length > 0) ? (
               <MapboxMap 
                 lat={(selectedLocation ?? filtered[0]).latitude} 
                 lng={(selectedLocation ?? filtered[0]).longitude} 
@@ -150,70 +224,6 @@ const Locations: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-box" style={{ maxWidth: "450px" }}>
-            <div className="modal-header">
-              <h2>Add New Location</h2>
-              <button onClick={() => setIsModalOpen(false)}>✕</button>
-            </div>
-            
-            <div style={{ padding: "24px" }}>
-              <div style={{ display: "flex", gap: "10px", marginBottom: "12px" }}>
-                <input 
-                  style={{ flex: 1 }}
-                  placeholder="Search a place (e.g. Siargao)..." 
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleSearchPlace()}
-                />
-                <button className="btn btn-primary" onClick={handleSearchPlace} disabled={isSearching}>
-                  {isSearching ? '...' : '🔍'}
-                </button>
-              </div>
-              <p style={{ fontSize: "11px", color: "var(--text-muted)", marginBottom: "20px", fontStyle: "italic" }}>
-                Tip: Searching will auto-fill coordinates below.
-              </p>
-
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <div>
-                  <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Location Name</label>
-                  <input 
-                    value={formData.locationName} 
-                    onChange={e => setFormData({ ...formData, locationName: e.target.value })} 
-                    required 
-                    placeholder="Enter location display name"
-                  />
-                </div>
-                <div className="grid-2" style={{ gap: "12px" }}>
-                  <div>
-                    <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Latitude</label>
-                    <input 
-                      type="number" step="any" 
-                      value={formData.latitude} 
-                      onChange={e => setFormData({ ...formData, latitude: parseFloat(e.target.value) })} 
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Longitude</label>
-                    <input 
-                      type="number" step="any" 
-                      value={formData.longitude} 
-                      onChange={e => setFormData({ ...formData, longitude: parseFloat(e.target.value) })} 
-                      required 
-                    />
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary btn-lg" style={{ marginTop: "10px", width: "100%" }}>
-                  Save Location
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
     </MainLayout>
   );
 };

@@ -26,9 +26,9 @@ export default function ArchivedItems() {
         leadService.getLeads({ showArchived: true }),
         locationService.getLocations({ showArchived: true })
       ]);
-      setCampaigns(c.filter(x => x.isArchived));
-      setLeads(l.filter(x => x.isArchived));
-      setLocations(loc.filter(x => x.isArchived));
+      setCampaigns(c.filter(x => x.isArchived).sort((a, b) => b.campaignID - a.campaignID));
+      setLeads(l.filter(x => x.isArchived).sort((a, b) => b.leadID - a.leadID));
+      setLocations(loc.filter(x => x.isArchived).sort((a, b) => b.locationID - a.locationID));
     } catch (e) {
       console.error("Failed to fetch archived items", e);
     } finally {
@@ -88,6 +88,8 @@ export default function ArchivedItems() {
                   <tr style={{ textAlign: "left", borderBottom: "1px solid var(--border)", fontSize: "12px", color: "var(--text-muted)" }}>
                     <th style={{ padding: "12px" }}>Name / ID</th>
                     <th style={{ padding: "12px" }}>Details</th>
+                    <th style={{ padding: "12px" }}>Archived At</th>
+                    <th style={{ padding: "12px" }}>Archived By</th>
                     <th style={{ padding: "12px", textAlign: "right" }}>Actions</th>
                   </tr>
                 </thead>
@@ -99,6 +101,8 @@ export default function ArchivedItems() {
                         <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>#{c.campaignID}</div>
                       </td>
                       <td style={{ padding: "12px" }}>{c.status} • Budget: ${c.budget}</td>
+                      <td style={{ padding: "12px" }}>{c.archivedDate ? new Date(c.archivedDate).toLocaleString() : '-'}</td>
+                      <td style={{ padding: "12px" }}>{c.archivedByUserName || '-'}</td>
                       <td style={{ padding: "12px", textAlign: "right" }}>
                         <button className="btn btn-sm" onClick={() => handleRestore('campaign', c.campaignID)}>Restore</button>
                       </td>
@@ -111,6 +115,8 @@ export default function ArchivedItems() {
                         <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>{l.source || 'No source'}</div>
                       </td>
                       <td style={{ padding: "12px" }}>Status: {l.leadStatus} • Score: {l.leadScore}</td>
+                      <td style={{ padding: "12px" }}>{l.archivedDate ? new Date(l.archivedDate).toLocaleString() : '-'}</td>
+                      <td style={{ padding: "12px" }}>{l.archivedByUserName || '-'}</td>
                       <td style={{ padding: "12px", textAlign: "right" }}>
                         <button className="btn btn-sm" onClick={() => handleRestore('lead', l.leadID)}>Restore</button>
                       </td>
@@ -123,6 +129,8 @@ export default function ArchivedItems() {
                         <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>#{loc.locationID}</div>
                       </td>
                       <td style={{ padding: "12px" }}>{loc.latitude.toFixed(4)}, {loc.longitude.toFixed(4)}</td>
+                      <td style={{ padding: "12px" }}>{loc.archivedDate ? new Date(loc.archivedDate).toLocaleString() : '-'}</td>
+                      <td style={{ padding: "12px" }}>{loc.archivedByUserName || '-'}</td>
                       <td style={{ padding: "12px", textAlign: "right" }}>
                         <button className="btn btn-sm" onClick={() => handleRestore('location', loc.locationID)}>Restore</button>
                       </td>
@@ -130,7 +138,7 @@ export default function ArchivedItems() {
                   ))}
                   {(activeTab === 'campaigns' ? campaigns : activeTab === 'leads' ? leads : locations).length === 0 && (
                     <tr>
-                      <td colSpan={3} style={{ padding: "40px", textAlign: "center", color: "var(--text-muted)", fontSize: "13px", fontStyle: "italic" }}>
+                      <td colSpan={5} style={{ padding: "40px", textAlign: "center", color: "var(--text-muted)", fontSize: "13px", fontStyle: "italic" }}>
                         No archived items found in this category.
                       </td>
                     </tr>

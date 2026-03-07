@@ -24,7 +24,7 @@ const Campaigns: React.FC = () => {
     try {
       setLoading(true);
       const data = await campaignService.getCampaigns({ search, showArchived: false });
-      setCampaigns(data.filter(c => !c.isArchived));
+      setCampaigns(data.filter(c => !c.isArchived).sort((a, b) => b.campaignID - a.campaignID));
     } catch (_) {
       console.error("Failed to fetch campaigns");
     } finally {

@@ -13,6 +13,8 @@ export interface LeadDTO {
   createdDate: string;
   lastContactDate?: string;
   isArchived: boolean;
+  archivedDate?: string;
+  archivedByUserName?: string;
 }
 
 export interface CreateLeadDTO {

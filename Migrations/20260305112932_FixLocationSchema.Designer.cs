@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Voyager.API.Data;
 
@@ -11,9 +12,11 @@ using Voyager.API.Data;
 namespace Voyager.API.Migrations
 {
     [DbContext(typeof(VoyagerDbContext))]
-    partial class VoyagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260305112932_FixLocationSchema")]
+    partial class FixLocationSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,12 +250,6 @@ namespace Voyager.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CampaignID"));
 
-                    b.Property<int?>("ArchivedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ArchivedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<decimal>("Budget")
                         .HasColumnType("decimal(10,2)");
 
@@ -289,8 +286,6 @@ namespace Voyager.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CampaignID");
-
-                    b.HasIndex("ArchivedBy");
 
                     b.HasIndex("CreatedBy");
 
@@ -333,12 +328,6 @@ namespace Voyager.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"));
 
-                    b.Property<int?>("ArchivedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ArchivedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -363,8 +352,6 @@ namespace Voyager.API.Migrations
                         .HasColumnType("decimal(11,8)");
 
                     b.HasKey("LocationID");
-
-                    b.HasIndex("ArchivedBy");
 
                     b.ToTable("CampaignLocations");
                 });
@@ -458,12 +445,6 @@ namespace Voyager.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeadID"));
 
-                    b.Property<int?>("ArchivedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ArchivedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("CampaignID")
                         .HasColumnType("int");
 
@@ -493,8 +474,6 @@ namespace Voyager.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("LeadID");
-
-                    b.HasIndex("ArchivedBy");
 
                     b.HasIndex("CampaignID");
 
@@ -701,11 +680,6 @@ namespace Voyager.API.Migrations
 
             modelBuilder.Entity("Voyager.API.Models.Campaign", b =>
                 {
-                    b.HasOne("Voyager.API.Models.User", "Archiver")
-                        .WithMany()
-                        .HasForeignKey("ArchivedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Voyager.API.Models.User", "Creator")
                         .WithMany("CreatedCampaigns")
                         .HasForeignKey("CreatedBy")
@@ -717,8 +691,6 @@ namespace Voyager.API.Migrations
                         .HasForeignKey("LocationID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Archiver");
 
                     b.Navigation("Creator");
 
@@ -742,16 +714,6 @@ namespace Voyager.API.Migrations
                     b.Navigation("Campaign");
 
                     b.Navigation("Lead");
-                });
-
-            modelBuilder.Entity("Voyager.API.Models.CampaignLocation", b =>
-                {
-                    b.HasOne("Voyager.API.Models.User", "Archiver")
-                        .WithMany()
-                        .HasForeignKey("ArchivedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Archiver");
                 });
 
             modelBuilder.Entity("Voyager.API.Models.EmailLog", b =>
@@ -802,11 +764,6 @@ namespace Voyager.API.Migrations
 
             modelBuilder.Entity("Voyager.API.Models.Lead", b =>
                 {
-                    b.HasOne("Voyager.API.Models.User", "Archiver")
-                        .WithMany()
-                        .HasForeignKey("ArchivedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Voyager.API.Models.Campaign", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignID")
@@ -817,8 +774,6 @@ namespace Voyager.API.Migrations
                         .WithMany("Leads")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Archiver");
 
                     b.Navigation("Campaign");
 

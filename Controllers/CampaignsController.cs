@@ -46,7 +46,9 @@ namespace Voyager.API.Controllers
                     LocationName = c.Location.LocationName,
                     Latitude = c.Location.Latitude,
                     Longitude = c.Location.Longitude,
-                    IsArchived = c.IsArchived
+                    IsArchived = c.IsArchived,
+                    ArchivedDate = c.ArchivedDate,
+                    ArchivedByUserName = c.Archiver != null ? c.Archiver.FirstName + " " + c.Archiver.LastName : null
                 })
                 .ToListAsync();
 
@@ -79,7 +81,9 @@ namespace Voyager.API.Controllers
                 LocationName = campaign.Location.LocationName,
                 Latitude = campaign.Location.Latitude,
                 Longitude = campaign.Location.Longitude,
-                IsArchived = campaign.IsArchived
+                IsArchived = campaign.IsArchived,
+                ArchivedDate = campaign.ArchivedDate,
+                ArchivedByUserName = campaign.Archiver != null ? campaign.Archiver.FirstName + " " + campaign.Archiver.LastName : null
             };
 
             return Ok(dto);
@@ -155,7 +159,10 @@ namespace Voyager.API.Controllers
             var campaign = await _context.Campaigns.FindAsync(id);
             if (campaign == null) return NotFound();
 
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
             campaign.IsArchived = true;
+            campaign.ArchivedDate = DateTime.UtcNow;
+            campaign.ArchivedBy = userId;
             await _context.SaveChangesAsync();
             return NoContent();
         }
