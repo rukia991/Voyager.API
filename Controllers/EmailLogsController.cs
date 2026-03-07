@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Voyager.API.Data;
 using Voyager.API.DTOs;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Controllers
 {
@@ -14,10 +15,12 @@ namespace Voyager.API.Controllers
     public class EmailLogsController : ControllerBase
     {
         private readonly VoyagerDbContext _context;
+        private readonly IEmailService _emailService;
 
-        public EmailLogsController(VoyagerDbContext context)
+        public EmailLogsController(VoyagerDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -33,7 +36,7 @@ namespace Voyager.API.Controllers
                 {
                     EmailLogID = l.EmailLogID,
                     CampaignName = l.Campaign.CampaignName,
-                    LeadName = l.Lead.User != null ? l.Lead.User.FirstName + " " + l.Lead.User.LastName : "Unknown",
+                    LeadName = l.Lead.FullName ?? (l.Lead.User != null ? l.Lead.User.FirstName + " " + l.Lead.User.LastName : "Unknown"),
                     TemplateName = l.Template.TemplateName,
                     SentByName = l.SentByUser.FirstName + " " + l.SentByUser.LastName,
                     SentDate = l.SentDate,
@@ -49,25 +52,83 @@ namespace Voyager.API.Controllers
         public async Task<IActionResult> BulkSend([FromBody] BulkSendDTO dto)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-            
-            // In a real app, this would trigger an async background job
-            foreach (var leadId in dto.LeadIDs)
+
+            // Load template, campaign, and leads in one go
+            var template = await _context.EmailTemplates.FindAsync(dto.TemplateID);
+            if (template == null) return NotFound("Template not found.");
+            if (template.IsApproved != "Approved") return BadRequest("Template is not approved for sending.");
+
+            var campaign = await _context.Campaigns.FindAsync(dto.CampaignID);
+            if (campaign == null) return NotFound("Campaign not found.");
+
+            var leads = await _context.Leads
+                .Include(l => l.User)
+                .Where(l => dto.LeadIDs.Contains(l.LeadID))
+                .ToListAsync();
+
+            int sent = 0, failed = 0, skipped = 0;
+
+            foreach (var lead in leads)
             {
+                // Resolve email address: direct Email field first, then linked User
+                var recipientEmail = lead.Email ?? lead.User?.Email;
+                var recipientName = lead.FullName
+                    ?? (lead.User != null ? lead.User.FirstName + " " + lead.User.LastName : "Valued Customer");
+
+                if (string.IsNullOrWhiteSpace(recipientEmail))
+                {
+                    skipped++;
+                    continue; // No email address — skip
+                }
+
+                // Personalize template body
+                var personalizedBody = template.Body
+                    .Replace("{{firstName}}", lead.User?.FirstName ?? recipientName.Split(' ')[0])
+                    .Replace("{{lastName}}", lead.User?.LastName ?? "")
+                    .Replace("{{fullName}}", recipientName)
+                    .Replace("{{campaignName}}", campaign.CampaignName)
+                    .Replace("{{email}}", recipientEmail);
+
+                var personalizedSubject = template.Subject
+                    .Replace("{{campaignName}}", campaign.CampaignName)
+                    .Replace("{{fullName}}", recipientName);
+
+                string status;
+                try
+                {
+                    await _emailService.SendAsync(recipientEmail, recipientName, personalizedSubject, personalizedBody);
+                    status = "Sent";
+                    sent++;
+                }
+                catch (Exception ex)
+                {
+                    status = "Failed";
+                    failed++;
+                    Console.Error.WriteLine($"Failed to send email to {recipientEmail}: {ex.Message}");
+                }
+
                 var log = new EmailLog
                 {
                     CampaignID = dto.CampaignID,
                     TemplateID = dto.TemplateID,
-                    LeadID = leadId,
+                    LeadID = lead.LeadID,
                     SentBy = userId,
                     SentDate = DateTime.UtcNow,
-                    Status = "Sent",
-                    EmailStatus = "Sent"
+                    Status = status,
+                    EmailStatus = status
                 };
                 _context.EmailLogs.Add(log);
             }
 
             await _context.SaveChangesAsync();
-            return Ok(new { message = $"Successfully sent {dto.LeadIDs.Count} emails." });
+
+            return Ok(new
+            {
+                message = $"Bulk send complete.",
+                sent,
+                failed,
+                skipped
+            });
         }
     }
 }

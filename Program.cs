@@ -7,6 +7,7 @@ using Serilog;
 using System.Text;
 using Voyager.API.Data;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +57,9 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+
 builder.Services.AddControllers();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 // Swagger with JWT support
 builder.Services.AddEndpointsApiExplorer();

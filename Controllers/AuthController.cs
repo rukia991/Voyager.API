@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -50,7 +50,6 @@ namespace Voyager.API.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            // Assign role
             var roleExists = await _roleManager.RoleExistsAsync(dto.Role);
             if (roleExists)
                 await _userManager.AddToRoleAsync(user, dto.Role);
@@ -61,7 +60,7 @@ namespace Voyager.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
-            var user = await _userManager.FindByEmailAsync(dto.Email) 
+            var user = await _userManager.FindByEmailAsync(dto.Email)
                        ?? await _userManager.FindByNameAsync(dto.Email);
 
             if (user == null)
@@ -78,13 +77,15 @@ namespace Voyager.API.Controllers
             var role = roles.FirstOrDefault() ?? "Customer";
 
             var token = GenerateJwtToken(user, role);
-            var expiry = DateTime.UtcNow.AddDays(
-                int.Parse(_configuration["JwtSettings:ExpiryInDays"]!));
+            var expiry = DateTime.UtcNow.AddDays(int.Parse(_configuration["JwtSettings:ExpiryInDays"]!));
 
             return Ok(new AuthResponseDTO
             {
                 Token = token,
                 UserName = user.UserName!,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DisplayName = $"{user.FirstName} {user.LastName}".Trim(),
                 Email = user.Email!,
                 Role = role,
                 Expiry = expiry

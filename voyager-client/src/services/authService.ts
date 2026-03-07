@@ -16,6 +16,9 @@ export interface RegisterDTO extends LoginDTO {
 export interface AuthResponse {
   token: string;
   userName: string;
+  firstName?: string;
+  lastName?: string;
+  displayName?: string;
   email: string;
   role: string;
   expiry: string;

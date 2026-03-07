@@ -2237,3 +2237,364 @@ ALTER TABLE [Leads] ADD CONSTRAINT [FK_Leads_Users_ArchivedBy] FOREIGN KEY ([Arc
 2026-03-07 02:42:58.045 +08:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20260306184239_AddArchivalAudit', N'8.0.0');
+2026-03-07 20:38:29.577 +08:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-07 20:38:29.689 +08:00 [INF] Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-07 20:38:29.697 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-07 20:38:29.703 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-07 20:38:29.781 +08:00 [INF] Executed DbCommand (62ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-03-07 20:38:29.802 +08:00 [INF] Applying migration '20260307123808_AddLeadEmailField'.
+2026-03-07 20:38:29.979 +08:00 [INF] Executed DbCommand (91ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Leads] ADD [Email] nvarchar(max) NULL;
+2026-03-07 20:38:29.984 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Leads] ADD [FullName] nvarchar(max) NULL;
+2026-03-07 20:38:30.024 +08:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260307123808_AddLeadEmailField', N'8.0.0');
+2026-03-07 20:57:18.098 +08:00 [INF] User profile is available. Using 'C:\Users\63910\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-07 20:57:22.267 +08:00 [INF] Executed DbCommand (352ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-07 20:57:22.574 +08:00 [INF] Executed DbCommand (7ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-07 20:57:22.584 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-07 20:57:22.592 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-07 20:57:22.603 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-07 20:57:22.669 +08:00 [INF] Executed DbCommand (20ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-07 20:57:22.806 +08:00 [INF] Executed DbCommand (8ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-07 20:57:22.815 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-07 20:57:22.825 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-07 20:57:22.839 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-07 20:57:22.917 +08:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [CampaignLocations] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-07 20:57:22.955 +08:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'SuperAdmin'
+2026-03-07 20:57:22.974 +08:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Campaigns] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-07 20:57:22.988 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmailTemplates] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-07 20:57:24.248 +08:00 [INF] Now listening on: https://localhost:7070
+2026-03-07 20:57:24.252 +08:00 [INF] Now listening on: http://localhost:5287
+2026-03-07 20:57:24.411 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-07 20:57:24.429 +08:00 [INF] Hosting environment: Development
+2026-03-07 20:57:24.434 +08:00 [INF] Content root path: C:\Users\63910\source\repos\Voyager.API
+2026-03-07 20:57:26.003 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 20:57:26.831 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 857.6577ms
+2026-03-07 20:57:27.045 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 20:57:27.045 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 20:57:27.045 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 20:57:27.111 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 66.3583ms
+2026-03-07 20:57:27.150 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 105.6096ms
+2026-03-07 20:57:27.256 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 211.1031ms
+2026-03-07 20:57:27.382 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 20:57:27.492 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 109.6322ms
+2026-03-07 21:03:20.779 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:03:21.503 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 924.7809ms
+2026-03-07 21:03:22.613 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:03:23.067 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:03:23.143 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 558.665ms
+2026-03-07 21:03:23.277 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 219.4994ms
+2026-03-07 21:03:23.314 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:03:23.827 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 513.4443ms
+2026-03-07 21:03:57.787 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:03:58.397 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 626.5212ms
+2026-03-07 21:03:58.502 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:03:58.750 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 247.4124ms
+2026-03-07 21:03:58.965 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:03:58.966 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:03:58.967 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:03:58.997 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 32.3897ms
+2026-03-07 21:03:59.087 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 121.34ms
+2026-03-07 21:03:59.146 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 180.324ms
+2026-03-07 21:03:59.514 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:03:59.605 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 90.8433ms
+2026-03-07 21:11:37.522 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:11:37.520 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:11:38.111 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 660.2759ms
+2026-03-07 21:11:38.378 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:11:38.615 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 236.28ms
+2026-03-07 21:11:39.201 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 21:11:39.207 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 21:11:38.793 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 1360.2445ms
+2026-03-07 21:11:39.270 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 21:11:40.248 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 21:11:40.271 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 21:11:40.520 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 21:11:40.622 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 1421.8402ms
+2026-03-07 21:11:41.456 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 21:11:40.393 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 1186.3153ms
+2026-03-07 21:11:41.545 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 1024.8562ms
+2026-03-07 21:11:40.657 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:11:41.467 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 21:11:41.683 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:11:41.885 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 1227.7814ms
+2026-03-07 21:11:41.915 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:11:41.900 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 2630.5551ms
+2026-03-07 21:11:41.997 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 314.2056ms
+2026-03-07 21:11:42.446 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 531.5827ms
+2026-03-07 21:11:49.139 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:11:49.342 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 202.5351ms
+2026-03-07 21:11:49.511 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 21:11:49.520 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 21:11:49.525 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 14.274ms
+2026-03-07 21:16:25.848 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:16:25.848 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:16:26.118 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 301.9993ms
+2026-03-07 21:16:26.578 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 763.229ms
+2026-03-07 21:16:26.889 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 21:16:26.894 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 21:16:26.894 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 21:16:26.950 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 21:16:27.071 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 180.3654ms
+2026-03-07 21:16:27.096 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 21:16:27.118 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 21:16:27.238 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 355.1666ms
+2026-03-07 21:16:27.253 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:16:27.308 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 21:16:27.347 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 21:16:27.370 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 116.9983ms
+2026-03-07 21:16:27.385 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 266.7906ms
+2026-03-07 21:16:27.371 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 481.822ms
+2026-03-07 21:16:27.410 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:16:27.410 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:16:27.661 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 256.4465ms
+2026-03-07 21:16:27.730 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 324.0246ms
+2026-03-07 21:16:30.733 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:16:30.877 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 143.7405ms
+2026-03-07 21:16:31.593 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 21:16:31.750 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 21:16:31.753 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 160.7638ms
+2026-03-07 21:17:22.693 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:17:22.693 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:17:23.040 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 383.5349ms
+2026-03-07 21:17:23.362 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 731.9194ms
+2026-03-07 21:17:23.747 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 21:17:23.748 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 21:17:23.749 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 21:17:23.886 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 21:17:24.128 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 21:17:24.129 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 348.3526ms
+2026-03-07 21:17:24.261 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 515.1998ms
+2026-03-07 21:17:24.307 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:17:24.257 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 21:17:24.801 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 21:17:24.934 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 1186.0204ms
+2026-03-07 21:17:25.031 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 21:17:24.936 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 629.3625ms
+2026-03-07 21:17:24.997 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:17:25.093 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:17:25.235 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 979.8029ms
+2026-03-07 21:17:25.324 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 326.3024ms
+2026-03-07 21:17:25.428 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 334.5274ms
+2026-03-07 21:17:26.700 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:17:27.012 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 312.1276ms
+2026-03-07 21:17:27.523 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 21:17:27.550 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 21:17:27.576 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 57.7161ms
+2026-03-07 21:19:58.520 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:19:59.003 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 495.9909ms
+2026-03-07 21:19:59.728 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:20:00.204 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:20:01.160 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:20:01.584 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 1856.4614ms
+2026-03-07 21:20:02.103 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 1898.7153ms
+2026-03-07 21:20:02.496 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1336.8645ms
+2026-03-07 21:20:03.026 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:20:03.820 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 793.7637ms
+2026-03-07 21:20:34.727 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:20:34.727 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:20:34.818 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 93.3271ms
+2026-03-07 21:20:35.949 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 1233.5046ms
+2026-03-07 21:20:36.415 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 21:20:36.388 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 21:20:36.389 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 21:20:36.599 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 21:20:36.770 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 381.3232ms
+2026-03-07 21:20:36.826 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 21:20:36.862 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 21:20:37.075 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 690.4239ms
+2026-03-07 21:20:37.139 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:20:37.205 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 21:20:37.244 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 21:20:37.276 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 137.9334ms
+2026-03-07 21:20:37.286 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 478.2174ms
+2026-03-07 21:20:37.287 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 874.4284ms
+2026-03-07 21:20:37.324 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:20:37.326 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:20:37.575 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 251.2158ms
+2026-03-07 21:20:37.757 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 430.9962ms
+2026-03-07 21:20:40.138 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:20:40.491 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 352.6289ms
+2026-03-07 21:20:40.766 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 21:20:40.780 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 21:20:40.783 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 18.3759ms
+2026-03-07 21:26:09.061 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:26:09.061 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:26:09.544 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 2115.8887ms
+2026-03-07 21:26:10.850 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 3459.6243ms
+2026-03-07 21:26:12.619 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 21:26:12.680 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 21:26:12.620 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 21:26:13.074 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 21:26:13.074 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 21:26:13.240 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 592.6354ms
+2026-03-07 21:26:13.326 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:26:13.240 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 590.676ms
+2026-03-07 21:26:13.776 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 448.9883ms
+2026-03-07 21:26:13.924 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 21:26:13.314 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 21:26:13.991 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:26:14.332 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 1652.4978ms
+2026-03-07 21:26:14.609 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 618.7961ms
+2026-03-07 21:26:14.604 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 21:26:14.696 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:26:14.817 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 1504.5642ms
+2026-03-07 21:26:15.155 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 463.6917ms
+2026-03-07 21:26:37.051 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:26:37.771 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 728.0983ms
+2026-03-07 21:26:38.537 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 21:26:38.563 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 21:26:38.566 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 29.5321ms
+2026-03-07 21:45:54.297 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:45:54.297 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 21:45:54.582 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 300.1629ms
+2026-03-07 21:45:55.244 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 977.7403ms
+2026-03-07 21:45:55.689 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 21:45:55.703 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 21:45:55.707 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 21:45:56.613 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 21:45:57.081 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 21:45:57.152 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 1463.2247ms
+2026-03-07 21:45:57.207 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 1509.3517ms
+2026-03-07 21:45:57.186 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 21:45:57.213 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 21:45:57.241 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:45:57.447 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 1744.6279ms
+2026-03-07 21:45:57.544 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 21:45:57.578 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 338.391ms
+2026-03-07 21:45:57.679 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:45:57.685 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 471.6436ms
+2026-03-07 21:45:57.792 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:45:58.128 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 449.2781ms
+2026-03-07 21:45:59.211 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1419.9576ms
+2026-03-07 21:46:18.342 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:46:18.817 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 21:46:18.829 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 501.8931ms
+2026-03-07 21:46:18.900 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 21:46:18.911 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 93.604ms
+2026-03-07 21:58:51.448 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 21:58:52.072 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 639.7326ms
+2026-03-07 21:58:52.290 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 21:58:52.363 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 72.5137ms
+2026-03-07 21:58:52.425 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 21:58:52.427 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 21:58:52.473 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 48.6164ms
+2026-03-07 21:58:52.592 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 164.9671ms
+2026-03-07 21:58:53.242 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 21:58:53.689 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 447.8481ms
+2026-03-07 22:01:05.216 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 22:01:05.222 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 22:01:05.417 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 233.8934ms
+2026-03-07 22:01:05.477 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 22:01:05.650 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 173.6945ms
+2026-03-07 22:01:05.905 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 752.1764ms
+2026-03-07 22:01:06.307 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 22:01:06.311 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 22:01:06.314 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 22:01:06.411 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 22:01:06.447 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 136.0692ms
+2026-03-07 22:01:06.497 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 22:01:06.499 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 22:01:06.654 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 22:01:06.683 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 376.2197ms
+2026-03-07 22:01:06.794 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 22:01:06.721 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 403.6181ms
+2026-03-07 22:01:06.822 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 22:01:06.739 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 22:01:06.852 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 69.3464ms
+2026-03-07 22:01:06.920 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 423.9454ms
+2026-03-07 22:01:06.959 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 219.823ms
+2026-03-07 22:01:07.032 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 22:01:07.147 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 115.1548ms
+2026-03-07 22:01:15.461 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 22:01:15.653 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 192.3815ms
+2026-03-07 22:01:15.725 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 22:01:15.744 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 22:01:15.747 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 23.492ms
+2026-03-07 22:06:45.914 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.html - null null
+2026-03-07 22:06:46.017 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - null null
+2026-03-07 22:06:46.113 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/clear-browser-cache - 200 0 null 87.9584ms
+2026-03-07 22:06:46.873 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.html - 200 null text/html;charset=utf-8 1024.2219ms
+2026-03-07 22:06:47.537 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - null null
+2026-03-07 22:06:47.612 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.css - null null
+2026-03-07 22:06:47.963 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - null null
+2026-03-07 22:06:48.393 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-03-07 22:06:48.426 +08:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-03-07 22:06:48.488 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui.css - 200 152034 text/css 951.2538ms
+2026-03-07 22:06:48.679 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/index.js - null null
+2026-03-07 22:06:48.574 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.css - 200 202 text/css 961.6302ms
+2026-03-07 22:06:48.671 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-07 22:06:49.320 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-03-07 22:06:49.397 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/index.js - 200 null application/javascript;charset=utf-8 717.2748ms
+2026-03-07 22:06:49.664 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-07 22:06:49.633 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-bundle.js - 200 1452753 text/javascript 1684.4451ms
+2026-03-07 22:06:49.674 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-03-07 22:06:49.950 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 285.632ms
+2026-03-07 22:06:50.090 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/_vs/browserLink - null null
+2026-03-07 22:06:50.213 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/swagger-ui-standalone-preset.js - 200 230293 text/javascript 1542.0762ms
+2026-03-07 22:06:50.489 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/_vs/browserLink - 200 null text/javascript; charset=UTF-8 398.5738ms
+2026-03-07 22:06:53.527 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - null null
+2026-03-07 22:06:53.708 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 180.9406ms
+2026-03-07 22:06:53.761 +08:00 [INF] Request starting HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - null null
+2026-03-07 22:06:53.770 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2026-03-07 22:06:53.775 +08:00 [INF] Request finished HTTP/2 GET https://localhost:7070/swagger/favicon-32x32.png - 200 628 image/png 14.1491ms

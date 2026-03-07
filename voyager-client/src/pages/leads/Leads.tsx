@@ -23,6 +23,8 @@ const Leads: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingLead, setEditingLead] = useState<LeadDTO | null>(null);
   const [formData, setFormData] = useState<CreateLeadDTO>({ 
+    email: '',
+    fullName: '',
     campaignID: 0, 
     leadStatus: 'New', 
     leadScore: 0, 
@@ -75,6 +77,8 @@ const Leads: React.FC = () => {
       setIsModalOpen(false); 
       fetchLeads(); 
       setFormData({ 
+        email: '',
+        fullName: '',
         campaignID: campaigns[0]?.campaignID || 0, 
         leadStatus: 'New', 
         leadScore: 0, 
@@ -157,8 +161,8 @@ const Leads: React.FC = () => {
                       onClick={() => setSelectedLead(l)}
                     >
                       <td style={{ padding: "16px" }}>
-                        <div style={{ fontWeight: "700", color: "white" }}>{l.userName || `Lead #${l.leadID}`}</div>
-                        <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>Source: {l.source || 'Direct'}</div>
+                        <div style={{ fontWeight: "700", color: "white" }}>{l.fullName || l.userName || `Lead #${l.leadID}`}</div>
+                        <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>📧 {l.email || 'No email'} · {l.source || 'Direct'}</div>
                       </td>
                       <td style={{ padding: "16px" }}>{l.campaignName}</td>
                       <td style={{ padding: "16px" }}>
@@ -241,6 +245,14 @@ const Leads: React.FC = () => {
           <div className="modal-box">
             <div className="modal-header"><h2>Add New Lead</h2><button onClick={() => setIsModalOpen(false)}>✕</button></div>
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Full Name <span style={{ color: "#a78bfa" }}>*</span></label>
+                <input required placeholder="e.g. Juan dela Cruz" value={formData.fullName || ''} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Email Address <span style={{ color: "#a78bfa" }}>*</span></label>
+                <input required type="email" placeholder="e.g. juan@example.com" value={formData.email || ''} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+              </div>
               <div>
                 <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Campaign</label>
                 <select value={formData.campaignID} onChange={e => setFormData({ ...formData, campaignID: parseInt(e.target.value) })}>

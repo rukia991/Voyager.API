@@ -5,6 +5,8 @@
         public int LeadID { get; set; }
         public int? UserID { get; set; }
         public int CampaignID { get; set; }
+        public string? Email { get; set; }
+        public string? FullName { get; set; }
         public string LeadStatus { get; set; } = "New";
         public int LeadScore { get; set; }
         public string? Source { get; set; }

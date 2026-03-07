@@ -17,6 +17,8 @@ export interface CreateEmailTemplateDTO {
   body: string;
 }
 
+export type UpdateEmailTemplateDTO = CreateEmailTemplateDTO;
+
 export interface EmailLogDTO {
   emailLogID: number;
   campaignName?: string;
@@ -42,6 +44,14 @@ const emailService = {
   createTemplate: async (template: CreateEmailTemplateDTO): Promise<EmailTemplateDTO> => {
     const response = await api.post<EmailTemplateDTO>('/emailtemplates', template);
     return response.data;
+  },
+
+  updateTemplate: async (id: number, template: UpdateEmailTemplateDTO): Promise<void> => {
+    await api.put(`/emailtemplates/${id}`, template);
+  },
+
+  deleteTemplate: async (id: number): Promise<void> => {
+    await api.delete(`/emailtemplates/${id}`);
   },
 
   approveTemplate: async (id: number, status: string): Promise<void> => {

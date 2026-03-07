@@ -13,6 +13,12 @@ import Automation from "./pages/automation/Automation";
 import Users from "./pages/users/Users";
 import LandingPage from "./pages/LandingPage";
 import CustomerPortal from "./pages/portal/CustomerPortal";
+import CustomerOffersPage from "./pages/portal/CustomerOffersPage";
+import CustomerMapPage from "./pages/portal/CustomerMapPage";
+import CustomerCampaignsPage from "./pages/portal/CustomerCampaignsPage";
+import CustomerProfilePage from "./pages/portal/CustomerProfilePage";
+import CustomerSubscriptionsPage from "./pages/portal/CustomerSubscriptionsPage";
+import CustomerFeedbackPage from "./pages/portal/CustomerFeedbackPage";
 import Settings from "./pages/settings/Settings";
 import ArchivedItems from "./pages/archived/ArchivedItems";
 
@@ -42,6 +48,12 @@ function App() {
           <Route path="/locations" element={<ProtectedRoute><Locations /></ProtectedRoute>} />
           <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
           <Route path="/portal" element={<ProtectedRoute><CustomerPortal /></ProtectedRoute>} />
+          <Route path="/portal/offers" element={<ProtectedRoute><CustomerOffersPage /></ProtectedRoute>} />
+          <Route path="/portal/map" element={<ProtectedRoute><CustomerMapPage /></ProtectedRoute>} />
+          <Route path="/portal/campaigns" element={<ProtectedRoute><CustomerCampaignsPage /></ProtectedRoute>} />
+          <Route path="/portal/profile" element={<ProtectedRoute><CustomerProfilePage /></ProtectedRoute>} />
+          <Route path="/portal/subscriptions" element={<ProtectedRoute><CustomerSubscriptionsPage /></ProtectedRoute>} />
+          <Route path="/portal/feedback" element={<ProtectedRoute><CustomerFeedbackPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/archived" element={<ProtectedRoute><ArchivedItems /></ProtectedRoute>} />
         </Routes>

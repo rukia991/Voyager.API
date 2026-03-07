@@ -1,0 +1,9 @@
+﻿C:\Users\63910\source\repos\Voyager.API\Program.cs(59,1): error CS1529: A using clause must precede all other elements defined in the namespace except extern alias declarations [C:\Users\63910\source\repos\Voyager.API\Voyager.API.csproj]
+
+Build FAILED.
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:03.57
+
+Workload updates are available. Run `dotnet workload list` for more information.

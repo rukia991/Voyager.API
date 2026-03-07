@@ -21,15 +21,30 @@ namespace Voyager.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaigns([FromQuery] bool showArchived = false)
+        public async Task<ActionResult<IEnumerable<CampaignDTO>>> GetCampaigns(
+            [FromQuery] bool showArchived = false,
+            [FromQuery] string? status = null,
+            [FromQuery] string? search = null)
         {
             var query = _context.Campaigns.AsQueryable();
 
             if (!showArchived)
                 query = query.Where(c => !c.IsArchived);
 
+            if (!string.IsNullOrWhiteSpace(status))
+                query = query.Where(c => c.Status == status);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(c =>
+                    c.CampaignName.Contains(term) ||
+                    (c.Description != null && c.Description.Contains(term)));
+            }
+
             var campaigns = await query
                 .Include(c => c.Location)
+                .Include(c => c.Archiver)
                 .Select(c => new CampaignDTO
                 {
                     CampaignID = c.CampaignID,

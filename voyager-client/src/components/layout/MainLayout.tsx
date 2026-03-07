@@ -13,6 +13,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const displayName = user?.userName || "User";
   const initials = (user?.userName?.[0] ?? "?").toUpperCase();
 
   return (
@@ -34,7 +35,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             </button>
             <span className="top-header-wave">Hi</span>
             <span className="top-header-greeting">{getGreeting()},</span>
-            <span className="top-header-username">{user?.userName}</span>
+            <span className="top-header-username">{displayName}</span>
           </div>
 
           <div className="top-header-right">

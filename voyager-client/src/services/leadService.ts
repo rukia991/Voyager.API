@@ -6,6 +6,8 @@ export interface LeadDTO {
   userName?: string;
   campaignID: number;
   campaignName?: string;
+  email?: string;
+  fullName?: string;
   leadStatus: string;
   leadScore: number;
   source?: string;
@@ -18,6 +20,8 @@ export interface LeadDTO {
 }
 
 export interface CreateLeadDTO {
+  email?: string;
+  fullName?: string;
   campaignID: number;
   leadStatus: string;
   leadScore: number;

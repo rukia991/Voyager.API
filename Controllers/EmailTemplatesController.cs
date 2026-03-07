@@ -63,6 +63,41 @@ namespace Voyager.API.Controllers
             return CreatedAtAction(nameof(GetTemplates), new { id = template.TemplateID }, template);
         }
 
+        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTemplate(int id, [FromBody] UpdateEmailTemplateDTO dto)
+        {
+            var template = await _context.EmailTemplates.FindAsync(id);
+            if (template == null) return NotFound();
+
+            template.TemplateName = dto.TemplateName;
+            template.Subject = dto.Subject;
+            template.Body = dto.Body;
+
+            // Editing a previously approved template requires re-approval.
+            if (template.IsApproved == "Approved")
+                template.IsApproved = "Pending";
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTemplate(int id)
+        {
+            var template = await _context.EmailTemplates.FindAsync(id);
+            if (template == null) return NotFound();
+
+            var isUsed = await _context.EmailLogs.AnyAsync(l => l.TemplateID == id);
+            if (isUsed)
+                return BadRequest("Template cannot be deleted because it has related email logs.");
+
+            _context.EmailTemplates.Remove(template);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
         [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpPatch("{id}/approve")]
         public async Task<IActionResult> ApproveTemplate(int id, [FromBody] UpdateTemplateStatusDTO dto)

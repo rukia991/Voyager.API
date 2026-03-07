@@ -35,7 +35,7 @@ namespace Voyager.API.Controllers
 
             var campaigns = await _context.Campaigns
                 .Include(c => c.Location)
-                .Where(c => c.Status == "Active")
+                .Where(c => c.Status == "Active" && !c.IsArchived)
                 .Select(c => new CampaignOfferDTO
                 {
                     CampaignID = c.CampaignID,

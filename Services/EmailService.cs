@@ -1,0 +1,40 @@
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+
+namespace Voyager.API.Services
+{
+    public class EmailService : IEmailService
+    {
+        private readonly IConfiguration _config;
+        private readonly ILogger<EmailService> _logger;
+
+        public EmailService(IConfiguration config, ILogger<EmailService> logger)
+        {
+            _config = config;
+            _logger = logger;
+        }
+
+        public async Task SendAsync(string to, string toName, string subject, string htmlBody)
+        {
+            var host = _config["Email:SmtpHost"]!;
+            var port = int.Parse(_config["Email:SmtpPort"]!);
+            var sender = _config["Email:Sender"]!;
+            var password = _config["Email:Password"]!;
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Voyager Marketing", sender));
+            message.To.Add(new MailboxAddress(toName, to));
+            message.Subject = subject;
+            message.Body = new TextPart("html") { Text = htmlBody };
+
+            using var client = new SmtpClient();
+            await client.ConnectAsync(host, port, SecureSocketOptions.StartTls);
+            await client.AuthenticateAsync(sender, password);
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
+
+            _logger.LogInformation("Email sent to {To} with subject '{Subject}'", to, subject);
+        }
+    }
+}

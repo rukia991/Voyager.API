@@ -24,6 +24,8 @@ namespace Voyager.API.DTOs
         public string Body { get; set; } = string.Empty;
     }
 
+    public class UpdateEmailTemplateDTO : CreateEmailTemplateDTO { }
+
     public class EmailLogDTO
     {
         public int EmailLogID { get; set; }

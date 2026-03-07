@@ -56,6 +56,8 @@ namespace Voyager.API.Controllers
                 UserName = l.User != null ? l.User.FirstName + " " + l.User.LastName : "Unknown",
                 CampaignID = l.CampaignID,
                 CampaignName = l.Campaign.CampaignName,
+                Email = l.Email,
+                FullName = l.FullName,
                 LeadStatus = l.LeadStatus,
                 LeadScore = l.LeadScore,
                 Source = l.Source,
@@ -89,6 +91,8 @@ namespace Voyager.API.Controllers
                 UserName = lead.User != null ? lead.User.FirstName + " " + lead.User.LastName : "Unknown",
                 CampaignID = lead.CampaignID,
                 CampaignName = lead.Campaign.CampaignName,
+                Email = lead.Email,
+                FullName = lead.FullName,
                 LeadStatus = lead.LeadStatus,
                 LeadScore = lead.LeadScore,
                 Source = lead.Source,
@@ -107,6 +111,8 @@ namespace Voyager.API.Controllers
             var lead = new Lead
             {
                 UserID = dto.UserID,
+                Email = dto.Email,
+                FullName = dto.FullName,
                 CampaignID = dto.CampaignID,
                 LeadStatus = dto.LeadStatus,
                 LeadScore = dto.LeadScore,

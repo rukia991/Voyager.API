@@ -9,6 +9,8 @@ namespace Voyager.API.DTOs
         public string? UserName { get; set; }
         public int CampaignID { get; set; }
         public string? CampaignName { get; set; }
+        public string? Email { get; set; }
+        public string? FullName { get; set; }
         public string LeadStatus { get; set; } = "New";
         public int LeadScore { get; set; }
         public string? Source { get; set; }
@@ -22,8 +24,8 @@ namespace Voyager.API.DTOs
 
     public class CreateLeadDTO
     {
-        public string? Email { get; set; } // Supporting direct email input if not linked to User
-        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? FullName { get; set; }
         [Required]
         public int CampaignID { get; set; }
         public string LeadStatus { get; set; } = "New";
