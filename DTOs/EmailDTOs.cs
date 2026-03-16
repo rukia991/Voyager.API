@@ -46,4 +46,10 @@ namespace Voyager.API.DTOs
         [Required]
         public List<int> LeadIDs { get; set; } = new List<int>();
     }
+
+    public class UpdateEmailLogStatusDTO
+    {
+        [Required]
+        public string Status { get; set; } = string.Empty;
+    }
 }

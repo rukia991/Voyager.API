@@ -12,11 +12,21 @@ export interface LeadDTO {
   leadScore: number;
   source?: string;
   notes?: string;
+  latitude?: number;
+  longitude?: number;
   createdDate: string;
   lastContactDate?: string;
   isArchived: boolean;
   archivedDate?: string;
   archivedByUserName?: string;
+  enrollmentHistory?: LeadEnrollmentDTO[];
+}
+
+export interface LeadEnrollmentDTO {
+  campaignID: number;
+  campaignName: string;
+  enrolledDate: string;
+  status: string;
 }
 
 export interface CreateLeadDTO {

@@ -197,11 +197,17 @@ const Settings: React.FC = () => {
                      
                      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>Verbose Debug Logging</span>
+                            <div>
+                              <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>Verbose Debug Logging</span>
+                              <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>Shows detailed server events for troubleshooting. Turn off in production for performance/privacy.</div>
+                            </div>
                             <div style={{ width: "32px", height: "16px", background: "rgba(255,255,255,0.1)", borderRadius: "99px" }}></div>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>Strict CORS Enforcement</span>
+                            <div>
+                              <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>Strict CORS Enforcement</span>
+                              <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>Only approved frontend origins can call the API. Prevents unauthorized browser requests.</div>
+                            </div>
                             <div style={{ width: "32px", height: "16px", background: "var(--accent)", borderRadius: "99px", display: "flex", justifyContent: "flex-end", padding: "2px" }}>
                                 <div style={{ width: "12px", height: "12px", background: "white", borderRadius: "50%" }}></div>
                             </div>

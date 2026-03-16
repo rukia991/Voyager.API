@@ -48,6 +48,7 @@ function App() {
           <Route path="/locations" element={<ProtectedRoute><Locations /></ProtectedRoute>} />
           <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
           <Route path="/portal" element={<ProtectedRoute><CustomerPortal /></ProtectedRoute>} />
+          <Route path="/portal/home" element={<ProtectedRoute><CustomerOffersPage /></ProtectedRoute>} />
           <Route path="/portal/offers" element={<ProtectedRoute><CustomerOffersPage /></ProtectedRoute>} />
           <Route path="/portal/map" element={<ProtectedRoute><CustomerMapPage /></ProtectedRoute>} />
           <Route path="/portal/campaigns" element={<ProtectedRoute><CustomerCampaignsPage /></ProtectedRoute>} />

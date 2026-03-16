@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAuth } from "../../context/AuthContext";
 
@@ -11,10 +12,34 @@ const getGreeting = () => {
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const displayName = user?.userName || "User";
   const initials = (user?.userName?.[0] ?? "?").toUpperCase();
+  const profilePath = user?.role === "Customer" ? "/portal/profile" : user?.role === "SuperAdmin" ? "/settings" : "/dashboard";
+
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('voyager-theme') || 'dark');
+  const [accent, setAccent] = useState(localStorage.getItem('voyager-accent') || 'purple');
+
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('voyager-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (accent === 'purple') {
+      document.documentElement.removeAttribute('data-accent');
+    } else {
+      document.documentElement.setAttribute('data-accent', accent);
+    }
+    localStorage.setItem('voyager-accent', accent);
+  }, [accent]);
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--bg-main)", position: "relative" }}>
@@ -38,9 +63,53 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             <span className="top-header-username">{displayName}</span>
           </div>
 
-          <div className="top-header-right">
+          <div className="top-header-right" style={{ position: "relative" }}>
+            <button 
+              className="btn btn-sm btn-ghost" 
+              style={{ width: "36px", height: "36px", padding: 0, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}
+              onClick={() => setThemeMenuOpen(!themeMenuOpen)}
+              title="Appearance Settings"
+            >
+              🎨
+            </button>
+            
+            {themeMenuOpen && (
+              <div 
+                className="card anim-scale-in" 
+                style={{ position: "absolute", top: "48px", right: "0", width: "220px", padding: "16px", zIndex: 500 }}
+              >
+                <div style={{ fontSize: "12px", fontWeight: "700", marginBottom: "12px", color: "var(--text-secondary)", textTransform: "uppercase" }}>Appearance</div>
+                
+                <div className="form-group" style={{ marginBottom: "16px" }}>
+                  <label>Mode</label>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button className={`btn btn-sm ${theme === 'dark' ? 'btn-primary' : 'btn-ghost'}`} style={{ flex: 1 }} onClick={() => { setTheme('dark'); setThemeMenuOpen(false); }}>Dark</button>
+                    <button className={`btn btn-sm ${theme === 'light' ? 'btn-primary' : 'btn-ghost'}`} style={{ flex: 1 }} onClick={() => { setTheme('light'); setThemeMenuOpen(false); }}>Light</button>
+                  </div>
+                </div>
+
+                <div className="form-group" style={{ marginBottom: "8px" }}>
+                  <label>Accent Color</label>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => { setAccent('purple'); setThemeMenuOpen(false); }} style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#7c5cbf", border: accent === 'purple' ? "2px solid white" : "none", cursor: "pointer" }} title="Purple" />
+                    <button onClick={() => { setAccent('blue'); setThemeMenuOpen(false); }} style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#3b82f6", border: accent === 'blue' ? "2px solid white" : "none", cursor: "pointer" }} title="Blue" />
+                    <button onClick={() => { setAccent('emerald'); setThemeMenuOpen(false); }} style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#10b981", border: accent === 'emerald' ? "2px solid white" : "none", cursor: "pointer" }} title="Emerald" />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <span className="top-header-role">{user?.role}</span>
-            <div className="top-header-avatar">{initials}</div>
+            <button
+              type="button"
+              onClick={() => navigate(profilePath)}
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "transparent", border: "none", cursor: "pointer" }}
+              aria-label="Open profile"
+              title="Open profile"
+            >
+              <span className="top-header-username" style={{ maxWidth: "120px" }}>{displayName}</span>
+              <div className="top-header-avatar">{initials}</div>
+            </button>
           </div>
         </header>
 

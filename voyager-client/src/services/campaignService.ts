@@ -6,6 +6,7 @@ export interface CampaignDTO {
   description?: string;
   startDate: string;
   endDate: string;
+  imageUrl?: string;
   budget: number;
   targetGoal?: string;
   status: string;
@@ -25,6 +26,7 @@ export interface CreateCampaignDTO {
   description?: string;
   startDate: string;
   endDate: string;
+  imageUrl?: string;
   budget: number;
   targetGoal?: string;
   status: string;

@@ -45,7 +45,7 @@ const automationService = {
   },
 
   getSettings: async (): Promise<IntegrationSettingsDTO> => {
-    const response = await api.get<IntegrationSettingsDTO>('/workflowrules/settings');
+    const response = await api.get<IntegrationSettingsDTO>('/settings');
     return response.data;
   },
 

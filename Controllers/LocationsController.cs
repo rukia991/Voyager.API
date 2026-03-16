@@ -68,6 +68,7 @@ namespace Voyager.API.Controllers
             };
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPost]
         public async Task<ActionResult<LocationDTO>> CreateLocation(CreateLocationDTO dto)
         {
@@ -95,6 +96,7 @@ namespace Voyager.API.Controllers
             });
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateLocation(int id, CampaignLocation location)
         {
@@ -105,6 +107,7 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLocation(int id)
         {
@@ -116,21 +119,32 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPatch("{id}/archive")]
         public async Task<IActionResult> ArchiveLocation(int id)
         {
             var location = await _context.CampaignLocations.FindAsync(id);
             if (location == null) return NotFound();
             
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            int.TryParse(userIdClaim, out var userId);
             location.IsArchived = true;
             location.ArchivedDate = DateTime.UtcNow;
-            location.ArchivedBy = userId;
-            
-            await _context.SaveChangesAsync();
+            location.ArchivedBy = userId > 0 ? userId : null;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                var detail = ex.InnerException?.Message ?? ex.Message;
+                return BadRequest(new { message = $"Failed to archive location. {detail}" });
+            }
             return NoContent();
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPatch("{id}/restore")]
         public async Task<IActionResult> RestoreLocation(int id)
         {

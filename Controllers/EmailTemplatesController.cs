@@ -41,7 +41,7 @@ namespace Voyager.API.Controllers
             return Ok(templates);
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPost]
         public async Task<ActionResult<EmailTemplateDTO>> CreateTemplate([FromBody] CreateEmailTemplateDTO dto)
         {
@@ -63,7 +63,7 @@ namespace Voyager.API.Controllers
             return CreatedAtAction(nameof(GetTemplates), new { id = template.TemplateID }, template);
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTemplate(int id, [FromBody] UpdateEmailTemplateDTO dto)
         {
@@ -82,7 +82,7 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTemplate(int id)
         {

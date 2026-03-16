@@ -23,6 +23,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
   const [isLoading, setIsLoading] = useState(true);
   const [isModalExpanded, setIsModalExpanded] = useState(false);
   const [travelHours, setTravelHours] = useState<number | null>(null);
+  const userLocationRef = useRef<[number, number] | null>(null);
 
   const markerRef = useRef<mapboxgl.Marker | null>(null);
 
@@ -98,6 +99,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
           navigator.geolocation.getCurrentPosition((pos) => {
             if (!map.current) return;
             const userLoc: [number, number] = [pos.coords.longitude, pos.coords.latitude];
+            userLocationRef.current = userLoc;
             new mapboxgl.Marker({ color: '#10b981', scale: 0.8 }).setLngLat(userLoc).addTo(map.current);
             
             try {
@@ -162,7 +164,32 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
       essential: true,
       zoom: map.current.getZoom()
     });
-  }, [lat, lng, token]);
+
+    // Keep route/travel estimate in sync when destination changes.
+    const userLoc = userLocationRef.current;
+    if (showRoute && userLoc) {
+      const routeSource = map.current.getSource('route') as mapboxgl.GeoJSONSource | undefined;
+      const routeData = {
+        type: 'Feature' as const,
+        properties: {},
+        geometry: { type: 'LineString' as const, coordinates: [userLoc, [lng, lat]] }
+      };
+      if (routeSource) {
+        routeSource.setData(routeData);
+      }
+
+      if (showTravelInfo) {
+        const toRad = (d: number) => d * Math.PI / 180;
+        const dLat = toRad(lat - userLoc[1]);
+        const dLon = toRad(lng - userLoc[0]);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+          + Math.cos(toRad(userLoc[1])) * Math.cos(toRad(lat))
+          * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const d = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        setTravelHours(d / 50);
+      }
+    }
+  }, [lat, lng, token, showRoute, showTravelInfo]);
 
   const isCoordsValid = !isNaN(lat) && lat >= -90 && lat <= 90 && !isNaN(lng) && lng >= -180 && lng <= 180;
 

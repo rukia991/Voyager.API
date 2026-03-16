@@ -17,7 +17,7 @@ const Locations: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
-  const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Marketing Manager');
+  const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Admin' || user.role === 'Marketing Manager');
 
 
   useEffect(() => { fetchLocations(); }, []);
@@ -37,8 +37,8 @@ const Locations: React.FC = () => {
       await locationService.archiveLocation(id);
       fetchLocations();
       if (selectedLocation?.locationID === id) setSelectedLocation(null);
-    } catch (e) {
-      alert("Failed to archive location");
+    } catch (e: any) {
+      alert(getApiErrorMessage(e, "Failed to archive location"));
     }
   };
 
@@ -122,31 +122,28 @@ const Locations: React.FC = () => {
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                <div>
-                  <label style={{ fontSize: "11px" }}>Location Name</label>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label>Location Name *</label>
                   <input 
-                    style={{ height: "38px" }}
                     value={formData.locationName} 
                     onChange={e => setFormData({ ...formData, locationName: e.target.value })} 
                     required 
                   />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                  <div>
-                    <label style={{ fontSize: "11px" }}>Latitude</label>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label>Latitude *</label>
                     <input 
-                      style={{ height: "38px" }}
                       type="number" step="any" 
                       value={formData.latitude} 
                       onChange={e => setFormData({ ...formData, latitude: parseFloat(e.target.value) })} 
                       required 
                     />
                   </div>
-                  <div>
-                    <label style={{ fontSize: "11px" }}>Longitude</label>
+                  <div className="form-group">
+                    <label>Longitude *</label>
                     <input 
-                      style={{ height: "38px" }}
                       type="number" step="any" 
                       value={formData.longitude} 
                       onChange={e => setFormData({ ...formData, longitude: parseFloat(e.target.value) })} 
@@ -154,10 +151,10 @@ const Locations: React.FC = () => {
                     />
                   </div>
                 </div>
-                <div style={{ fontSize: "10px", color: "var(--text-muted)", fontStyle: "italic", marginTop: "4px" }}>
+                <div style={{ fontSize: "11px", color: "var(--text-muted)", fontStyle: "italic", marginTop: "-10px", marginBottom: "16px" }}>
                   Tip: You can also click on the map to pin this location.
                 </div>
-                <button type="submit" className="btn btn-primary" style={{ marginTop: "10px", width: "100%" }}>
+                <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>
                   Save Location
                 </button>
               </form>
@@ -229,3 +226,8 @@ const Locations: React.FC = () => {
 };
 
 export default Locations;
+  const getApiErrorMessage = (err: any, fallback: string) => {
+    const responseData = err?.response?.data;
+    if (typeof responseData === 'string' && responseData.trim()) return responseData;
+    return responseData?.message || responseData?.title || err?.message || fallback;
+  };

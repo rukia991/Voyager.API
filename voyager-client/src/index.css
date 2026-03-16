@@ -11,7 +11,7 @@
   --border-accent: rgba(124, 92, 191, 0.35);
   --text-primary: #f0f2f7;
   --text-secondary: #a0aec0;
-  --text-muted: #4b5563;
+  --text-muted: #6b7280;
   --accent: #7c5cbf;
   --accent-soft: rgba(124, 92, 191, 0.15);
   --accent-glow: rgba(124, 92, 191, 0.25);
@@ -25,6 +25,40 @@
   --transition: 150ms ease;
   --sidebar-w: 232px;
   --header-h: 56px;
+}
+
+[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border: #e2e8f0;
+  --border-accent: rgba(124, 92, 191, 0.5);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --accent: #6366f1;
+  --accent-soft: rgba(99, 102, 241, 0.1);
+  --accent-glow: rgba(99, 102, 241, 0.2);
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 55%, #f093fb 100%);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-accent: 0 4px 14px rgba(99, 102, 241, 0.2);
+}
+
+[data-accent="blue"] {
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.15);
+  --accent-glow: rgba(59, 130, 246, 0.25);
+  --gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 55%, #2563eb 100%);
+  --border-accent: rgba(59, 130, 246, 0.35);
+}
+
+[data-accent="emerald"] {
+  --accent: #10b981;
+  --accent-soft: rgba(16, 185, 129, 0.15);
+  --accent-glow: rgba(16, 185, 129, 0.25);
+  --gradient: linear-gradient(135deg, #34d399 0%, #10b981 55%, #059669 100%);
+  --border-accent: rgba(16, 185, 129, 0.35);
 }
 
 /* BASE & RESET */
@@ -58,8 +92,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -533,12 +567,12 @@ body {
 input,
 select,
 textarea {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   padding: 0 16px;
-  height: 44px; /* Standardize with buttons */
+  height: 48px; /* Slightly taller for better touch targets on mobile */
   font-size: 14px;
   font-family: inherit;
   transition: border-color var(--transition), box-shadow var(--transition);
@@ -557,6 +591,7 @@ select:focus,
 textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px var(--accent-glow);
+  background: var(--bg-main);
 }
 
 input::placeholder,
@@ -567,13 +602,35 @@ textarea::placeholder {
 label {
   display: block;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 6px;
+  margin-bottom: 8px; /* Increased padding between label and input */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 24px; /* Increased standard spacing between form groups */
+}
+
+.form-group-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.form-group-inline label {
+  margin-bottom: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .form-group {
+    margin-bottom: 16px;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────

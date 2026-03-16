@@ -23,7 +23,7 @@ const defaultPrefs: CustomerPreferencesDTO = {
 };
 
 const sectionTitle: Record<PortalSection, string> = {
-  offers: 'Personalized Offers',
+  offers: 'Customer Home',
   map: 'Destination Map',
   campaigns: 'My Campaigns',
   profile: 'Profile & Contact Preferences',
@@ -36,11 +36,11 @@ interface CustomerPortalProps {
 }
 
 const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
-  useAuth();
+  const { updateUser } = useAuth();
   const location = useLocation();
 
   const [offers, setOffers] = useState<CampaignOfferDTO[]>([]);
-  const [profile, setProfile] = useState<CustomerProfileDTO>({ firstName: '', lastName: '', email: '', phoneNumber: '' });
+  const [profile, setProfile] = useState<CustomerProfileDTO>({ userName: '', firstName: '', lastName: '', email: '', phoneNumber: '' });
   const [prefs, setPrefs] = useState<CustomerPreferencesDTO>(() => {
     const raw = localStorage.getItem('voyager_customer_prefs');
     if (raw) {
@@ -56,6 +56,11 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
   const [activeFeedback, setActiveFeedback] = useState<CampaignOfferDTO | null>(null);
   const [feedback, setFeedback] = useState<CampaignFeedbackDTO>({ campaignID: 0, rating: 5 });
   const [profileSaved, setProfileSaved] = useState(false);
+  const [subscriptionSaved, setSubscriptionSaved] = useState(false);
+  const [enrollingCampaignId, setEnrollingCampaignId] = useState<number | null>(null);
+  const [selectedMapCampaignId, setSelectedMapCampaignId] = useState<number | null>(null);
+  const [itineraryCampaign, setItineraryCampaign] = useState<CampaignOfferDTO | null>(null);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState<Record<number, boolean>>({});
 
   const section = useMemo<PortalSection>(() => {
     if (forcedSection) return forcedSection;
@@ -80,6 +85,8 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
       ]);
       setOffers(offerData);
       setProfile(profileData);
+      const firstEnrolledWithCoords = offerData.find(o => o.isEnrolled && o.status === 'Active' && o.latitude && o.longitude);
+      setSelectedMapCampaignId(firstEnrolledWithCoords?.campaignID ?? null);
     } catch (_) {
       console.error('Failed to fetch portal data');
     }
@@ -88,11 +95,34 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
   const handleProfileSave = async (e: React.FormEvent) => {
     e.preventDefault();
     await customerPortalService.updateProfile(profile);
+    updateUser({ userName: profile.userName });
     setProfileSaved(true);
     setTimeout(() => setProfileSaved(false), 2500);
   };
 
+  const handleEnroll = async (offer: CampaignOfferDTO) => {
+    if (offer.isEnrolled) return;
+
+    setEnrollingCampaignId(offer.campaignID);
+    try {
+      await customerPortalService.enrollCampaign(offer.campaignID);
+      setOffers(prev => prev.map(o => o.campaignID === offer.campaignID ? { ...o, isEnrolled: true } : o));
+      if (offer.status === 'Active' && offer.latitude && offer.longitude) {
+        setSelectedMapCampaignId(offer.campaignID);
+      }
+    } catch (err: any) {
+      alert(err?.response?.data?.message || 'Failed to enroll in campaign.');
+    } finally {
+      setEnrollingCampaignId(null);
+    }
+  };
+
   const openFeedback = (offer: CampaignOfferDTO) => {
+    if (!offer.isEnrolled) {
+      alert('Please enroll first before giving feedback.');
+      return;
+    }
+
     setActiveFeedback(offer);
     setFeedback({ campaignID: offer.campaignID, rating: 5 });
     setIsFeedbackOpen(true);
@@ -100,26 +130,93 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
 
   const submitFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
-    await customerPortalService.submitFeedback(feedback);
-    setIsFeedbackOpen(false);
+    try {
+      await customerPortalService.submitFeedback(feedback);
+      setIsFeedbackOpen(false);
+      setFeedbackSubmitted(prev => ({ ...prev, [feedback.campaignID]: true }));
+    } catch (err: any) {
+      alert(err?.response?.data?.message || 'Failed to submit feedback.');
+    }
+  };
+
+  const updatePreference = (key: keyof CustomerPreferencesDTO, value: boolean) => {
+    setPrefs(prev => ({ ...prev, [key]: value }));
+    setSubscriptionSaved(true);
+    setTimeout(() => setSubscriptionSaved(false), 1800);
+  };
+
+  const subscribeAll = () => {
+    setPrefs({ subscribeLuxury: true, subscribeCultural: true, subscribeTropical: true, subscribeAdventure: true });
+    setSubscriptionSaved(true);
+    setTimeout(() => setSubscriptionSaved(false), 1800);
+  };
+
+  const unsubscribeAll = () => {
+    setPrefs({ subscribeLuxury: false, subscribeCultural: false, subscribeTropical: false, subscribeAdventure: false });
+    setSubscriptionSaved(true);
+    setTimeout(() => setSubscriptionSaved(false), 1800);
   };
 
   const enrolled = offers.filter(o => o.isEnrolled);
+  const featuredOffers = offers.slice(0, 4);
+  const activeEnrolled = enrolled.filter(o => o.status === 'Active');
+  const mapOffer = activeEnrolled.find(o => o.campaignID === selectedMapCampaignId) ?? activeEnrolled.find(o => o.latitude && o.longitude) ?? null;
 
   return (
     <MainLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-100">Travel Portal</h1>
-        <p className="text-slate-400 mt-1">{sectionTitle[section]}</p>
+        <div className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-1">
+          Customer Portal
+        </div>
+        <h1 className="text-3xl font-bold text-slate-100">
+          {sectionTitle[section]}
+        </h1>
+        <p className="text-slate-400 mt-2 text-sm">
+          Manage your travel campaigns, preferences, and feedback in one
+          consistent space.
+        </p>
       </div>
 
       {(section === 'offers' || section === 'feedback') && (
         <section>
-          <h2 className="text-xl font-bold text-slate-200 mb-4">Exclusive Campaign Offers</h2>
+          <h2 className="text-xl font-bold text-slate-200 mb-4">Available Campaigns</h2>
+
+          {section === 'offers' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+              <div className="glass-card p-4 border-white/5">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Most Picked</div>
+                <div className="text-2xl font-black text-white">{enrolled.length}</div>
+                <div className="text-xs text-slate-400">campaigns you availed</div>
+              </div>
+              <div className="glass-card p-4 border-white/5">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Featured</div>
+                <div className="text-2xl font-black text-white">{featuredOffers.length}</div>
+                <div className="text-xs text-slate-400">top campaigns on this page</div>
+              </div>
+              <div className="glass-card p-4 border-white/5">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Active Now</div>
+                <div className="text-2xl font-black text-white">{offers.filter(o => o.status === 'Active').length}</div>
+                <div className="text-xs text-slate-400">currently running</div>
+              </div>
+              <div className="glass-card p-4 border-white/5">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Feedback Ready</div>
+                <div className="text-2xl font-black text-white">{enrolled.length}</div>
+                <div className="text-xs text-slate-400">enrolled campaigns only</div>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {offers.map(offer => (
               <div key={offer.campaignID} className="glass-card overflow-hidden border-white/5 group hover:border-purple-500/30 transition-all">
                 <div className="h-36 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1a1f37 0%, #0d1124 100%)' }}>
+                  {offer.imageUrl && (
+                    <img
+                      src={offer.imageUrl}
+                      alt={offer.campaignName}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  )}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-5xl mb-2">{offer.locationName?.[0] ?? 'D'}</span>
                     <span className="text-xs text-slate-400">{offer.locationName}</span>
@@ -139,16 +236,24 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
                   </div>
                   <div className="flex gap-2">
                     {!offer.isEnrolled && (
-                      <button className="flex-1 py-2 btn-gradient text-white text-xs font-semibold rounded-lg hover:scale-[1.02] transition-all">
-                        Enroll Now
+                      <button
+                        onClick={() => handleEnroll(offer)}
+                        disabled={enrollingCampaignId === offer.campaignID}
+                        className="flex-1 py-2 btn-gradient text-white text-xs font-semibold rounded-lg hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        {enrollingCampaignId === offer.campaignID ? 'Availing...' : 'Avail Campaign'}
                       </button>
                     )}
-                    <button onClick={() => openFeedback(offer)} className="flex-1 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs font-semibold rounded-lg transition-all">
-                      Feedback
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => openFeedback(offer)}
+                    disabled={!offer.isEnrolled}
+                    className="flex-1 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {feedbackSubmitted[offer.campaignID] ? 'Feedback Sent' : 'Feedback'}
+                  </button>
                 </div>
               </div>
+            </div>
             ))}
             {offers.length === 0 && (
               <div className="md:col-span-2 glass-card p-12 text-center text-slate-500 italic">No active campaign offers.</div>
@@ -160,14 +265,32 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
       {section === 'map' && (
         <section>
           <h2 className="text-xl font-bold text-slate-200 mb-4">Destination Tracker</h2>
+          {activeEnrolled.length > 0 && (
+            <div className="mb-4 flex flex-wrap gap-2">
+              {activeEnrolled.map(c => (
+                <button
+                  key={c.campaignID}
+                  onClick={() => setSelectedMapCampaignId(c.campaignID)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                    c.campaignID === mapOffer?.campaignID
+                      ? 'bg-purple-500/20 border-purple-400/40 text-purple-200'
+                      : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10'
+                  }`}
+                >
+                  {c.campaignName}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="card h-[280px] sm:h-[340px] lg:h-[430px] overflow-hidden">
-            {offers.length > 0 && offers[0].latitude ? (
+            {mapOffer && mapOffer.latitude && mapOffer.longitude ? (
               <MapboxMap
-                lat={Number(offers[0].latitude)}
-                lng={Number(offers[0].longitude)}
-                title={offers[0].locationName || 'Travel Destination'}
-                description={offers[0].description}
+                lat={Number(mapOffer.latitude)}
+                lng={Number(mapOffer.longitude)}
+                title={`${mapOffer.campaignName} - ${mapOffer.locationName || 'Travel Destination'}`}
+                description={mapOffer.description}
                 showRoute={true}
+                showTravelInfo={true}
               />
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-slate-500 italic">
@@ -185,27 +308,45 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
           <div className="glass-card overflow-hidden border-white/5">
             {enrolled.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-left">
+                <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-white/5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      <th className="px-6 py-4">Campaign</th>
-                      <th className="px-6 py-4">Destination</th>
-                      <th className="px-6 py-4 text-right">Ends</th>
+                    <tr className="border-b border-white/5 bg-white/5 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+                      <th className="px-6 py-3">Campaign</th>
+                      <th className="px-6 py-3">Destination</th>
+                      <th className="px-6 py-3">Itinerary</th>
+                      <th className="px-6 py-3 text-right">Ends</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
                     {enrolled.map(o => (
                       <tr key={o.campaignID} className="hover:bg-white/5">
-                        <td className="px-6 py-4 text-slate-200 font-medium">{o.campaignName}</td>
-                        <td className="px-6 py-4 text-sm text-slate-400">{o.locationName ?? '-'}</td>
-                        <td className="px-6 py-4 text-xs text-slate-500 text-right">{new Date(o.endDate).toLocaleDateString()}</td>
+                        <td className="px-6 py-3 text-slate-100 font-semibold">
+                          {o.campaignName}
+                        </td>
+                        <td className="px-6 py-3 text-[11px] text-slate-300">
+                          {o.locationName ?? '-'}
+                        </td>
+                        <td className="px-6 py-3 text-[11px] text-slate-300">
+                          <button
+                            className="btn btn-sm btn-ghost text-xs"
+                            style={{ height: '30px', padding: '0 10px' }}
+                            onClick={() => setItineraryCampaign(o)}
+                          >
+                            View Plan
+                          </button>
+                        </td>
+                        <td className="px-6 py-3 text-[11px] text-slate-500 text-right font-mono">
+                          {new Date(o.endDate).toLocaleDateString()}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             ) : (
-              <div className="py-10 text-center text-slate-500 italic">You have not enrolled in any campaigns yet.</div>
+              <div className="py-10 text-center text-slate-500 italic">
+                You have not availed any campaigns yet.
+              </div>
             )}
           </div>
         </section>
@@ -216,6 +357,10 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
           <div className="glass-card p-6 border-white/5">
             <h2 className="text-lg font-bold text-white mb-5">Profile Settings</h2>
             <form onSubmit={handleProfileSave} className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Username</label>
+                <input className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" value={profile.userName} onChange={e => setProfile(p => ({ ...p, userName: e.target.value }))} required />
+              </div>
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1.5">First Name</label>
                 <input className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" value={profile.firstName} onChange={e => setProfile(p => ({ ...p, firstName: e.target.value }))} />
@@ -244,6 +389,11 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
         <section className="max-w-xl">
           <div className="glass-card p-6 border-white/5">
             <h2 className="text-lg font-bold text-white mb-5">Campaign Subscriptions</h2>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
+              <button className="btn btn-sm btn-ghost" onClick={subscribeAll}>Subscribe All</button>
+              <button className="btn btn-sm btn-ghost" onClick={unsubscribeAll}>Unsubscribe All</button>
+              {subscriptionSaved && <span style={{ fontSize: '11px', color: '#34d399', alignSelf: 'center' }}>Preferences saved</span>}
+            </div>
             <div className="space-y-4">
               {(Object.keys(CATEGORY_ICONS) as (keyof typeof CATEGORY_ICONS)[]).map(cat => {
                 const key = `subscribe${cat}` as keyof typeof prefs;
@@ -257,7 +407,7 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
                       </div>
                     </div>
                     <button
-                      onClick={() => setPrefs(p => ({ ...p, [key]: !p[key] }))}
+                      onClick={() => updatePreference(key, !prefs[key])}
                       className={`w-11 h-6 rounded-full p-0.5 transition-colors relative ${prefs[key] ? 'bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.4)]' : 'bg-slate-700'}`}
                     >
                       <div className={`w-5 h-5 bg-white rounded-full transition-transform ${prefs[key] ? 'translate-x-5' : 'translate-x-0'}`} />
@@ -273,15 +423,21 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
       {section === 'feedback' && (
         <section>
           <h2 className="text-xl font-bold text-slate-200 mb-4">Provide Feedback</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {offers.map(offer => (
-              <div key={offer.campaignID} className="glass-card p-5 border-white/5">
-                <h3 className="text-white font-bold mb-2">{offer.campaignName}</h3>
-                <p className="text-xs text-slate-400 mb-4">{offer.description ?? 'Share your campaign experience.'}</p>
-                <button onClick={() => openFeedback(offer)} className="btn btn-primary">Open Feedback Form</button>
-              </div>
-            ))}
-          </div>
+          {enrolled.length === 0 ? (
+            <div className="glass-card p-8 text-center text-slate-500 italic">
+              Enroll in a campaign first, then feedback options will appear here.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {enrolled.map(offer => (
+                <div key={offer.campaignID} className="glass-card p-5 border-white/5">
+                  <h3 className="text-white font-bold mb-2">{offer.campaignName}</h3>
+                  <p className="text-xs text-slate-400 mb-4">{offer.description ?? 'Share your campaign experience.'}</p>
+                  <button onClick={() => openFeedback(offer)} className="btn btn-primary">Open Feedback Form</button>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       )}
 
@@ -315,6 +471,24 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
                 <button type="submit" className="px-7 py-2.5 btn-gradient text-white rounded-xl text-sm font-semibold shadow-lg shadow-purple-500/20">Submit</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {itineraryCampaign && (
+        <div className="fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="glass-card w-full max-w-lg p-8 border-white/20">
+            <h2 className="text-xl font-bold text-white mb-2">Campaign Itinerary</h2>
+            <p className="text-slate-300 mb-1">{itineraryCampaign.campaignName}</p>
+            <p className="text-xs text-slate-500 mb-5">{new Date(itineraryCampaign.startDate).toLocaleDateString()} - {new Date(itineraryCampaign.endDate).toLocaleDateString()}</p>
+            <div className="space-y-3 text-sm">
+              <div><span className="text-slate-500">Destination: </span><span className="text-slate-200">{itineraryCampaign.locationName ?? 'N/A'}</span></div>
+              <div><span className="text-slate-500">Category Goal: </span><span className="text-slate-200">{itineraryCampaign.targetGoal || 'Standard campaign package'}</span></div>
+              <div><span className="text-slate-500">Plan Notes: </span><span className="text-slate-200">{itineraryCampaign.description || 'Detailed itinerary will be provided by campaign manager.'}</span></div>
+            </div>
+            <div className="flex justify-end mt-6">
+              <button className="btn btn-ghost" onClick={() => setItineraryCampaign(null)}>Close</button>
+            </div>
           </div>
         </div>
       )}

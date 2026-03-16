@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FleetHive · Unified Access</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1021;
+      --panel:#11182f;
+      --panel-2:#0f1426;
+      --accent:#37c2ff;
+      --accent-2:#5be3b6;
+      --muted:#a9b4d0;
+      --text:#eaf0ff;
+      --border:rgba(255,255,255,0.08);
+      --radius:18px;
+      --glow:0 20px 80px rgba(55,194,255,0.14);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:"Space Grotesk","Manrope","Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(91,227,182,0.08), transparent 35%),
+        radial-gradient(circle at 80% 10%, rgba(55,194,255,0.12), transparent 42%),
+        radial-gradient(circle at 62% 72%, rgba(245,183,0,0.08), transparent 36%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    header{
+      padding:30px clamp(20px,4vw,52px) 18px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      gap:18px;
+      position:sticky;top:0;z-index:10;
+      background:linear-gradient(90deg,rgba(11,16,33,0.94),rgba(11,16,33,0.82));
+      backdrop-filter:blur(10px);
+    }
+    .logo-wrap{width:74px;height:74px;border-radius:18px;border:1px solid var(--border);display:grid;place-items:center;background:radial-gradient(circle,rgba(55,194,255,0.16),rgba(11,16,33,0.9));box-shadow:var(--glow);}
+    .logo{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(55,194,255,0.28));}
+    h1{margin:0;font-size:clamp(30px,3vw,36px);letter-spacing:-0.02em;}
+    .subtitle{color:var(--muted);max-width:940px;margin-top:6px;line-height:1.6;}
+    .tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+    .tag{padding:8px 12px;border-radius:999px;background:rgba(55,194,255,0.1);border:1px solid rgba(55,194,255,0.22);color:#d7f4ff;font-size:12px;letter-spacing:0.01em;}
+    main{padding: clamp(20px,4vw,52px);}
+    .hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;align-items:center;}
+    .panel{
+      background:linear-gradient(150deg,var(--panel),var(--panel-2));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:var(--glow);
+    }
+    .panel:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 24%, rgba(55,194,255,0.08), transparent 45%);pointer-events:none;}
+    .panel h3{margin:0 0 6px;font-size:18px;}
+    .muted{color:var(--muted);font-size:14px;line-height:1.5;margin:0;}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+    .btn{border:none;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;color:#0b1021;background:linear-gradient(120deg,#37c2ff,#5be3b6);box-shadow:0 12px 36px rgba(55,194,255,0.22);}
+    .btn.alt{background:transparent;color:var(--text);border:1px solid var(--border);box-shadow:none;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px;}
+    ul.list{margin:0;padding:0 0 0 16px;color:var(--muted);line-height:1.5;font-size:14px;}
+    table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;}
+    th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;}
+    th{color:#f7fbff;font-weight:700;font-size:13px;background:rgba(255,255,255,0.04);}
+    td:first-child{font-weight:600;}
+    td.price-cell{color:var(--accent-2);font-weight:700;}
+    footer{padding:22px clamp(20px,4vw,52px) 34px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);background:#0b1021;}
+    @media(max-width:640px){header{flex-direction:column;align-items:flex-start;}.logo-wrap{width:66px;height:66px;}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-wrap">
+      <img src="assets/fleethive-logo.png" alt="FleetHive logo" class="logo"
+           onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2272%22 height=%2272%22 viewBox=%220 0 120 120%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%25%22 y1=%22100%25%22 x2=%22100%25%22 y2=%220%25%22%3E%3Cstop offset=%220%25%22 stop-color=%2337c2ff%22/%3E%3Cstop offset=%22100%25%22 stop-color=%235be3b6%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx=%2216%22 width=%22120%22 height=%22120%22 fill=%22%230b1021%22/%3E%3Cpath d=%22M18 60 60 24l42 36-42 36-42-36Z%22 fill=%22none%22 stroke=%22url(%23g)%22 stroke-width=%224%22/%3E%3Crect x=%2232%22 y=%2254%22 width=%2224%22 height=%2218%22 rx=%223%22 fill=%22url(%23g)%22/%3E%3Crect x=%2264%22 y=%2246%22 width=%2224%22 height=%2226%22 rx=%223%22 fill=%22url(%23g)%22 opacity=%22.75%22/%3E%3Cpath d=%22M24 60h72%22 stroke=%22url(%23g)%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%22.8%22/%3E%3Ccircle cx=%2236%22 cy=%2278%22 r=%223.5%22 fill=%22%23f5b700%22/%3E%3Ccircle cx=%2284%22 cy=%2278%22 r=%223.5%22 fill=%22%23f5b700%22/%3E%3Ctext x=%2260%22 y=%22104%22 fill=%22%23a9b4d0%22 font-family=%22Space Grotesk, sans-serif%22 font-size=%2210%22 text-anchor=%22middle%22%3EFleetHive%3C/text%3E%3C/svg%3E';">
+    </div>
+    <div>
+      <h1>FleetHive</h1>
+      <div class="subtitle">
+        FleetHive: A Dispatch Lifecycle Management System for container trucking operations in Davao City using Hungarian Algorithm-based driver-job assignment, CNN-NLP document intelligence, and multi-model predictive analytics.
+      </div>
+      <div class="tags">
+        <span class="tag">Hungarian Matching</span>
+        <span class="tag">Document AI</span>
+        <span class="tag">Predictive ETA</span>
+        <span class="tag">Customer Visibility</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="panel">
+        <h3>Dispatcher Console</h3>
+        <p class="muted">Command center for Core Dispatch, SLA timers, and rapid rerouting.</p>
+        <div class="cta-row">
+          <a class="btn" href="driver-home.html">Open Driver Ops</a>
+          <a class="btn alt" href="client-dashboard.html">Open Customer Portal</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Highlights</h3>
+        <ul class="list">
+          <li>Weighted Hungarian assignment with proximity, SLA, and driver hours.</li>
+          <li>CNN + NLP to auto-read PODs, gate passes, and invoices.</li>
+          <li>Predictive analytics: ETA, demand, and fleet sizing simulations.</li>
+          <li>Customer-facing portal for live tracking and billing artifacts.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section style="margin-top:28px;">
+      <h3 style="margin:0 0 8px;">Modules & Estimated Monthly Add-Ons</h3>
+      <div class="panel" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Module</th><th>Est. Monthly Add-On</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Core Dispatch</td><td class="price-cell">&#8369;2,000&ndash;&#8369;3,500 / mo</td></tr>
+            <tr><td>Document Intelligence</td><td class="price-cell">&#8369;1,500&ndash;&#8369;2,500 / mo</td></tr>
+            <tr><td>Customer Portal</td><td class="price-cell">&#8369;1,000&ndash;&#8369;1,800 / mo</td></tr>
+            <tr><td>Predictive Analytics</td><td class="price-cell">&#8369;2,000&ndash;&#8369;3,000 / mo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section style="margin-top:22px;">
+      <h3 style="margin:0 0 8px;">Quick Links</h3>
+      <div class="grid">
+        <div class="panel">
+          <h3>Driver View</h3>
+          <p class="muted">Route cards, load status, and assignment confirmations.</p>
+          <div class="cta-row"><a class="btn" href="driver-home.html">Launch Driver</a></div>
+        </div>
+        <div class="panel">
+          <h3>Customer Portal</h3>
+          <p class="muted">Tracking, POD vault, and billing previews for shippers and consignees.</p>
+          <div class="cta-row"><a class="btn" href="client-dashboard.html">Launch Portal</a></div>
+        </div>
+        <div class="panel">
+          <h3>Analytics</h3>
+          <p class="muted">Demand forecast, ETA risk, and what-if fleet sizing.</p>
+          <div class="cta-row"><button class="btn alt">Coming Soon</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    FleetHive — Dispatch Lifecycle Management System for Davao City container trucking. Logo is loaded from <code>nvg-dashboard/assets/fleethive-logo.png</code>.
+  </footer>
+</body>
+</html>

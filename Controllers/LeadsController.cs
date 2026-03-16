@@ -30,7 +30,12 @@ namespace Voyager.API.Controllers
             var query = _context.Leads
                 .Include(l => l.User)
                 .Include(l => l.Campaign)
+                .ThenInclude(c => c.Location)
                 .AsQueryable();
+
+            // Filter out administrative roles from Lead Management
+            string[] adminRoles = { "SuperAdmin", "Admin", "Marketing Manager", "Marketing Staff" };
+            query = query.Where(l => l.User == null || !adminRoles.Contains(l.User.Role));
 
             if (!showArchived)
                 query = query.Where(l => !l.IsArchived);
@@ -49,26 +54,65 @@ namespace Voyager.API.Controllers
                     l.Notes != null && l.Notes.Contains(search));
             }
 
-            var leads = await query.Select(l => new LeadDTO
-            {
-                LeadID = l.LeadID,
-                UserID = l.UserID,
-                UserName = l.User != null ? l.User.FirstName + " " + l.User.LastName : "Unknown",
-                CampaignID = l.CampaignID,
-                CampaignName = l.Campaign.CampaignName,
-                Email = l.Email,
-                FullName = l.FullName,
-                LeadStatus = l.LeadStatus,
-                LeadScore = l.LeadScore,
-                Source = l.Source,
-                Notes = l.Notes,
-                CreatedDate = l.CreatedDate,
-                LastContactDate = l.LastContactDate,
-                IsArchived = l.IsArchived,
-                ArchivedDate = l.ArchivedDate,
-                ArchivedByUserName = l.Archiver != null ? l.Archiver.FirstName + " " + l.Archiver.LastName : null
-            })
-            .ToListAsync();
+            var leadsRaw = await query
+                .Include(l => l.CampaignLeads)
+                .ThenInclude(cl => cl.Campaign)
+                .ToListAsync();
+
+            // Group by Email to handle duplicates and consolidate history
+            var leads = leadsRaw
+                .GroupBy(l => l.Email?.ToLower() ?? $"id-{l.LeadID}")
+                .Select(g => {
+                    var primaryLead = g.OrderByDescending(l => l.UserID != null).ThenBy(l => l.LeadID).First();
+                    
+                    // Aggregate ALL history from ALL lead records with this email
+                    var consolidatedHistory = g.SelectMany(l => l.CampaignLeads)
+                        .Select(cl => new LeadEnrollmentDTO
+                        {
+                            CampaignID = cl.CampaignID,
+                            CampaignName = cl.Campaign?.CampaignName ?? "Unknown",
+                            EnrolledDate = cl.AssignedDate,
+                            Status = cl.Campaign?.Status ?? "Unknown"
+                        })
+                        .OrderByDescending(h => h.EnrolledDate)
+                        .ToList();
+
+                    // If a lead has a legacy CampaignID but no CampaignLeads, add it to history
+                    foreach (var l in g) {
+                        if (l.CampaignID != 0 && !consolidatedHistory.Any(h => h.CampaignID == l.CampaignID)) {
+                             consolidatedHistory.Add(new LeadEnrollmentDTO {
+                                 CampaignID = l.CampaignID,
+                                 CampaignName = l.Campaign?.CampaignName ?? "Initial Campaign",
+                                 EnrolledDate = l.CreatedDate,
+                                 Status = l.Campaign?.Status ?? "Active"
+                             });
+                        }
+                    }
+
+                    return new LeadDTO
+                    {
+                        LeadID = primaryLead.LeadID,
+                        UserID = primaryLead.UserID,
+                        UserName = primaryLead.User != null ? primaryLead.User.FirstName + " " + primaryLead.User.LastName : "Customer",
+                        CampaignID = primaryLead.CampaignID,
+                        CampaignName = primaryLead.Campaign?.CampaignName ?? "N/A",
+                        Email = primaryLead.Email,
+                        FullName = primaryLead.FullName,
+                        LeadStatus = primaryLead.LeadStatus,
+                        LeadScore = primaryLead.LeadScore,
+                        Source = primaryLead.Source,
+                        Notes = primaryLead.Notes,
+                        Latitude = primaryLead.Campaign?.Location?.Latitude,
+                        Longitude = primaryLead.Campaign?.Location?.Longitude,
+                        CreatedDate = primaryLead.CreatedDate,
+                        LastContactDate = primaryLead.LastContactDate,
+                        IsArchived = primaryLead.IsArchived,
+                        ArchivedDate = primaryLead.ArchivedDate,
+                        ArchivedByUserName = primaryLead.Archiver != null ? primaryLead.Archiver.FirstName + " " + primaryLead.Archiver.LastName : null,
+                        EnrollmentHistory = consolidatedHistory.GroupBy(h => h.CampaignID).Select(h => h.First()).ToList()
+                    };
+                })
+                .ToList();
 
             return Ok(leads);
         }
@@ -79,35 +123,64 @@ namespace Voyager.API.Controllers
             var lead = await _context.Leads
                 .Include(l => l.User)
                 .Include(l => l.Campaign)
+                .ThenInclude(c => c.Location)
+                .Include(l => l.CampaignLeads)
+                .ThenInclude(cl => cl.Campaign)
                 .FirstOrDefaultAsync(l => l.LeadID == id);
 
-            if (lead == null)
-                return NotFound();
+            if (lead == null) return NotFound();
 
-            return new LeadDTO
+            // Fetch all duplicates to aggregate history
+            var allEnrollments = await _context.CampaignLeads
+                .Include(cl => cl.Campaign)
+                .Where(cl => cl.Lead.Email == lead.Email)
+                .Select(cl => new LeadEnrollmentDTO
+                {
+                    CampaignID = cl.CampaignID,
+                    CampaignName = cl.Campaign.CampaignName,
+                    EnrolledDate = cl.AssignedDate,
+                    Status = cl.Campaign.Status
+                })
+                .ToListAsync();
+
+            var dto = new LeadDTO
             {
                 LeadID = lead.LeadID,
                 UserID = lead.UserID,
-                UserName = lead.User != null ? lead.User.FirstName + " " + lead.User.LastName : "Unknown",
+                UserName = lead.User != null ? lead.User.FirstName + " " + lead.User.LastName : "Customer",
                 CampaignID = lead.CampaignID,
-                CampaignName = lead.Campaign.CampaignName,
+                CampaignName = lead.Campaign?.CampaignName ?? "N/A",
                 Email = lead.Email,
                 FullName = lead.FullName,
                 LeadStatus = lead.LeadStatus,
                 LeadScore = lead.LeadScore,
                 Source = lead.Source,
                 Notes = lead.Notes,
+                Latitude = lead.Campaign?.Location?.Latitude,
+                Longitude = lead.Campaign?.Location?.Longitude,
                 CreatedDate = lead.CreatedDate,
                 LastContactDate = lead.LastContactDate,
                 IsArchived = lead.IsArchived,
                 ArchivedDate = lead.ArchivedDate,
-                ArchivedByUserName = lead.Archiver != null ? lead.Archiver.FirstName + " " + lead.Archiver.LastName : null
+                ArchivedByUserName = lead.Archiver != null ? lead.Archiver.FirstName + " " + lead.Archiver.LastName : null,
+                EnrollmentHistory = allEnrollments.GroupBy(h => h.CampaignID).Select(g => g.First()).OrderByDescending(h => h.EnrolledDate).ToList()
             };
+
+            return Ok(dto);
         }
 
         [HttpPost]
         public async Task<ActionResult<LeadDTO>> CreateLead([FromBody] CreateLeadDTO dto)
         {
+            var existingLead = await _context.Leads
+                .FirstOrDefaultAsync(l => !string.IsNullOrEmpty(l.Email) && l.Email == dto.Email);
+
+            if (existingLead != null)
+            {
+                // Reuse existing lead
+                return CreatedAtAction(nameof(GetLead), new { id = existingLead.LeadID }, existingLead);
+            }
+
             var lead = new Lead
             {
                 UserID = dto.UserID,
@@ -146,7 +219,7 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLead(int id)
         {
@@ -155,12 +228,19 @@ namespace Voyager.API.Controllers
             if (lead == null)
                 return NotFound();
 
+            if (!lead.IsArchived)
+                return BadRequest(new { message = "Lead must be archived before deletion." });
+
+            if (!lead.ArchivedDate.HasValue || lead.ArchivedDate.Value > DateTime.UtcNow.AddDays(-30))
+                return BadRequest(new { message = "Lead can only be permanently deleted after 30 days in archive." });
+
             _context.Leads.Remove(lead);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPatch("{id}/archive")]
         public async Task<IActionResult> ArchiveLead(int id)
         {
@@ -175,6 +255,7 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPatch("{id}/restore")]
         public async Task<IActionResult> RestoreLead(int id)
         {

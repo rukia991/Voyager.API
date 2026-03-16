@@ -15,7 +15,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const isCustomer = user?.role === 'Customer';
 
   const nav = [
-    { icon: 'D', label: 'Dashboard', path: '/dashboard' },
+    !isCustomer && { icon: 'D', label: 'Dashboard', path: '/dashboard' },
+    isCustomer && { icon: 'H', label: 'Home', path: '/portal/home' },
     !isCustomer && { icon: 'C', label: 'Campaigns', path: '/campaigns' },
     !isCustomer && { icon: 'L', label: 'Leads', path: '/leads' },
     !isCustomer && { icon: 'E', label: 'Email Marketing', path: '/email' },
@@ -25,7 +26,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     !isCustomer && { icon: 'W', label: 'Automation', path: '/automation' },
     isAdmin && { icon: 'U', label: 'Users', path: '/users' },
     user?.role === 'SuperAdmin' && { icon: 'S', label: 'Settings', path: '/settings' },
-    isCustomer && { icon: 'T', label: 'Travel Offers', path: '/portal/offers' },
     isCustomer && { icon: 'M', label: 'Destination Map', path: '/portal/map' },
     isCustomer && { icon: 'Y', label: 'My Campaigns', path: '/portal/campaigns' },
     isCustomer && { icon: 'P', label: 'Profile', path: '/portal/profile' },

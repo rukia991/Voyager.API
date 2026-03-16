@@ -7,7 +7,7 @@ using Voyager.API.Models;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager,Marketing Staff")]
     [ApiController]
     [Route("api/[controller]")]
     public class WorkflowRulesController : ControllerBase
@@ -38,7 +38,7 @@ namespace Voyager.API.Controllers
                 .ToListAsync();
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPost]
         public async Task<ActionResult<WorkflowRuleDTO>> CreateRule([FromBody] CreateWorkflowRuleDTO dto)
         {
@@ -58,7 +58,7 @@ namespace Voyager.API.Controllers
             return CreatedAtAction(nameof(GetRules), new { id = rule.RuleID }, rule);
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPatch("{id}/toggle")]
         public async Task<IActionResult> ToggleRule(int id)
         {
@@ -70,7 +70,7 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "SuperAdmin,Marketing Manager")]
+        [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRule(int id)
         {
@@ -82,28 +82,6 @@ namespace Voyager.API.Controllers
             return NoContent();
         }
 
-        [Authorize]
-        [HttpGet("settings")]
-        public ActionResult<SystemSettingsDTO> GetSystemSettings()
-        {
-            // Resolve Mapbox token from common configuration keys (appsettings, user-secrets, env vars).
-            string? mapboxToken = _config["Mapbox:AccessToken"];
-            if (string.IsNullOrWhiteSpace(mapboxToken))
-            {
-                mapboxToken = _config["MapboxToken"];
-            }
-            if (string.IsNullOrWhiteSpace(mapboxToken))
-            {
-                mapboxToken = _config["MAPBOX_ACCESS_TOKEN"];
-            }
 
-            return Ok(new SystemSettingsDTO
-            {
-                MapboxAccessToken = mapboxToken?.Trim() ?? string.Empty,
-                EmailSmtpHost = _config["Email:SmtpHost"] ?? "smtp.example.com",
-                EmailSmtpPort = int.Parse(_config["Email:SmtpPort"] ?? "587"),
-                EmailSender = _config["Email:Sender"] ?? "noreply@voyager.com"
-            });
-        }
     }
 }

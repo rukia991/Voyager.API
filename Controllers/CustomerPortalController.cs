@@ -43,6 +43,7 @@ namespace Voyager.API.Controllers
                     Description = c.Description,
                     TargetGoal = c.TargetGoal,
                     Status = c.Status,
+                    ImageUrl = c.ImageUrl,
                     LocationName = c.Location != null ? c.Location.LocationName : null,
                     Country = c.Location != null ? c.Location.Country : null,
                     Latitude = c.Location != null ? c.Location.Latitude : null,
@@ -66,11 +67,81 @@ namespace Voyager.API.Controllers
 
             return Ok(new CustomerProfileDTO
             {
+                UserName = user.UserName ?? string.Empty,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email ?? string.Empty,
                 PhoneNumber = user.PhoneNumber ?? string.Empty
             });
+        }
+
+        [HttpPost("campaigns/{campaignId:int}/enroll")]
+        public async Task<IActionResult> EnrollCampaign(int campaignId)
+        {
+            var userIdStr = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userIdStr)) return Unauthorized();
+            
+            var userId = int.Parse(userIdStr);
+            var currentUser = await _userManager.FindByIdAsync(userIdStr);
+
+            var campaign = await _context.Campaigns
+                .FirstOrDefaultAsync(c => c.CampaignID == campaignId && !c.IsArchived && c.Status == "Active");
+            if (campaign == null) return NotFound(new { message = "Campaign not found." });
+
+            var lead = await _context.Leads
+                .FirstOrDefaultAsync(l => l.UserID == userId || (currentUser != null && l.Email == currentUser.Email));
+
+            if (lead == null)
+            {
+                lead = new Lead
+                {
+                    UserID = userId,
+                    Email = currentUser?.Email,
+                    FullName = currentUser != null ? $"{currentUser.FirstName} {currentUser.LastName}".Trim() : null,
+                    LeadStatus = "New",
+                    LeadScore = 0,
+                    Source = "Portal Enrollment",
+                    Notes = "Customer enrolled via portal.",
+                    CreatedDate = DateTime.UtcNow
+                };
+                _context.Leads.Add(lead);
+                await _context.SaveChangesAsync();
+            }
+            else if (lead.UserID == null && userId != 0)
+            {
+                // Link existing guest lead to this user account
+                lead.UserID = userId;
+                await _context.SaveChangesAsync();
+            }
+
+            var alreadyEnrolled = await _context.CampaignLeads
+                .AnyAsync(cl => cl.CampaignID == campaignId && cl.LeadID == lead.LeadID);
+
+            if (alreadyEnrolled)
+                return Ok(new { message = "Campaign already availed." });
+
+            var newStart = campaign.StartDate;
+            var newEnd = campaign.EndDate;
+
+            var hasOverlappingCampaign = await _context.CampaignLeads
+                .Where(cl => cl.Lead.UserID == userId && !cl.Campaign.IsArchived && cl.CampaignID != campaignId)
+                .AnyAsync(cl => newStart <= cl.Campaign.EndDate && newEnd >= cl.Campaign.StartDate);
+
+            if (hasOverlappingCampaign)
+                return BadRequest(new { message = "You already availed another campaign with overlapping travel dates. Please choose different dates." });
+
+            if (!alreadyEnrolled)
+            {
+                _context.CampaignLeads.Add(new CampaignLead
+                {
+                    CampaignID = campaignId,
+                    LeadID = lead.LeadID,
+                    AssignedDate = DateTime.UtcNow
+                });
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(new { message = "Campaign enrolled successfully." });
         }
 
         // PATCH profile
@@ -81,6 +152,19 @@ namespace Voyager.API.Controllers
             var user = await _userManager.FindByIdAsync(userId!);
             if (user == null) return NotFound();
 
+            if (string.IsNullOrWhiteSpace(dto.UserName))
+                return BadRequest(new { message = "Username is required." });
+
+            var trimmedUserName = dto.UserName.Trim();
+            var sameUserName = string.Equals(user.UserName, trimmedUserName, StringComparison.OrdinalIgnoreCase);
+            if (!sameUserName)
+            {
+                var exists = await _userManager.Users.AnyAsync(u => u.UserName == trimmedUserName && u.Id != user.Id);
+                if (exists)
+                    return BadRequest(new { message = "Username is already in use." });
+            }
+
+            user.UserName = trimmedUserName;
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
             user.PhoneNumber = dto.PhoneNumber;
@@ -92,8 +176,13 @@ namespace Voyager.API.Controllers
         [HttpPost("feedback")]
         public async Task<IActionResult> SubmitFeedback([FromBody] CampaignFeedbackDTO dto)
         {
-            // Feedback is stored as an audit log entry for simplicity
             var userId = int.Parse(_userManager.GetUserId(User)!);
+            var isEnrolled = await _context.CampaignLeads
+                .AnyAsync(cl => cl.CampaignID == dto.CampaignID && cl.Lead.UserID == userId);
+
+            if (!isEnrolled)
+                return BadRequest(new { message = "You must enroll in this campaign before sending feedback." });
+
             _context.AuditLogs.Add(new AuditLog
             {
                 UserId = userId,

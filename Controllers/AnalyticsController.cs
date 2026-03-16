@@ -6,7 +6,7 @@ using Voyager.API.DTOs;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
     [ApiController]
     [Route("api/[controller]")]
     public class AnalyticsController : ControllerBase
@@ -25,27 +25,50 @@ namespace Voyager.API.Controllers
             var emailsSent = await _context.EmailLogs.CountAsync();
             var conversions = await _context.Leads.CountAsync(l => l.LeadStatus == "Converted");
             
-            // Mocking some time-series data for the charts
+            // Calculate Performance Over Time (Last 7 Days)
             var performance = new List<DailyMetricDTO>();
+            var startDate = DateTime.UtcNow.Date.AddDays(-6);
+
+            var dailyLeads = await _context.Leads
+                .Where(l => l.CreatedDate >= startDate)
+                .GroupBy(l => l.CreatedDate.Date)
+                .Select(g => new { Date = g.Key, Count = g.Count() })
+                .ToListAsync();
+
+            var dailyEmails = await _context.EmailLogs
+                .Where(e => e.SentDate >= startDate)
+                .GroupBy(e => e.SentDate.Date)
+                .Select(g => new { Date = g.Key, Count = g.Count() })
+                .ToListAsync();
+
+            var dailyConversions = await _context.Leads
+                .Where(l => l.LeadStatus == "Converted" && l.CreatedDate >= startDate)
+                .GroupBy(l => l.CreatedDate.Date)
+                .Select(g => new { Date = g.Key, Count = g.Count() })
+                .ToListAsync();
+
             for (int i = 6; i >= 0; i--)
             {
-                var date = DateTime.UtcNow.AddDays(-i).ToString("MMM dd");
+                var targetDate = DateTime.UtcNow.Date.AddDays(-i);
                 performance.Add(new DailyMetricDTO
                 {
-                    Date = date,
-                    Leads = Random.Shared.Next(10, 50),
-                    EmailsSent = Random.Shared.Next(50, 200),
-                    Conversions = Random.Shared.Next(1, 10)
+                    Date = targetDate.ToString("MMM dd"),
+                    Leads = dailyLeads.FirstOrDefault(d => d.Date == targetDate)?.Count ?? 0,
+                    EmailsSent = dailyEmails.FirstOrDefault(d => d.Date == targetDate)?.Count ?? 0,
+                    Conversions = dailyConversions.FirstOrDefault(d => d.Date == targetDate)?.Count ?? 0
                 });
             }
 
+            // Real-time ROI calculation from Analytics history if available
+            var latestAnalytics = await _context.Analytics
+                .OrderByDescending(a => a.RecordDate)
+                .FirstOrDefaultAsync();
+
+            decimal totalRoi = latestAnalytics?.CalculatedROI ?? 0;
+
             var statusDistribution = await _context.Leads
                 .GroupBy(l => l.LeadStatus)
-                .Select(g => new StatusDistributionDTO
-                {
-                    Status = g.Key,
-                    Count = g.Count()
-                })
+                .Select(g => new { Status = g.Key, Count = g.Count() })
                 .ToListAsync();
 
             return Ok(new AnalyticsSummaryDTO
@@ -53,9 +76,13 @@ namespace Voyager.API.Controllers
                 TotalLeads = totalLeads,
                 EmailsSent = emailsSent,
                 Conversions = conversions,
-                TotalROI = 24.5m, // Mock ROI
+                TotalROI = totalRoi,
                 PerformanceOverTime = performance,
-                LeadStatusDistribution = statusDistribution
+                LeadStatusDistribution = statusDistribution.Select(s => new StatusDistributionDTO 
+                { 
+                    Status = s.Status ?? "Unknown", 
+                    Count = s.Count 
+                }).ToList()
             });
         }
 

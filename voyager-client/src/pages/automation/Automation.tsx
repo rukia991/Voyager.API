@@ -4,12 +4,37 @@ import { useAuth } from '../../context/AuthContext';
 import automationService from '../../services/automationService';
 import type { WorkflowRuleDTO, CreateWorkflowRuleDTO, IntegrationSettingsDTO } from '../../services/automationService';
 
+const WORKFLOW_PRESETS: CreateWorkflowRuleDTO[] = [
+  {
+    ruleName: 'Assign High Score Leads',
+    triggerEvent: 'New Lead',
+    condition: '{"lead_score_gte": 70}',
+    action: 'Assign Lead',
+    isActive: true
+  },
+  {
+    ruleName: 'Email Open Score Boost',
+    triggerEvent: 'Email Opened',
+    condition: '{"campaign_eq":"Summer Promo","score_delta":10}',
+    action: 'Update Score',
+    isActive: true
+  },
+  {
+    ruleName: '7-Day Re-engagement',
+    triggerEvent: 'Lead Status Changed',
+    condition: '{"last_contact_days_gte":7,"status_neq":"Converted"}',
+    action: 'Send Email',
+    isActive: true
+  }
+];
+
 const Automation: React.FC = () => {
   const { user } = useAuth();
   const [rules, setRules] = useState<WorkflowRuleDTO[]>([]);
   const [settings, setSettings] = useState<IntegrationSettingsDTO | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAddingPresets, setIsAddingPresets] = useState(false);
   const [formData, setFormData] = useState<CreateWorkflowRuleDTO>({ ruleName: '', triggerEvent: 'New Lead', condition: '', action: 'Assign Lead', isActive: true });
 
   const isSuperAdmin = user?.role === 'SuperAdmin';
@@ -39,6 +64,27 @@ const Automation: React.FC = () => {
     try { await automationService.deleteRule(id); fetchData(); } catch (_) { console.error("Failed to delete rule"); }
   };
 
+  const createPresetRule = async (preset: CreateWorkflowRuleDTO) => {
+    const exists = rules.some(r => r.ruleName.trim().toLowerCase() === preset.ruleName.trim().toLowerCase());
+    if (exists) return;
+    await automationService.createRule(preset);
+  };
+
+  const handleAddAllPresets = async () => {
+    setIsAddingPresets(true);
+    try {
+      for (const preset of WORKFLOW_PRESETS) {
+        await createPresetRule(preset);
+      }
+      await fetchData();
+    } catch (e) {
+      console.error('Failed to add preset workflows', e);
+      alert('Failed to add one or more preset workflows.');
+    } finally {
+      setIsAddingPresets(false);
+    }
+  };
+
   return (
     <MainLayout>
       <div className="page-header anim-slide-up">
@@ -49,6 +95,60 @@ const Automation: React.FC = () => {
         </div>
         {isManager && <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>+ New Rule</button>}
       </div>
+
+      <div className="card anim-slide-up delay-1" style={{ padding: "16px 18px", marginBottom: "16px" }}>
+        <div style={{ fontSize: "12px", fontWeight: "800", color: "white", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          How To Use Automation
+        </div>
+        <div style={{ fontSize: "12px", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+          1) Create a rule with a trigger (ex: New Lead). 2) Add condition logic (ex: score_gt 50). 3) Pick an action (ex: Send Email). 4) Toggle the rule on.
+          Use rules to reduce manual work for lead routing, follow-ups, and score updates.
+        </div>
+        {isManager && (
+          <div style={{ marginTop: "12px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            <button className="btn btn-sm btn-primary" onClick={handleAddAllPresets} disabled={isAddingPresets}>
+              {isAddingPresets ? 'Adding presets...' : 'Add All Recommended Workflows'}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {isManager && (
+        <div className="card anim-slide-up delay-1" style={{ padding: "16px 18px", marginBottom: "16px" }}>
+          <div style={{ fontSize: "12px", fontWeight: "800", color: "white", marginBottom: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+            Recommended Workflow Presets
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "10px" }}>
+            {WORKFLOW_PRESETS.map((preset) => {
+              const exists = rules.some(r => r.ruleName.trim().toLowerCase() === preset.ruleName.trim().toLowerCase());
+              return (
+                <div key={preset.ruleName} className="glass-card" style={{ padding: "12px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)", marginBottom: "4px" }}>{preset.ruleName}</div>
+                  <div style={{ fontSize: "10px", color: "var(--text-muted)", marginBottom: "8px" }}>{preset.triggerEvent} {'->'} {preset.action}</div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span className={exists ? 'badge badge-blue' : 'badge badge-amber'}>{exists ? 'Added' : 'Not Added'}</span>
+                    <button
+                      className="btn btn-sm btn-ghost"
+                      disabled={exists}
+                      onClick={async () => {
+                        try {
+                          await createPresetRule(preset);
+                          await fetchData();
+                        } catch (e) {
+                          console.error('Failed to add preset', e);
+                          alert('Failed to add preset rule.');
+                        }
+                      }}
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="grid-2 anim-slide-up delay-1" style={{ alignItems: "start" }}>
         {/* Rules */}

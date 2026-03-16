@@ -9,7 +9,7 @@ using Voyager.API.Services;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager,Marketing Staff")]
     [ApiController]
     [Route("api/[controller]")]
     public class EmailLogsController : ControllerBase
@@ -46,6 +46,29 @@ namespace Voyager.API.Controllers
                 .ToListAsync();
 
             return Ok(logs);
+        }
+
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateEmailLogStatusDTO dto)
+        {
+            var status = dto.Status?.Trim() ?? string.Empty;
+            var allowed = new[] { "Sent", "Viewed", "Clicked", "Failed", "Pending" };
+            if (string.IsNullOrWhiteSpace(status) || !allowed.Contains(status))
+                return BadRequest(new { message = "Invalid status." });
+
+            var log = await _context.EmailLogs.FindAsync(id);
+            if (log == null) return NotFound();
+
+            // Preserve progression: Clicked > Viewed > Sent.
+            if (log.Status == "Clicked" && status != "Clicked")
+                return NoContent();
+            if (log.Status == "Viewed" && status == "Sent")
+                return NoContent();
+
+            log.Status = status;
+            log.EmailStatus = status;
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         [HttpPost("bulk-send")]

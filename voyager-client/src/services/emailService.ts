@@ -65,7 +65,11 @@ const emailService = {
 
   bulkSend: async (data: { campaignID: number; templateID: number; leadIDs: number[] }): Promise<void> => {
     await api.post('/emaillogs/bulk-send', data);
-  }
+  },
+
+  updateLogStatus: async (id: number, status: 'Sent' | 'Viewed' | 'Clicked' | 'Failed' | 'Pending'): Promise<void> => {
+    await api.patch(`/emaillogs/${id}/status`, { status });
+  },
 };
 
 export default emailService;

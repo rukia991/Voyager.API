@@ -18,140 +18,247 @@ const Login: React.FC = () => {
         e.preventDefault();
         setError(null);
         if (!isFormValid) return;
-
         setIsSubmitting(true);
         try {
             const response = await authService.login({ email: usernameOrEmail.trim(), password });
             login(response);
-            navigate('/dashboard');
+            navigate(response.role === 'Customer' ? '/portal/home' : '/dashboard');
         } catch (err: any) {
-            console.error('Login failed:', err);
             setError(err.response?.data?.message || 'Invalid email/username or password.');
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#070b13] px-4 py-6 sm:px-6 lg:p-10 font-[Inter]">
-            <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -top-28 left-[-10%] h-[440px] w-[440px] rounded-full bg-indigo-500/15 blur-[120px]" />
-                <div className="absolute -bottom-24 right-[-10%] h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px]" />
-            </div>
+    const inputStyle: React.CSSProperties = {
+        width: '100%',
+        height: '44px',
+        background: 'rgba(255,255,255,0.06)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        borderRadius: '10px',
+        color: '#f0f2f7',
+        padding: '0 14px',
+        fontSize: '13px',
+        outline: 'none',
+        fontFamily: 'inherit',
+        boxSizing: 'border-box',
+        transition: 'border-color 0.2s, box-shadow 0.2s',
+    };
 
-            <div className="relative flex w-full max-w-[1180px] overflow-hidden rounded-[32px] border border-white/10 bg-[#0c1018]/95 shadow-[0_28px_80px_rgba(0,0,0,0.55)] backdrop-blur-sm">
-                <div className="flex w-full flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:w-[46%] lg:px-12 xl:px-16">
-                    <div className="mx-auto w-full max-w-[440px]">
-                    <div className="mb-9 flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white shadow-[0_10px_24px_rgba(102,126,234,0.35)]">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                <path d="M22 2 11 13" />
-                                <path d="m22 2-7 20-4-9-9-4Z" />
+    return (
+        <div style={{
+            minHeight: '100vh',
+            background: 'var(--bg-main)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            position: 'relative',
+            overflow: 'hidden',
+            fontFamily: "'Inter', sans-serif",
+        }}>
+            {/* Ambient glows */}
+            <div style={{ position: 'absolute', top: '-150px', left: '-150px', width: '500px', height: '500px', borderRadius: '50%', background: 'rgba(124,92,191,0.2)', filter: 'blur(100px)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: '-150px', right: '-150px', width: '500px', height: '500px', borderRadius: '50%', background: 'rgba(240,147,251,0.15)', filter: 'blur(100px)', pointerEvents: 'none' }} />
+
+            {/* CARD */}
+            <div style={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: '900px',
+                height: '520px',
+                borderRadius: '24px',
+                border: '1px solid rgba(255,255,255,0.08)',
+                background: '#13172a',
+                boxShadow: '0 40px 100px rgba(0,0,0,0.6)',
+                display: 'flex',
+                overflow: 'hidden',
+            }}>
+
+                {/* ── LEFT: Form ── */}
+                <div style={{
+                    width: '45%',
+                    padding: '44px 44px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                }}>
+                    {/* Logo */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '32px' }}>
+                        <div style={{
+                            width: '38px', height: '38px', borderRadius: '10px',
+                            background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            flexShrink: 0, boxShadow: '0 4px 12px rgba(102,126,234,0.4)',
+                        }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 2 11 13" /><path d="m22 2-7 20-4-9-9-4Z" />
                             </svg>
                         </div>
                         <div>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Voyager</p>
-                            <p className="text-lg font-black tracking-tight text-white">Control Center</p>
+                            <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4b5563' }}>Voyager</div>
+                            <div style={{ fontSize: '14px', fontWeight: 800, color: '#f0f2f7', letterSpacing: '-0.2px', lineHeight: 1 }}>Control Center</div>
                         </div>
                     </div>
 
-                    <div className="mb-8">
-                        <h1 className="text-3xl font-black leading-tight text-white">Welcome back</h1>
-                        <p className="mt-2 text-sm text-slate-400">Sign in to manage campaigns, leads, and customer journeys.</p>
+                    {/* Heading */}
+                    <div style={{ marginBottom: '24px' }}>
+                        <h1 style={{ fontSize: '26px', fontWeight: 900, color: '#f0f2f7', letterSpacing: '-0.5px', marginBottom: '6px', lineHeight: 1.1 }}>Welcome back</h1>
+                        <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.5 }}>Sign in to manage your campaigns and leads.</p>
                     </div>
 
+                    {/* Error */}
                     {error && (
-                        <div aria-live="polite" className="mb-6 rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-300">
+                        <div style={{ marginBottom: '16px', padding: '10px 14px', borderRadius: '10px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5', fontSize: '12px', fontWeight: 500 }}>
                             {error}
                         </div>
                     )}
 
-                    <form className="space-y-5" onSubmit={handleSubmit}>
-                        <div className="space-y-2">
-                            <label htmlFor="usernameOrEmail" className="ml-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Identity</label>
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {/* Email */}
+                        <div>
+                            <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#6b7280', marginBottom: '6px', letterSpacing: '0.05em' }}>
+                                Email or Username
+                            </label>
                             <input
-                                id="usernameOrEmail"
-                                type="text"
-                                required
-                                autoComplete="username"
+                                type="text" required autoComplete="username"
                                 value={usernameOrEmail}
-                                onChange={(e) => setUsernameOrEmail(e.target.value)}
-                                placeholder="Email or Username"
-                                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-slate-600 focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/15 transition-all"
+                                onChange={e => setUsernameOrEmail(e.target.value)}
+                                placeholder="Enter email or username"
+                                style={inputStyle}
+                                onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
+                                onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
                             />
                         </div>
 
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="ml-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Password</label>
-                                <button type="button" className="text-[11px] font-semibold text-slate-500 hover:text-indigo-300 transition-colors" onClick={() => setError('Password reset is not available yet. Please contact your admin.')}>Forgot password?</button>
+                        {/* Password */}
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                                <label style={{ fontSize: '11px', fontWeight: 600, color: '#6b7280', letterSpacing: '0.05em' }}>Password</label>
+                                <button type="button"
+                                    onClick={() => setError('Contact your admin to reset password.')}
+                                    style={{ fontSize: '11px', color: '#7c5cbf', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit' }}>
+                                    Forgot password?
+                                </button>
                             </div>
-                            <div className="relative">
+                            <div style={{ position: 'relative' }}>
                                 <input
-                                    id="password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    required
-                                    autoComplete="current-password"
+                                    type={showPassword ? 'text' : 'password'} required autoComplete="current-password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={e => setPassword(e.target.value)}
                                     placeholder="Enter your password"
-                                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 pr-12 text-sm text-white placeholder:text-slate-600 focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/15 transition-all"
+                                    style={{ ...inputStyle, paddingRight: '44px' }}
+                                    onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
+                                    onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
-                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
-                                >
-                                    {showPassword ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" /><line x1="1" y1="1" x2="23" y2="23" /></svg>
-                                    ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
-                                    )}
+                                <button type="button" onClick={() => setShowPassword(!showPassword)}
+                                    style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', display: 'flex', padding: 0 }}>
+                                    {showPassword
+                                        ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" /><line x1="1" y1="1" x2="23" y2="23" /></svg>
+                                        : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                                    }
                                 </button>
                             </div>
                         </div>
 
-                        <button
-                            type="submit"
-                            disabled={isSubmitting || !isFormValid}
-                            className="mt-2 h-[50px] w-full rounded-lg bg-white text-sm font-extrabold tracking-wide text-slate-900 shadow-[0_10px_24px_rgba(255,255,255,0.16)] transition-all hover:-translate-y-[1px] hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-white/40 disabled:text-slate-400 disabled:shadow-none"
+                        {/* Submit */}
+                        <button type="submit" disabled={isSubmitting || !isFormValid}
+                            style={{
+                                width: '100%', height: '44px', marginTop: '4px',
+                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 55%, #f093fb 100%)',
+                                border: 'none', borderRadius: '10px',
+                                color: 'white', fontWeight: 700, fontSize: '14px',
+                                cursor: isFormValid && !isSubmitting ? 'pointer' : 'not-allowed',
+                                fontFamily: 'inherit',
+                                opacity: !isFormValid || isSubmitting ? 0.5 : 1,
+                                boxShadow: isFormValid ? '0 4px 20px rgba(102,126,234,0.35)' : 'none',
+                                transition: 'all 0.2s',
+                            }}
+                            onMouseEnter={e => { if (isFormValid) e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
                         >
-                            {isSubmitting ? 'Authenticating...' : 'Sign In'}
+                            {isSubmitting ? 'Signing in...' : 'Sign In'}
                         </button>
                     </form>
 
-                    <p className="mt-8 flex items-center justify-center gap-2 text-xs font-semibold tracking-wide text-slate-500">
-                        New to Voyager?{' '}
-                        <button
-                            onClick={() => navigate('/register')}
-                            className="inline-flex h-8 items-center rounded-md border border-white/15 px-3 text-xs font-semibold text-slate-200 transition-all hover:bg-white/10"
-                        >
+                    {/* Footer */}
+                    <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                        <span style={{ fontSize: '12px', color: '#4b5563' }}>New to Voyager? </span>
+                        <button onClick={() => navigate('/register')}
+                            style={{ fontSize: '12px', fontWeight: 700, color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}>
                             Create account
                         </button>
-                    </p>
                     </div>
                 </div>
 
-                <div className="hidden lg:relative lg:flex lg:w-[54%] lg:flex-col lg:items-center lg:justify-center lg:bg-[#06080f] lg:p-10">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.25),transparent_58%)]" />
-                    <div className="relative z-10 w-full max-w-xl rounded-[34px] border border-white/10 bg-gradient-to-br from-white/10 to-transparent p-5 shadow-2xl backdrop-blur-2xl">
-                        <div className="relative overflow-hidden rounded-[24px] border border-white/10">
-                            <img
-                                src="https://images.unsplash.com/photo-1544033527-b192daee1f5b?q=80&w=1000&auto=format&fit=crop"
-                                alt="Voyager destination"
-                                className="h-[450px] w-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
-                            <div className="absolute bottom-8 left-8 right-8">
-                                <span className="inline-flex rounded-full bg-indigo-500 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white">Command View</span>
-                                <h3 className="mt-3 text-3xl font-black leading-tight text-white">Operate every journey from one place.</h3>
-                            </div>
+                {/* ── RIGHT: Visual Panel ── */}
+                <div style={{
+                    flex: 1,
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: 'linear-gradient(145deg, #0d0f1e 0%, #1a1040 50%, #0d0f1e 100%)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '40px',
+                }}>
+                    {/* Grid pattern */}
+                    <div style={{
+                        position: 'absolute', inset: 0, opacity: 0.06,
+                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+                        backgroundSize: '40px 40px',
+                    }} />
+
+                    {/* Purple glow center */}
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,92,191,0.3) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+
+                    {/* Decorative shapes */}
+                    <div style={{ position: 'absolute', top: '40px', right: '60px', width: '40px', height: '40px', borderRadius: '8px', background: 'linear-gradient(135deg, #667eea, #764ba2)', opacity: 0.7, transform: 'rotate(20deg)', animation: 'floatShape 4s ease-in-out infinite' }} />
+                    <div style={{ position: 'absolute', bottom: '80px', left: '50px', width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg, #34d399, #8fd3f4)', opacity: 0.8, animation: 'floatShape 5s ease-in-out infinite reverse' }} />
+                    <div style={{ position: 'absolute', top: '30%', left: '40px', width: '14px', height: '14px', background: '#fbbf24', opacity: 0.6, transform: 'rotate(45deg)', animation: 'floatShape 6s ease-in-out infinite' }} />
+                    <div style={{ position: 'absolute', bottom: '35%', right: '40px', width: '18px', height: '18px', borderRadius: '50%', border: '3px solid #f093fb', opacity: 0.7, animation: 'floatShape 3.5s ease-in-out infinite reverse' }} />
+
+                    {/* Hexagon with plane icon */}
+                    <div style={{ position: 'relative', zIndex: 1, marginBottom: '28px' }}>
+                        <div style={{
+                            width: '110px', height: '110px',
+                            background: 'linear-gradient(145deg, rgba(102,126,234,0.25), rgba(240,147,251,0.15))',
+                            border: '1px solid rgba(255,255,255,0.12)',
+                            borderRadius: '28px',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            backdropFilter: 'blur(10px)',
+                            boxShadow: '0 8px 40px rgba(102,126,234,0.2), inset 0 1px 0 rgba(255,255,255,0.1)',
+                        }}>
+                            <span style={{ fontSize: '44px' }}>✈️</span>
                         </div>
                     </div>
-                    <p className="relative z-10 mt-8 max-w-md text-center text-sm leading-relaxed text-slate-400">
-                        Track leads, automate outreach, and move faster with a workspace built for travel operations.
-                    </p>
+
+                    {/* Text */}
+                    <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+                        <h3 style={{ fontSize: '20px', fontWeight: 900, color: 'white', marginBottom: '10px', letterSpacing: '-0.3px', lineHeight: 1.2 }}>
+                            Operate every journey<br />from one place.
+                        </h3>
+                        <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, maxWidth: '280px', margin: '0 auto' }}>
+                            Track leads, automate outreach, and move faster with a workspace built for travel operations.
+                        </p>
+                    </div>
+
+                    {/* Dots */}
+                    <div style={{ position: 'absolute', bottom: '28px', display: 'flex', gap: '6px' }}>
+                        {[1,2,3].map(i => (
+                            <div key={i} style={{ width: i === 1 ? '20px' : '6px', height: '6px', borderRadius: '999px', background: i === 1 ? 'linear-gradient(90deg, #667eea, #f093fb)' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s' }} />
+                        ))}
+                    </div>
+
+                    <style>{`
+                        @keyframes floatShape {
+                            0%, 100% { transform: translateY(0) rotate(20deg); }
+                            50% { transform: translateY(-12px) rotate(20deg); }
+                        }
+                    `}</style>
                 </div>
             </div>
         </div>

@@ -12,13 +12,19 @@ const Analytics: React.FC = () => {
   const [summary, setSummary] = useState<AnalyticsSummaryDTO | null>(null);
   const [campaignMetrics, setCampaignMetrics] = useState<CampaignMetricDTO[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const isManager = auth.user?.role === 'SuperAdmin' || auth.user?.role === 'Marketing Manager';
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    fetchData();
+    const timer = setInterval(fetchData, 30000);
+    return () => clearInterval(timer);
+  }, []);
   const fetchData = async () => {
     try {
       const [s, m] = await Promise.all([analyticsService.getSummary(), analyticsService.getCampaignMetrics()]);
       setSummary(s); setCampaignMetrics(m);
+      setLastUpdated(new Date());
     } catch (_) { console.error("Error fetching analytics"); } finally { setLoading(false); }
   };
 
@@ -61,9 +67,12 @@ const Analytics: React.FC = () => {
         <div className="page-header-left">
           <div className="eyebrow">Insights</div>
           <h1>Analytics</h1>
-          <p>Deep-dive into your marketing performance and ROI.</p>
+          <p>Deep-dive into your marketing performance and ROI. Auto-refreshes every 30 seconds.</p>
         </div>
-        {isManager && <button className="btn btn-primary" onClick={handleExport}>📥 Export</button>}
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          {lastUpdated && <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Updated: {lastUpdated.toLocaleTimeString()}</span>}
+          {isManager && <button className="btn btn-primary" onClick={handleExport}>📥 Export</button>}
+        </div>
       </div>
 
       {/* KPI Row */}

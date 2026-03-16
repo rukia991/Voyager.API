@@ -9,6 +9,7 @@ namespace Voyager.API.DTOs
         public string? Description { get; set; }
         public string? TargetGoal { get; set; }
         public string Status { get; set; } = string.Empty;
+        public string? ImageUrl { get; set; }
         public string? LocationName { get; set; }
         public string? Country { get; set; }
         public decimal? Latitude { get; set; }
@@ -20,6 +21,7 @@ namespace Voyager.API.DTOs
 
     public class CustomerProfileDTO
     {
+        public string UserName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

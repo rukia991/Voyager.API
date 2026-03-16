@@ -233,38 +233,71 @@ const Users: React.FC = () => {
       {/* Audit Log — Super Admin only */}
       {isSuperAdmin && (
         <div className="glass-card overflow-hidden">
-          <div className="px-6 py-4 border-b border-white/5 flex items-center gap-3">
-            <span className="text-lg">🛡️</span>
-            <h2 className="text-lg font-bold text-white">System Audit Log</h2>
-            <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full">Super Admin Only</span>
+          <div className="px-6 py-4 border-b border-white/5 flex items-center gap-4">
+            <span className="text-xl">🛡️</span>
+            <div className="flex flex-col">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                Security &amp; Audit
+              </span>
+              <h2 className="text-lg font-bold text-white leading-tight">System Audit Log</h2>
+            </div>
+            <div className="ml-auto flex items-center gap-2">
+              <span className="text-[10px] bg-purple-500/20 text-purple-200 px-2.5 py-0.5 rounded-full border border-purple-500/40">
+                Super Admin Only
+              </span>
+              <span className="text-[10px] bg-white/5 text-slate-200 px-2.5 py-0.5 rounded-full border border-white/10">
+                {auditLogs.length} events
+              </span>
+              <button
+                className="btn btn-sm btn-ghost text-xs"
+                onClick={fetchData}
+              >
+                Refresh
+              </button>
+            </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left">
+            <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                  <th className="px-6 py-4">User</th>
-                  <th className="px-6 py-4">Action</th>
-                  <th className="px-6 py-4">Module</th>
-                  <th className="px-6 py-4">Details</th>
-                  <th className="px-6 py-4 text-right">Timestamp</th>
+                <tr className="border-b border-white/5 bg-white/5 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+                  <th className="px-6 py-3">User</th>
+                  <th className="px-6 py-3">Action</th>
+                  <th className="px-6 py-3">Module</th>
+                  <th className="px-6 py-3">Details</th>
+                  <th className="px-6 py-3 text-right">Timestamp</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {auditLogs.map(log => (
                   <tr key={log.id} className="hover:bg-white/5">
-                    <td className="px-6 py-3 text-sm text-purple-300 font-medium">@{log.userName}</td>
+                    <td className="px-6 py-3 text-sm text-slate-100 font-semibold">@{log.userName}</td>
                     <td className="px-6 py-3">
-                      <span className="text-xs bg-blue-500/10 text-blue-300 px-2 py-1 rounded-md">{log.action}</span>
+                      <span className="text-[11px] bg-blue-500/15 text-blue-200 px-2.5 py-1 rounded-md font-semibold">
+                        {log.action}
+                      </span>
                     </td>
-                    <td className="px-6 py-3 text-xs text-slate-400">{log.module}</td>
-                    <td className="px-6 py-3 text-xs text-slate-500 max-w-xs truncate">{log.details}</td>
-                    <td className="px-6 py-3 text-xs text-slate-500 text-right">
+                    <td className="px-6 py-3 text-[11px] text-slate-300">
+                      <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
+                        {log.module}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3 text-[11px] text-slate-400 max-w-sm truncate">
+                      {log.details}
+                    </td>
+                    <td className="px-6 py-3 text-[11px] text-slate-500 text-right font-mono">
                       {new Date(log.timestamp).toLocaleString()}
                     </td>
                   </tr>
                 ))}
                 {auditLogs.length === 0 && (
-                  <tr><td colSpan={5} className="py-10 text-center text-slate-600 italic">No audit entries yet.</td></tr>
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="py-10 text-center text-slate-600 italic"
+                    >
+                      No audit entries yet.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

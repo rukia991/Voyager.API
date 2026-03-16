@@ -9,6 +9,12 @@ import leadService from '../../services/leadService';
 import type { LeadDTO } from '../../services/leadService';
 
 const emptyTemplate: CreateEmailTemplateDTO = { templateName: '', subject: '', body: '' };
+const templateSnippets = [
+  { label: 'Header', value: '<h1 style="margin:0 0 12px;">{{campaignName}}</h1>' },
+  { label: 'Greeting', value: '<p>Hello {{fullName}},</p>' },
+  { label: 'CTA Link', value: '<p><a href="https://example.com" target="_blank" rel="noopener">View details</a></p>' },
+  { label: 'Footer', value: '<p style="font-size:12px;color:#64748b;">You received this because you subscribed to Voyager campaigns.</p>' },
+];
 
 const EmailMarketing: React.FC = () => {
   const { user } = useAuth();
@@ -22,11 +28,15 @@ const EmailMarketing: React.FC = () => {
   const [templateData, setTemplateData] = useState<CreateEmailTemplateDTO>(emptyTemplate);
   const [editingTemplateId, setEditingTemplateId] = useState<number | null>(null);
   const [sendData, setSendData] = useState({ campaignID: 0, templateID: 0 });
+  const [previewHtml, setPreviewHtml] = useState('');
 
-  const isManager = user?.role === 'SuperAdmin' || user?.role === 'Marketing Manager';
+  const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Admin' || user.role === 'Marketing Manager');
   const isApprover = user?.role === 'SuperAdmin' || user?.role === 'Admin';
 
   useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    setPreviewHtml(templateData.body || '<p style=\"color:#64748b\">Template preview appears here.</p>');
+  }, [templateData.body]);
 
   const fetchData = async () => {
     try {
@@ -123,7 +133,32 @@ const EmailMarketing: React.FC = () => {
     }
   };
 
-  const statusClass: Record<string, string> = { Sent: 'badge badge-green', Failed: 'badge badge-red', Pending: 'badge badge-amber' };
+  const statusClass: Record<string, string> = {
+    Sent: 'badge badge-green',
+    Viewed: 'badge badge-blue',
+    Clicked: 'badge badge-purple',
+    Failed: 'badge badge-red',
+    Pending: 'badge badge-amber'
+  };
+
+  const handleMarkViewed = async (log: EmailLogDTO) => {
+    if (log.status !== 'Sent') return;
+    try {
+      await emailService.updateLogStatus(log.emailLogID, 'Viewed');
+      setLogs(prev => prev.map(x => x.emailLogID === log.emailLogID ? { ...x, status: 'Viewed' } : x));
+    } catch (e) {
+      console.error('Failed to mark viewed', e);
+    }
+  };
+
+  const handleMarkClicked = async (log: EmailLogDTO) => {
+    try {
+      await emailService.updateLogStatus(log.emailLogID, 'Clicked');
+      setLogs(prev => prev.map(x => x.emailLogID === log.emailLogID ? { ...x, status: 'Clicked' } : x));
+    } catch (e) {
+      console.error('Failed to mark clicked', e);
+    }
+  };
 
   return (
     <MainLayout>
@@ -193,9 +228,13 @@ const EmailMarketing: React.FC = () => {
             </thead>
             <tbody>
               {logs.map(log => (
-                <tr key={log.emailLogID} className="tbl-row">
+                <tr key={log.emailLogID} className="tbl-row" style={{ cursor: 'pointer' }} onClick={() => handleMarkViewed(log)}>
                   <td className="tbl-cell" style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-primary)' }}>{log.leadName}</td>
-                  <td className="tbl-cell" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{log.templateName}</td>
+                  <td className="tbl-cell" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                    <button className="btn btn-sm btn-ghost" style={{ height: '26px', padding: '0 8px' }} onClick={(e) => { e.stopPropagation(); handleMarkClicked(log); }}>
+                      {log.templateName}
+                    </button>
+                  </td>
                   <td className="tbl-cell" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{log.campaignName}</td>
                   <td className="tbl-cell"><span className={statusClass[log.status] ?? 'badge badge-gray'}>{log.status}</span></td>
                   <td className="tbl-cell" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{new Date(log.sentDate).toLocaleString()}</td>
@@ -219,7 +258,29 @@ const EmailMarketing: React.FC = () => {
             <form onSubmit={handleCreateOrUpdateTemplate}>
               <div className="form-group"><label>Template Name</label><input required value={templateData.templateName} onChange={e => setTemplateData(t => ({ ...t, templateName: e.target.value }))} /></div>
               <div className="form-group"><label>Subject</label><input required value={templateData.subject} onChange={e => setTemplateData(t => ({ ...t, subject: e.target.value }))} /></div>
+              <div className="form-group">
+                <label>Quick Blocks</label>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                  {templateSnippets.map(s => (
+                    <button
+                      key={s.label}
+                      type="button"
+                      className="btn btn-sm btn-ghost"
+                      style={{ height: '30px', padding: '0 10px' }}
+                      onClick={() => setTemplateData(t => ({ ...t, body: `${t.body || ''}\n${s.value}`.trim() }))}
+                    >
+                      + {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="form-group"><label>HTML Body</label><textarea required style={{ height: '140px', resize: 'none', fontFamily: 'monospace', fontSize: '12px' }} value={templateData.body} onChange={e => setTemplateData(t => ({ ...t, body: e.target.value }))} placeholder="<p>Hello!</p>" /></div>
+              <div className="form-group">
+                <label>Live Preview</label>
+                <div style={{ border: '1px solid var(--border)', borderRadius: '10px', padding: '12px', background: 'rgba(255,255,255,0.03)', minHeight: '120px' }}>
+                  <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
+                </div>
+              </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-ghost" onClick={() => { setIsTemplateModalOpen(false); setEditingTemplateId(null); }}>Cancel</button>
                 <button type="submit" className="btn btn-primary" disabled={isSubmitting}>{isSubmitting ? 'Saving...' : editingTemplateId ? 'Update Template' : 'Save Template'}</button>

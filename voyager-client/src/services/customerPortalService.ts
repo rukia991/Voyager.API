@@ -6,6 +6,7 @@ export interface CampaignOfferDTO {
   description?: string;
   targetGoal?: string;
   status: string;
+  imageUrl?: string;
   locationName?: string;
   country?: string;
   latitude?: number;
@@ -16,6 +17,7 @@ export interface CampaignOfferDTO {
 }
 
 export interface CustomerProfileDTO {
+  userName: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -49,6 +51,9 @@ const customerPortalService = {
   },
   submitFeedback: async (dto: CampaignFeedbackDTO): Promise<void> => {
     await api.post('/customerportal/feedback', dto);
+  },
+  enrollCampaign: async (campaignId: number): Promise<void> => {
+    await api.post(`/customerportal/campaigns/${campaignId}/enroll`);
   },
 };
 

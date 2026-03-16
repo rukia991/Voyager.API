@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
 import { useAuth } from '../../context/AuthContext';
 import leadService from '../../services/leadService';
-import type { LeadDTO, CreateLeadDTO } from '../../services/leadService';
+import type { LeadDTO, CreateLeadDTO, LeadEnrollmentDTO } from '../../services/leadService';
 import campaignService from '../../services/campaignService';
 import type { CampaignDTO } from '../../services/campaignService';
-import MapboxMap from '../../components/common/MapboxMap';
 
 const Leads: React.FC = () => {
   const { user } = useAuth();
@@ -32,7 +31,7 @@ const Leads: React.FC = () => {
     notes: '' 
   });
 
-  const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Marketing Manager');
+  const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Admin' || user.role === 'Marketing Manager');
 
   useEffect(() => { 
     fetchLeads(); 
@@ -42,7 +41,11 @@ const Leads: React.FC = () => {
   const fetchLeads = async () => {
     try { 
       const data = await leadService.getLeads({ search, showArchived: false });
-      setLeads(data.filter(l => !l.isArchived).sort((a, b) => b.leadID - a.leadID)); 
+      const active = data.filter(l => !l.isArchived).sort((a, b) => b.leadID - a.leadID);
+      setLeads(active);
+      if (active.length > 0 && (!selectedLead || selectedLead.isArchived)) {
+        setSelectedLead(active[0]);
+      }
     } catch (_) { 
       console.error("Error fetching leads"); 
     }
@@ -52,7 +55,7 @@ const Leads: React.FC = () => {
     try {
       const data = await campaignService.getCampaigns();
       setCampaigns(data);
-      if (data.length > 0) setFormData(f => ({ ...f, campaignID: data[0].campaignID }));
+      if (data.length > 0) setFormData((f: CreateLeadDTO) => ({ ...f, campaignID: data[0].campaignID }));
     } catch (_) { 
       console.error("Error fetching campaigns"); 
     }
@@ -137,14 +140,12 @@ const Leads: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          <div className="xl:col-span-8 card" style={{ padding: "0", overflow: "hidden" }}>
+          <div className="xl:col-span-7 card" style={{ padding: "0", overflow: "hidden" }}>
             <div style={{ overflowX: "auto" }}>
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr style={{ textAlign: "left", borderBottom: "1px solid var(--border)", fontSize: "12px", color: "var(--text-muted)" }}>
-                    <th style={{ padding: "16px" }}>Lead Details</th>
-                    <th style={{ padding: "16px" }}>Campaign</th>
-                    <th style={{ padding: "16px" }}>Status</th>
+                    <th style={{ padding: "16px" }}>Lead Name</th>
                     <th style={{ padding: "16px", textAlign: "right" }}>Actions</th>
                   </tr>
                 </thead>
@@ -156,28 +157,26 @@ const Leads: React.FC = () => {
                         borderBottom: "1px solid rgba(255,255,255,0.03)", 
                         fontSize: "13px", 
                         cursor: "pointer",
-                        background: selectedLead?.leadID === l.leadID ? "rgba(167, 139, 250, 0.05)" : "transparent"
+                        transition: "all 0.2s",
+                        background: selectedLead?.leadID === l.leadID ? "rgba(167, 139, 250, 0.08)" : "transparent"
                       }} 
                       onClick={() => setSelectedLead(l)}
+                      className="hover:bg-white/[0.02]"
                     >
                       <td style={{ padding: "16px" }}>
-                        <div style={{ fontWeight: "700", color: "white" }}>{l.fullName || l.userName || `Lead #${l.leadID}`}</div>
-                        <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>📧 {l.email || 'No email'} · {l.source || 'Direct'}</div>
-                      </td>
-                      <td style={{ padding: "16px" }}>{l.campaignName}</td>
-                      <td style={{ padding: "16px" }}>
-                        <span className={`badge badge-${l.leadStatus === 'Hot' ? 'red' : l.leadStatus === 'Warm' ? 'amber' : 'blue'}`}>
-                          {l.leadStatus}
-                        </span>
+                        <div style={{ fontWeight: "700", color: "white", fontSize: "15px" }}>{l.fullName || l.userName || `Lead #${l.leadID}`}</div>
+                        <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>{l.email || 'No email associated'}</div>
                       </td>
                       <td style={{ padding: "16px", textAlign: "right" }}>
                         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
                           <button 
                             className="btn btn-sm btn-ghost" 
+                            style={{ padding: "4px 12px" }}
                             onClick={(e) => { e.stopPropagation(); setEditingLead(l); setIsEditModalOpen(true); }}
                           >Edit</button>
                           <button 
-                            className="btn btn-sm btn-ghost" 
+                            className="btn btn-sm btn-ghost text-red-400 hover:text-red-300" 
+                            style={{ padding: "4px 12px" }}
                             onClick={(e) => { e.stopPropagation(); handleArchive(l.leadID); }}
                           >Archive</button>
                         </div>
@@ -185,7 +184,7 @@ const Leads: React.FC = () => {
                     </tr>
                   ))}
                   {leads.length === 0 && (
-                    <tr><td colSpan={4} style={{ padding: "40px", textAlign: "center", color: "var(--text-muted)", fontStyle: "italic" }}>No leads found.</td></tr>
+                    <tr><td colSpan={2} style={{ padding: "40px", textAlign: "center", color: "var(--text-muted)", fontStyle: "italic" }}>No leads found.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -199,40 +198,60 @@ const Leads: React.FC = () => {
             </div>
           </div>
 
-          {/* Side Panel: Lead Details & Map */}
-          <div className="xl:col-span-4 anim-slide-right">
+          {/* Side Panel: Campaign Enrollment History */}
+          <div className="xl:col-span-5 anim-slide-right">
             {selectedLead ? (
               <div className="card" style={{ height: "100%", padding: "24px" }}>
-                <h3 style={{ fontSize: "16px", fontWeight: "800", color: "white", marginBottom: "16px" }}>Lead Intelligence</h3>
-                
-                <div style={{ height: "200px", borderRadius: "12px", overflow: "hidden", marginBottom: "20px", border: "1px solid var(--border)" }}>
-                  <MapboxMap 
-                    lat={selectedLead.campaignID > 0 ? 14.5995 : 0} // Standard lat for PH if campaign exists, or 0
-                    lng={selectedLead.campaignID > 0 ? 120.9842 : 0} // Standard lng for PH
-                    title={selectedLead.userName || 'Lead'}
-                    showRoute={false}
-                  />
+                <div style={{ marginBottom: "24px" }}>
+                  <h3 style={{ fontSize: "16px", fontWeight: "800", color: "white", marginBottom: "4px" }}>Campaign Enrollment</h3>
+                  <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>Registration history for {selectedLead.fullName || selectedLead.userName}</p>
                 </div>
+                
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {(selectedLead.enrollmentHistory && selectedLead.enrollmentHistory.length > 0) ? (
+                    selectedLead.enrollmentHistory.map((h: LeadEnrollmentDTO, idx: number) => (
+                      <div key={idx} style={{ 
+                        padding: "16px", 
+                        background: "rgba(255,255,255,0.03)", 
+                        borderRadius: "12px", 
+                        border: "1px solid rgba(255,255,255,0.05)",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}>
+                        <div>
+                          <div style={{ fontWeight: "700", color: "white", fontSize: "14px" }}>{h.campaignName}</div>
+                          <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "4px" }}>
+                            Registered: {new Date(h.enrolledDate).toLocaleDateString()}
+                          </div>
+                        </div>
+                        <span className={`badge badge-${h.status === 'Active' ? 'blue' : 'gray'}`} style={{ fontSize: "10px" }}>
+                          {h.status}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <div style={{ padding: "40px 20px", textAlign: "center", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px dashed rgba(255,255,255,0.1)" }}>
+                      <p style={{ fontSize: "13px", color: "var(--text-muted)", fontStyle: "italic" }}>No active enrollments found for this lead.</p>
+                    </div>
+                  )}
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                  <div>
-                    <label style={{ fontSize: "10px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Performance Score</label>
-                    <div style={{ fontSize: "24px", fontWeight: "800", color: "var(--text-primary)" }}>{selectedLead.leadScore}<span style={{ fontSize: "14px", color: "var(--text-muted)", fontWeight: "400" }}>/100</span></div>
+                  <div style={{ marginTop: "24px", paddingTop: "24px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                    <div style={{ marginBottom: "16px" }}>
+                      <span style={{ fontSize: "10px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: "700" }}>Recent Notes</span>
+                      <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.5", marginTop: "8px" }}>
+                        {selectedLead.notes || "No additional workflow notes documented."}
+                      </p>
+                    </div>
+                    <button className="btn btn-primary" style={{ width: "100%", height: "48px" }} onClick={() => navigate('/email')}>
+                      📧 Reach Out
+                    </button>
                   </div>
-                  <div>
-                    <label style={{ fontSize: "10px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Notes</label>
-                    <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: "1.5", marginTop: "4px" }}>
-                      {selectedLead.notes || "No additional notes for this prospect."}
-                    </p>
-                  </div>
-                  <button className="btn btn-primary" style={{ width: "100%", marginTop: "10px", height: "48px" }} onClick={() => navigate('/email')}>
-                    📧 Reach Out
-                  </button>
                 </div>
               </div>
             ) : (
               <div className="card" style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-muted)", fontStyle: "italic", textAlign: "center", padding: "40px" }}>
-                Select a lead to view detailed analytics and location data.
+                Select a lead to view their campaign enrollment history and engagement details.
               </div>
             )}
           </div>
@@ -244,26 +263,28 @@ const Leads: React.FC = () => {
         <div className="modal-overlay">
           <div className="modal-box">
             <div className="modal-header"><h2>Add New Lead</h2><button onClick={() => setIsModalOpen(false)}>✕</button></div>
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Full Name <span style={{ color: "#a78bfa" }}>*</span></label>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Full Name <span style={{ color: "var(--accent)" }}>*</span></label>
                 <input required placeholder="e.g. Juan dela Cruz" value={formData.fullName || ''} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
               </div>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Email Address <span style={{ color: "#a78bfa" }}>*</span></label>
+              <div className="form-group">
+                <label>Email Address <span style={{ color: "var(--accent)" }}>*</span></label>
                 <input required type="email" placeholder="e.g. juan@example.com" value={formData.email || ''} onChange={e => setFormData({ ...formData, email: e.target.value })} />
               </div>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Campaign</label>
-                <select value={formData.campaignID} onChange={e => setFormData({ ...formData, campaignID: parseInt(e.target.value) })}>
-                  {campaigns.map(c => <option key={c.campaignID} value={c.campaignID}>{c.campaignName}</option>)}
-                </select>
-              </div>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Status</label>
-                <select value={formData.leadStatus} onChange={e => setFormData({ ...formData, leadStatus: e.target.value })}>
-                  {['New', 'Contacted', 'Qualified', 'Converted', 'Lost'].map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
+              <div className="grid-2">
+                <div className="form-group">
+                  <label>Campaign</label>
+                  <select value={formData.campaignID} onChange={e => setFormData({ ...formData, campaignID: parseInt(e.target.value) })}>
+                    {campaigns.map(c => <option key={c.campaignID} value={c.campaignID}>{c.campaignName}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Status</label>
+                  <select value={formData.leadStatus} onChange={e => setFormData({ ...formData, leadStatus: e.target.value })}>
+                    {['New', 'Contacted', 'Qualified', 'Converted', 'Lost'].map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-ghost" onClick={() => setIsModalOpen(false)}>Cancel</button>
@@ -278,20 +299,22 @@ const Leads: React.FC = () => {
         <div className="modal-overlay">
           <div className="modal-box">
             <div className="modal-header"><h2>Update Information</h2><button onClick={() => setIsEditModalOpen(false)}>✕</button></div>
-            <form onSubmit={handleUpdate} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Status</label>
-                <select value={editingLead.leadStatus} onChange={e => setEditingLead({ ...editingLead, leadStatus: e.target.value })}>
-                  {['New', 'Contacted', 'Qualified', 'Converted', 'Lost'].map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
+            <form onSubmit={handleUpdate}>
+              <div className="grid-2">
+                <div className="form-group">
+                  <label>Status</label>
+                  <select value={editingLead.leadStatus} onChange={e => setEditingLead({ ...editingLead, leadStatus: e.target.value })}>
+                    {['New', 'Contacted', 'Qualified', 'Converted', 'Lost'].map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Lead Score</label>
+                  <input type="number" min={0} max={100} value={editingLead.leadScore} onChange={e => setEditingLead({ ...editingLead, leadScore: parseInt(e.target.value) })} />
+                </div>
               </div>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Lead Score</label>
-                <input type="number" value={editingLead.leadScore} onChange={e => setEditingLead({ ...editingLead, leadScore: parseInt(e.target.value) })} />
-              </div>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px" }}>Notes</label>
-                <textarea value={editingLead.notes || ''} onChange={e => setEditingLead({ ...editingLead, notes: e.target.value })} />
+              <div className="form-group">
+                <label>Notes</label>
+                <textarea rows={4} value={editingLead.notes || ''} onChange={e => setEditingLead({ ...editingLead, notes: e.target.value })} />
               </div>
               <div className="modal-footer">
                  <button type="button" className="btn btn-ghost" onClick={() => setIsEditModalOpen(false)}>Cancel</button>

@@ -15,11 +15,22 @@ namespace Voyager.API.DTOs
         public int LeadScore { get; set; }
         public string? Source { get; set; }
         public string? Notes { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? LastContactDate { get; set; }
         public bool IsArchived { get; set; }
         public DateTime? ArchivedDate { get; set; }
         public string? ArchivedByUserName { get; set; }
+        public List<LeadEnrollmentDTO> EnrollmentHistory { get; set; } = new List<LeadEnrollmentDTO>();
+    }
+
+    public class LeadEnrollmentDTO
+    {
+        public int CampaignID { get; set; }
+        public string CampaignName { get; set; } = string.Empty;
+        public DateTime EnrolledDate { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 
     public class CreateLeadDTO
