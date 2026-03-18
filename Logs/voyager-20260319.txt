@@ -1,0 +1,312 @@
+2026-03-19 02:47:11.398 +08:00 [INF] User profile is available. Using 'C:\Users\PC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-19 02:47:11.496 +08:00 [INF] Now listening on: http://localhost:5287
+2026-03-19 02:47:11.503 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-19 02:47:11.509 +08:00 [INF] Hosting environment: Development
+2026-03-19 02:47:11.515 +08:00 [INF] Content root path: C:\Users\PC\Documents\Git Repo\Voyager.API
+2026-03-19 02:47:23.887 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/ - null null
+2026-03-19 02:47:23.973 +08:00 [WRN] Failed to determine the https port for redirect.
+2026-03-19 02:47:24.022 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/ - 404 0 null 137.6479ms
+2026-03-19 02:47:24.036 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5287/, Response status code: 404
+2026-03-19 02:47:27.376 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/ - null null
+2026-03-19 02:47:27.394 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/ - 404 0 null 18.4757ms
+2026-03-19 02:47:27.407 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5287/, Response status code: 404
+2026-03-19 02:47:28.420 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/ - null null
+2026-03-19 02:47:28.429 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/ - 404 0 null 9.3072ms
+2026-03-19 02:47:28.441 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5287/, Response status code: 404
+2026-03-19 02:47:46.322 +08:00 [INF] Application is shutting down...
+2026-03-19 02:49:20.231 +08:00 [INF] Executed DbCommand (291ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-19 02:49:20.941 +08:00 [INF] Executed DbCommand (646ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-19 02:49:21.272 +08:00 [INF] Executed DbCommand (315ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-19 02:49:21.682 +08:00 [INF] Executed DbCommand (398ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-19 02:49:22.258 +08:00 [INF] Executed DbCommand (546ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-03-19 02:49:22.299 +08:00 [INF] No migrations were applied. The database is already up to date.
+2026-03-19 02:49:22.313 +08:00 [INF] User profile is available. Using 'C:\Users\PC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-19 02:49:23.079 +08:00 [INF] Executed DbCommand (582ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-19 02:49:23.582 +08:00 [INF] Executed DbCommand (437ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-19 02:49:23.991 +08:00 [INF] Executed DbCommand (389ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-19 02:49:25.632 +08:00 [INF] Executed DbCommand (1,622ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-19 02:49:26.454 +08:00 [INF] Executed DbCommand (809ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-19 02:49:27.377 +08:00 [INF] Executed DbCommand (866ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[TenantId], [t].[CompanyName], [t].[CreatedDate], [t].[IsActive], [t].[SubscriptionPlan]
+FROM [Tenants] AS [t]
+WHERE [t].[CompanyName] = N'Voyager System Inc.'
+2026-03-19 02:49:27.722 +08:00 [INF] Executed DbCommand (279ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:49:28.348 +08:00 [INF] Executed DbCommand (557ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:49:28.666 +08:00 [INF] Executed DbCommand (307ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:49:29.117 +08:00 [INF] Executed DbCommand (431ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:49:29.519 +08:00 [INF] Executed DbCommand (384ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:49:29.992 +08:00 [INF] Executed DbCommand (459ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[Role] = N'SuperAdmin'
+2026-03-19 02:49:30.393 +08:00 [INF] Executed DbCommand (363ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [CampaignLocations] AS [c]
+        WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c].[TenantId] = @__ef_filter___tenantId_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-19 02:49:30.672 +08:00 [INF] Executed DbCommand (256ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Campaigns] AS [c]
+        WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c].[TenantId] = @__ef_filter___tenantId_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-19 02:49:31.000 +08:00 [INF] Executed DbCommand (310ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmailTemplates] AS [e]
+        WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [e].[TenantId] = @__ef_filter___tenantId_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-19 02:49:31.169 +08:00 [INF] Now listening on: http://localhost:5287
+2026-03-19 02:49:31.178 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-19 02:49:31.184 +08:00 [INF] Hosting environment: Development
+2026-03-19 02:49:31.191 +08:00 [INF] Content root path: C:\Users\PC\Documents\Git Repo\Voyager.API
+2026-03-19 02:49:39.959 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/ - null null
+2026-03-19 02:49:40.033 +08:00 [WRN] Failed to determine the https port for redirect.
+2026-03-19 02:49:40.075 +08:00 [INF] Executing endpoint 'Fallback {*path:nonfile}'
+2026-03-19 02:49:40.223 +08:00 [INF] Sending file. Request path: '/index.html'. Physical path: 'C:\Users\PC\Documents\Git Repo\Voyager.API\wwwroot\index.html'
+2026-03-19 02:49:40.226 +08:00 [INF] Executed endpoint 'Fallback {*path:nonfile}'
+2026-03-19 02:49:40.233 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/index.html - 200 475 text/html 275.3181ms
+2026-03-19 02:49:40.286 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/assets/index-Du2w-rXt.js - null null
+2026-03-19 02:49:40.287 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/assets/index-1oc6E0IA.css - null null
+2026-03-19 02:49:40.319 +08:00 [INF] Sending file. Request path: '/assets/index-1oc6E0IA.css'. Physical path: 'C:\Users\PC\Documents\Git Repo\Voyager.API\wwwroot\assets\index-1oc6E0IA.css'
+2026-03-19 02:49:40.326 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/assets/index-1oc6E0IA.css - 200 102122 text/css 39.8295ms
+2026-03-19 02:49:40.895 +08:00 [INF] Sending file. Request path: '/assets/index-Du2w-rXt.js'. Physical path: 'C:\Users\PC\Documents\Git Repo\Voyager.API\wwwroot\assets\index-Du2w-rXt.js'
+2026-03-19 02:49:40.898 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/assets/index-Du2w-rXt.js - 200 2559641 text/javascript 611.9212ms
+2026-03-19 02:50:02.596 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/auth/login - application/json 61
+2026-03-19 02:50:02.611 +08:00 [INF] CORS policy execution successful.
+2026-03-19 02:50:02.620 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:50:02.682 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-19 02:50:03.367 +08:00 [INF] Executed DbCommand (515ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-19 02:50:03.615 +08:00 [INF] Executed DbCommand (233ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:50:03.642 +08:00 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-03-19 02:50:03.685 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 985.3329ms
+2026-03-19 02:50:03.692 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:50:03.707 +08:00 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/auth/login - 401 null application/json; charset=utf-8 1110.4593ms
+2026-03-19 02:51:28.250 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/auth/login - application/json 61
+2026-03-19 02:51:28.278 +08:00 [INF] CORS policy execution successful.
+2026-03-19 02:51:28.290 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:51:28.302 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-19 02:51:28.784 +08:00 [INF] Executed DbCommand (226ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-19 02:51:29.023 +08:00 [INF] Executed DbCommand (224ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedUserName] = @__normalizedUserName_0
+2026-03-19 02:51:29.033 +08:00 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-03-19 02:51:29.043 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 735.0802ms
+2026-03-19 02:51:29.047 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:51:29.051 +08:00 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/auth/login - 401 null application/json; charset=utf-8 801.5774ms
+2026-03-19 02:53:12.364 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/auth/login - application/json 65
+2026-03-19 02:53:12.376 +08:00 [INF] CORS policy execution successful.
+2026-03-19 02:53:12.381 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:53:12.389 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-19 02:53:12.636 +08:00 [INF] Executed DbCommand (230ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-19 02:53:12.744 +08:00 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-03-19 02:53:12.752 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 355.1645ms
+2026-03-19 02:53:12.755 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:53:12.761 +08:00 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/auth/login - 401 null application/json; charset=utf-8 396.9414ms
+2026-03-19 02:53:28.025 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5287/api/auth/login - application/json 66
+2026-03-19 02:53:28.032 +08:00 [INF] CORS policy execution successful.
+2026-03-19 02:53:28.034 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:53:28.039 +08:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Voyager.API.DTOs.LoginDTO) on controller Voyager.API.Controllers.AuthController (Voyager.API).
+2026-03-19 02:53:28.275 +08:00 [INF] Executed DbCommand (227ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1) AND [u].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-19 02:53:28.649 +08:00 [INF] Executed DbCommand (238ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2026-03-19 02:53:28.930 +08:00 [INF] Executed DbCommand (226ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[TenantId], [t].[CompanyName], [t].[CreatedDate], [t].[IsActive], [t].[SubscriptionPlan]
+FROM [Tenants] AS [t]
+WHERE [t].[TenantId] = @__p_0
+2026-03-19 02:53:28.990 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AuthResponseDTO'.
+2026-03-19 02:53:29.004 +08:00 [INF] Executed action Voyager.API.Controllers.AuthController.Login (Voyager.API) in 961.4452ms
+2026-03-19 02:53:29.010 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AuthController.Login (Voyager.API)'
+2026-03-19 02:53:29.013 +08:00 [INF] Request finished HTTP/1.1 POST http://localhost:5287/api/auth/login - 200 null application/json; charset=utf-8 988.3478ms
+2026-03-19 02:53:29.091 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/api/analytics/summary - null null
+2026-03-19 02:53:29.141 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-19 02:53:29.148 +08:00 [INF] Route matched with {action = "GetSummary", controller = "Analytics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Voyager.API.DTOs.AnalyticsSummaryDTO]] GetSummary() on controller Voyager.API.Controllers.AnalyticsController (Voyager.API).
+2026-03-19 02:53:29.400 +08:00 [INF] Executed DbCommand (227ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [l].[TenantId] = @__ef_filter___tenantId_1
+2026-03-19 02:53:29.644 +08:00 [INF] Executed DbCommand (228ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [EmailLogs] AS [e]
+WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [e].[TenantId] = @__ef_filter___tenantId_1
+2026-03-19 02:53:29.885 +08:00 [INF] Executed DbCommand (226ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Leads] AS [l]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [l].[TenantId] = @__ef_filter___tenantId_1) AND [l].[LeadStatus] = N'Converted'
+2026-03-19 02:53:30.162 +08:00 [INF] Executed DbCommand (231ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__startDate_0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Key] AS [Date], COUNT(*) AS [Count]
+FROM (
+    SELECT CONVERT(date, [l].[CreatedDate]) AS [Key]
+    FROM [Leads] AS [l]
+    WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [l].[TenantId] = @__ef_filter___tenantId_1) AND [l].[CreatedDate] >= @__startDate_0
+) AS [t]
+GROUP BY [t].[Key]
+2026-03-19 02:53:30.413 +08:00 [INF] Executed DbCommand (234ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__startDate_0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Key] AS [Date], COUNT(*) AS [Count]
+FROM (
+    SELECT CONVERT(date, [e].[SentDate]) AS [Key]
+    FROM [EmailLogs] AS [e]
+    WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [e].[TenantId] = @__ef_filter___tenantId_1) AND [e].[SentDate] >= @__startDate_0
+) AS [t]
+GROUP BY [t].[Key]
+2026-03-19 02:53:30.653 +08:00 [INF] Executed DbCommand (228ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__startDate_0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Key] AS [Date], COUNT(*) AS [Count]
+FROM (
+    SELECT CONVERT(date, [l].[CreatedDate]) AS [Key]
+    FROM [Leads] AS [l]
+    WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [l].[TenantId] = @__ef_filter___tenantId_1) AND [l].[LeadStatus] = N'Converted' AND [l].[CreatedDate] >= @__startDate_0
+) AS [t]
+GROUP BY [t].[Key]
+2026-03-19 02:53:30.903 +08:00 [INF] Executed DbCommand (227ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[AnalyticsID], [a].[CalculatedROI], [a].[CampaignID], [a].[ConversionRate], [a].[Conversions], [a].[CostPerLead], [a].[EmailsClicked], [a].[EmailsOpened], [a].[EmailsSent], [a].[EngagementRate], [a].[RecordDate], [a].[Revenue], [a].[TenantId], [a].[TotalLeads]
+FROM [Analytics] AS [a]
+WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [a].[TenantId] = @__ef_filter___tenantId_1
+ORDER BY [a].[RecordDate] DESC
+2026-03-19 02:53:31.158 +08:00 [INF] Executed DbCommand (235ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadStatus] AS [Status], COUNT(*) AS [Count]
+FROM [Leads] AS [l]
+WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [l].[TenantId] = @__ef_filter___tenantId_1
+GROUP BY [l].[LeadStatus]
+2026-03-19 02:53:31.172 +08:00 [INF] Executing OkObjectResult, writing value of type 'Voyager.API.DTOs.AnalyticsSummaryDTO'.
+2026-03-19 02:53:31.190 +08:00 [INF] Executed action Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API) in 2039.6336ms
+2026-03-19 02:53:31.195 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.AnalyticsController.GetSummary (Voyager.API)'
+2026-03-19 02:53:31.199 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/api/analytics/summary - 200 null application/json; charset=utf-8 2108.1785ms
+2026-03-19 02:53:48.441 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/api/leads?search=&showArchived=false - null null
+2026-03-19 02:53:48.444 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/api/campaigns - null null
+2026-03-19 02:53:48.469 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-19 02:53:48.469 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API)'
+2026-03-19 02:53:48.500 +08:00 [INF] Route matched with {action = "GetCampaigns", controller = "Campaigns"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.CampaignDTO]]] GetCampaigns(Boolean, System.String, System.String) on controller Voyager.API.Controllers.CampaignsController (Voyager.API).
+2026-03-19 02:53:48.500 +08:00 [INF] Route matched with {action = "GetLeads", controller = "Leads"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Voyager.API.DTOs.LeadDTO]]] GetLeads(System.String, System.String, System.String, Boolean) on controller Voyager.API.Controllers.LeadsController (Voyager.API).
+2026-03-19 02:53:48.956 +08:00 [INF] Executed DbCommand (254ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[CampaignID], [c].[CampaignName], [c].[Description], [c].[StartDate], [c].[EndDate], [c].[ImageUrl], [c].[Budget], [c].[TargetGoal], [c].[Status], [c].[CreatedDate], [c].[CreatedBy], [c].[LocationID], [t].[LocationName], [t].[Latitude], [t].[Longitude], [c].[IsArchived], [c].[ArchivedDate], CASE
+    WHEN [t0].[Id] IS NOT NULL THEN COALESCE([t0].[FirstName], N'') + N' ' + COALESCE([t0].[LastName], N'')
+    ELSE NULL
+END AS [ArchivedByUserName]
+FROM [Campaigns] AS [c]
+INNER JOIN (
+    SELECT [c0].[LocationID], [c0].[Latitude], [c0].[LocationName], [c0].[Longitude]
+    FROM [CampaignLocations] AS [c0]
+    WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c0].[TenantId] = @__ef_filter___tenantId_1
+) AS [t] ON [c].[LocationID] = [t].[LocationID]
+LEFT JOIN (
+    SELECT [u].[Id], [u].[FirstName], [u].[LastName]
+    FROM [Users] AS [u]
+    WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1
+) AS [t0] ON [c].[ArchivedBy] = [t0].[Id]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [c].[TenantId] = @__ef_filter___tenantId_1) AND [c].[IsArchived] = CAST(0 AS bit)
+2026-03-19 02:53:48.967 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.CampaignDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-19 02:53:48.989 +08:00 [INF] Executed action Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API) in 479.3203ms
+2026-03-19 02:53:48.992 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.CampaignsController.GetCampaigns (Voyager.API)'
+2026-03-19 02:53:48.997 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/api/campaigns - 200 null application/json; charset=utf-8 552.839ms
+2026-03-19 02:53:49.651 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5287/api/tenants - null null
+2026-03-19 02:53:49.660 +08:00 [INF] Executing endpoint 'Voyager.API.Controllers.TenantsController.GetTenants (Voyager.API)'
+2026-03-19 02:53:49.671 +08:00 [INF] Route matched with {action = "GetTenants", controller = "Tenants"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetTenants() on controller Voyager.API.Controllers.TenantsController (Voyager.API).
+2026-03-19 02:53:49.925 +08:00 [INF] Executed DbCommand (230ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TenantId], [t].[CompanyName], [t].[SubscriptionPlan], [t].[IsActive], [t].[CreatedDate]
+FROM [Tenants] AS [t]
+ORDER BY [t].[CreatedDate] DESC
+2026-03-19 02:53:49.942 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[<>f__AnonymousType6`5[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-19 02:53:49.975 +08:00 [INF] Executed action Voyager.API.Controllers.TenantsController.GetTenants (Voyager.API) in 293.6541ms
+2026-03-19 02:53:49.983 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.TenantsController.GetTenants (Voyager.API)'
+2026-03-19 02:53:49.994 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/api/tenants - 200 null application/json; charset=utf-8 341.1197ms
+2026-03-19 02:53:50.116 +08:00 [INF] Executed DbCommand (271ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter___tenantId_1='?' (DbType = Int32), @__adminRoles_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LeadID], [l].[ArchivedBy], [l].[ArchivedDate], [l].[CampaignID], [l].[CreatedDate], [l].[Email], [l].[FullName], [l].[IsArchived], [l].[LastContactDate], [l].[LeadScore], [l].[LeadStatus], [l].[Notes], [l].[Source], [l].[TenantId], [l].[UserID], [t].[Id], [t].[AccessFailedCount], [t].[AccountStatus], [t].[ConcurrencyStamp], [t].[CreatedDate], [t].[Email], [t].[EmailConfirmed], [t].[FirstName], [t].[LastName], [t].[LockoutEnabled], [t].[LockoutEnd], [t].[MiddleName], [t].[NormalizedEmail], [t].[NormalizedUserName], [t].[PasswordHash], [t].[PhoneNumber], [t].[PhoneNumberConfirmed], [t].[Role], [t].[SecurityStamp], [t].[TenantId], [t].[TwoFactorEnabled], [t].[UserName], [t0].[CampaignID], [t0].[ArchivedBy], [t0].[ArchivedDate], [t0].[Budget], [t0].[CampaignName], [t0].[CreatedBy], [t0].[CreatedDate], [t0].[Description], [t0].[EndDate], [t0].[ImageUrl], [t0].[IsArchived], [t0].[LocationID], [t0].[StartDate], [t0].[Status], [t0].[TargetGoal], [t0].[TenantId], [t1].[LocationID], [t1].[ArchivedBy], [t1].[ArchivedDate], [t1].[Country], [t1].[CreatedDate], [t1].[Description], [t1].[IsArchived], [t1].[Latitude], [t1].[LocationName], [t1].[Longitude], [t1].[TenantId], [t2].[CampaignLeadID], [t2].[AssignedDate], [t2].[CampaignID], [t2].[LeadID], [t2].[TenantId], [t2].[CampaignID0], [t2].[ArchivedBy], [t2].[ArchivedDate], [t2].[Budget], [t2].[CampaignName], [t2].[CreatedBy], [t2].[CreatedDate], [t2].[Description], [t2].[EndDate], [t2].[ImageUrl], [t2].[IsArchived], [t2].[LocationID], [t2].[StartDate], [t2].[Status], [t2].[TargetGoal], [t2].[TenantId0]
+FROM [Leads] AS [l]
+LEFT JOIN (
+    SELECT [u].[Id], [u].[AccessFailedCount], [u].[AccountStatus], [u].[ConcurrencyStamp], [u].[CreatedDate], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[MiddleName], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TenantId], [u].[TwoFactorEnabled], [u].[UserName]
+    FROM [Users] AS [u]
+    WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [u].[TenantId] = @__ef_filter___tenantId_1
+) AS [t] ON [l].[UserID] = [t].[Id]
+INNER JOIN (
+    SELECT [c].[CampaignID], [c].[ArchivedBy], [c].[ArchivedDate], [c].[Budget], [c].[CampaignName], [c].[CreatedBy], [c].[CreatedDate], [c].[Description], [c].[EndDate], [c].[ImageUrl], [c].[IsArchived], [c].[LocationID], [c].[StartDate], [c].[Status], [c].[TargetGoal], [c].[TenantId]
+    FROM [Campaigns] AS [c]
+    WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c].[TenantId] = @__ef_filter___tenantId_1
+) AS [t0] ON [l].[CampaignID] = [t0].[CampaignID]
+INNER JOIN (
+    SELECT [c0].[LocationID], [c0].[ArchivedBy], [c0].[ArchivedDate], [c0].[Country], [c0].[CreatedDate], [c0].[Description], [c0].[IsArchived], [c0].[Latitude], [c0].[LocationName], [c0].[Longitude], [c0].[TenantId]
+    FROM [CampaignLocations] AS [c0]
+    WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c0].[TenantId] = @__ef_filter___tenantId_1
+) AS [t1] ON [t0].[LocationID] = [t1].[LocationID]
+LEFT JOIN (
+    SELECT [c1].[CampaignLeadID], [c1].[AssignedDate], [c1].[CampaignID], [c1].[LeadID], [c1].[TenantId], [t3].[CampaignID] AS [CampaignID0], [t3].[ArchivedBy], [t3].[ArchivedDate], [t3].[Budget], [t3].[CampaignName], [t3].[CreatedBy], [t3].[CreatedDate], [t3].[Description], [t3].[EndDate], [t3].[ImageUrl], [t3].[IsArchived], [t3].[LocationID], [t3].[StartDate], [t3].[Status], [t3].[TargetGoal], [t3].[TenantId] AS [TenantId0]
+    FROM [CampaignLeads] AS [c1]
+    INNER JOIN (
+        SELECT [c2].[CampaignID], [c2].[ArchivedBy], [c2].[ArchivedDate], [c2].[Budget], [c2].[CampaignName], [c2].[CreatedBy], [c2].[CreatedDate], [c2].[Description], [c2].[EndDate], [c2].[ImageUrl], [c2].[IsArchived], [c2].[LocationID], [c2].[StartDate], [c2].[Status], [c2].[TargetGoal], [c2].[TenantId]
+        FROM [Campaigns] AS [c2]
+        WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c2].[TenantId] = @__ef_filter___tenantId_1
+    ) AS [t3] ON [c1].[CampaignID] = [t3].[CampaignID]
+    WHERE @__ef_filter__p_0 = CAST(1 AS bit) OR [c1].[TenantId] = @__ef_filter___tenantId_1
+) AS [t2] ON [l].[LeadID] = [t2].[LeadID]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [l].[TenantId] = @__ef_filter___tenantId_1) AND ([t].[Id] IS NULL OR NOT EXISTS (
+    SELECT 1
+    FROM OPENJSON(@__adminRoles_0) WITH ([value] nvarchar(max) '$') AS [a]
+    WHERE [a].[value] = [t].[Role] OR ([a].[value] IS NULL AND [t].[Role] IS NULL))) AND [l].[IsArchived] = CAST(0 AS bit)
+ORDER BY [l].[LeadID], [t].[Id], [t0].[CampaignID], [t1].[LocationID], [t2].[CampaignLeadID]
+2026-03-19 02:53:50.125 +08:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Voyager.API.DTOs.LeadDTO, Voyager.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-19 02:53:50.131 +08:00 [INF] Executed action Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API) in 1618.4082ms
+2026-03-19 02:53:50.133 +08:00 [INF] Executed endpoint 'Voyager.API.Controllers.LeadsController.GetLeads (Voyager.API)'
+2026-03-19 02:53:50.134 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5287/api/leads?search=&showArchived=false - 200 null application/json; charset=utf-8 1692.4518ms
+2026-03-19 02:55:09.319 +08:00 [INF] Application is shutting down...
