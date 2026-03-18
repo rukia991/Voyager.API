@@ -59,6 +59,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 
 // Swagger with JWT support
@@ -101,12 +103,19 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("VoyagerCors", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.SetIsOriginAllowed(origin => true) // Allow any origin in production (better to restrict this later!)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
     });
 });
+
+// Fix for MonsterASP.NET: Set WebRoot if files are uploaded to site root directly
+string wwwrootPath = Path.Combine(builder.Environment.ContentRootPath, "wwwroot");
+if (!Directory.Exists(wwwrootPath))
+{
+    builder.Environment.WebRootPath = builder.Environment.ContentRootPath;
+}
 
 var app = builder.Build();
 
@@ -117,14 +126,23 @@ if (app.Environment.IsDevelopment())
 }
 
 // Seed Roles and SuperAdmin
+try {
 using (var scope = app.Services.CreateScope())
 {
+    var context = scope.ServiceProvider.GetRequiredService<VoyagerDbContext>();
+    // Automatically apply migrations to the production database
+    await context.Database.MigrateAsync();
+
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    await RoleSeeder.SeedRolesAndSuperAdminAsync(roleManager, userManager);
+    await RoleSeeder.SeedRolesAndSuperAdminAsync(roleManager, userManager, context);
 
-    var context = scope.ServiceProvider.GetRequiredService<VoyagerDbContext>();
     await DataSeeder.SeedDataAsync(context);
+}
+} catch (Exception ex) {
+    Console.WriteLine("CRASH_LOG_START");
+    Console.WriteLine(ex.ToString());
+    Console.WriteLine("CRASH_LOG_END");
 }
 
 app.UseCors("VoyagerCors");

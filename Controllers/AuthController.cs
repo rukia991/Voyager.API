@@ -16,15 +16,18 @@ namespace Voyager.API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly Voyager.API.Data.VoyagerDbContext _context;
 
         public AuthController(
             UserManager<User> userManager,
             RoleManager<IdentityRole<int>> roleManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            Voyager.API.Data.VoyagerDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -34,14 +37,40 @@ namespace Voyager.API.Controllers
             if (existingUser != null)
                 return BadRequest(new { message = "Email already exists." });
 
+            // Handle Tenant Association
+            int targetTenantId;
+            string finalRole;
+
+            if (dto.TenantIdEntry.HasValue && dto.TenantIdEntry > 0)
+            {
+                // Joins an existing agency as a Customer
+                targetTenantId = dto.TenantIdEntry.Value;
+                finalRole = "Customer";
+            }
+            else
+            {
+                // Creates a new Agency (Admin)
+                var tenant = new Tenant
+                {
+                    CompanyName = dto.FirstName + "'s Company",
+                    SubscriptionPlan = string.IsNullOrWhiteSpace(dto.SubscriptionPlan) ? "Basic" : dto.SubscriptionPlan,
+                    CreatedDate = DateTime.UtcNow
+                };
+                _context.Tenants.Add(tenant);
+                await _context.SaveChangesAsync();
+                targetTenantId = tenant.TenantId;
+                finalRole = "Admin";
+            }
+
             var user = new User
             {
+                TenantId = targetTenantId,
                 FirstName = dto.FirstName,
                 MiddleName = dto.MiddleName,
                 LastName = dto.LastName,
                 Email = dto.Email,
                 UserName = dto.UserName,
-                Role = dto.Role,
+                Role = finalRole,
                 AccountStatus = "Active",
                 CreatedDate = DateTime.UtcNow
             };
@@ -50,9 +79,9 @@ namespace Voyager.API.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            var roleExists = await _roleManager.RoleExistsAsync(dto.Role);
+            var roleExists = await _roleManager.RoleExistsAsync(finalRole);
             if (roleExists)
-                await _userManager.AddToRoleAsync(user, dto.Role);
+                await _userManager.AddToRoleAsync(user, finalRole);
 
             return Ok(new { message = "User registered successfully." });
         }
@@ -76,7 +105,10 @@ namespace Voyager.API.Controllers
             var roles = await _userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault() ?? "Customer";
 
-            var token = GenerateJwtToken(user, role);
+            var tenant = await _context.Tenants.FindAsync(user.TenantId);
+            var plan = tenant?.SubscriptionPlan ?? "Basic";
+
+            var token = GenerateJwtToken(user, role, plan);
             var expiry = DateTime.UtcNow.AddDays(int.Parse(_configuration["JwtSettings:ExpiryInDays"]!));
 
             return Ok(new AuthResponseDTO
@@ -88,11 +120,13 @@ namespace Voyager.API.Controllers
                 DisplayName = $"{user.FirstName} {user.LastName}".Trim(),
                 Email = user.Email!,
                 Role = role,
+                SubscriptionPlan = plan,
+                TenantId = user.TenantId,
                 Expiry = expiry
             });
         }
 
-        private string GenerateJwtToken(User user, string role)
+        private string GenerateJwtToken(User user, string role, string plan)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"]!;
@@ -104,7 +138,9 @@ namespace Voyager.API.Controllers
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Role, role),
                 new Claim("FirstName", user.FirstName),
-                new Claim("LastName", user.LastName)
+                new Claim("LastName", user.LastName),
+                new Claim("TenantId", user.TenantId.ToString()),
+                new Claim("SubscriptionPlan", plan)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

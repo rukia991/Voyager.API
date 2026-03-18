@@ -3,6 +3,7 @@
     public class Analytics
     {
         public int AnalyticsID { get; set; }
+        public int TenantId { get; set; }
         public int CampaignID { get; set; }
         public int TotalLeads { get; set; }
         public int EmailsSent { get; set; }
@@ -17,6 +18,7 @@
         public DateTime RecordDate { get; set; } = DateTime.UtcNow;
 
         // Navigation
+        public Tenant Tenant { get; set; } = null!;
         public Campaign Campaign { get; set; } = null!;
     }
 }

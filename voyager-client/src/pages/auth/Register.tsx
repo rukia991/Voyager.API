@@ -1,11 +1,22 @@
 import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import authService from '../../services/authService';
 import type { RegisterDTO } from '../../services/authService';
 
 const Register: React.FC = () => {
+    const [searchParams] = useSearchParams();
+    const plan = searchParams.get('plan') || 'Basic';
+    const tenantIdParam = searchParams.get('tid');
+
     const [formData, setFormData] = useState<RegisterDTO>({
-        firstName: '', lastName: '', userName: '', email: '', password: '', role: 'Customer'
+        firstName: '', 
+        lastName: '', 
+        userName: '', 
+        email: '', 
+        password: '', 
+        role: tenantIdParam ? 'Customer' : 'Admin', 
+        subscriptionPlan: plan,
+        tenantIdEntry: tenantIdParam ? parseInt(tenantIdParam) : undefined
     });
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -122,8 +133,12 @@ const Register: React.FC = () => {
 
                     {/* Heading */}
                     <div style={{ marginBottom: '20px' }}>
-                        <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#f0f2f7', letterSpacing: '-0.5px', marginBottom: '4px', lineHeight: 1.1 }}>Create your account</h1>
-                        <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5 }}>Set up your workspace and launch your first campaign faster.</p>
+                        <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#f0f2f7', letterSpacing: '-0.5px', marginBottom: '4px', lineHeight: 1.1 }}>
+                            {tenantIdParam ? 'Join the agency' : 'Create your account'}
+                        </h1>
+                        <p style={{ fontSize: '12px', color: '#6b7280', lineHeight: 1.5 }}>
+                            {tenantIdParam ? 'Create your traveler account to start planning your next trip.' : 'Set up your workspace and launch your first campaign faster.'}
+                        </p>
                     </div>
 
                     {/* Error */}

@@ -2,13 +2,20 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Data
 {
     public class VoyagerDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
-        public VoyagerDbContext(DbContextOptions<VoyagerDbContext> options) : base(options) { }
+        private readonly int _tenantId;
 
+        public VoyagerDbContext(DbContextOptions<VoyagerDbContext> options, ITenantService tenantService) : base(options) 
+        { 
+            _tenantId = tenantService.GetTenantId();
+        }
+
+        public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<CampaignLocation> CampaignLocations { get; set; }
         public DbSet<Lead> Leads { get; set; }
@@ -19,16 +26,35 @@ namespace Voyager.API.Data
         public DbSet<WorkflowRule> WorkflowRules { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
 
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+            {
+                var property = entry.Entity.GetType().GetProperty("TenantId");
+                if (property != null && _tenantId > 0)
+                {
+                    var currentValue = (int?)property.GetValue(entry.Entity);
+                    if (currentValue == null || currentValue == 0)
+                    {
+                        property.SetValue(entry.Entity, _tenantId);
+                    }
+                }
+            }
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             // User
             builder.Entity<User>().ToTable("Users");
+            builder.Entity<User>().HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
 
             // Campaign
             builder.Entity<Campaign>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.CampaignID);
                 entity.Property(e => e.Budget).HasColumnType("decimal(10,2)");
                 entity.HasOne(e => e.Creator)
@@ -48,6 +74,7 @@ namespace Voyager.API.Data
             // CampaignLocation
             builder.Entity<CampaignLocation>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.LocationID);
                 entity.Property(e => e.Latitude).HasColumnType("decimal(10,8)");
                 entity.Property(e => e.Longitude).HasColumnType("decimal(11,8)");
@@ -60,6 +87,7 @@ namespace Voyager.API.Data
             // Lead
             builder.Entity<Lead>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.LeadID);
                 entity.HasOne(e => e.User)
                       .WithMany(u => u.Leads)
@@ -78,6 +106,7 @@ namespace Voyager.API.Data
             // CampaignLead
             builder.Entity<CampaignLead>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.CampaignLeadID);
                 entity.HasOne(e => e.Campaign)
                       .WithMany(c => c.CampaignLeads)
@@ -92,6 +121,7 @@ namespace Voyager.API.Data
             // EmailTemplate
             builder.Entity<EmailTemplate>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.TemplateID);
                 entity.HasOne(e => e.Creator)
                       .WithMany()
@@ -102,6 +132,7 @@ namespace Voyager.API.Data
             // EmailLog
             builder.Entity<EmailLog>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.EmailLogID);
                 entity.HasOne(e => e.Campaign)
                       .WithMany(c => c.EmailLogs)
@@ -124,6 +155,7 @@ namespace Voyager.API.Data
             // Analytics
             builder.Entity<Analytics>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.AnalyticsID);
                 entity.Property(e => e.EngagementRate).HasColumnType("decimal(5,2)");
                 entity.Property(e => e.ConversionRate).HasColumnType("decimal(5,2)");
@@ -139,12 +171,14 @@ namespace Voyager.API.Data
             // WorkflowRule
             builder.Entity<WorkflowRule>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.RuleID);
             });
 
             // AuditLog
             builder.Entity<AuditLog>(entity =>
             {
+                entity.HasQueryFilter(e => _tenantId == 0 || e.TenantId == _tenantId);
                 entity.HasKey(e => e.Id);
                 entity.HasOne(e => e.User)
                       .WithMany()

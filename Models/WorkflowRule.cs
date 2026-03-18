@@ -3,6 +3,7 @@
     public class WorkflowRule
     {
         public int RuleID { get; set; }
+        public int TenantId { get; set; }
         public string RuleName { get; set; } = string.Empty;
         public string TriggerEvent { get; set; } = string.Empty;
         public string? Condition { get; set; }

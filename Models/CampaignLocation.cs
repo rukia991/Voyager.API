@@ -3,6 +3,7 @@
     public class CampaignLocation
     {
         public int LocationID { get; set; }
+        public int TenantId { get; set; }
         public string LocationName { get; set; } = string.Empty;
         public string? Description { get; set; }
         public decimal Latitude { get; set; }
@@ -14,6 +15,7 @@
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         // Navigation
+        public Tenant Tenant { get; set; } = null!;
         public User? Archiver { get; set; }
 
         // Navigation

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Voyager.API.Data;
 
@@ -11,9 +12,11 @@ using Voyager.API.Data;
 namespace Voyager.API.Migrations
 {
     [DbContext(typeof(VoyagerDbContext))]
-    partial class VoyagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260318111135_AddMultiTenancy")]
+    partial class AddMultiTenancy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,9 +234,6 @@ namespace Voyager.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
@@ -332,9 +332,6 @@ namespace Voyager.API.Migrations
                     b.Property<int>("LeadID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
                     b.HasKey("CampaignLeadID");
 
                     b.HasIndex("CampaignID");
@@ -422,9 +419,6 @@ namespace Voyager.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TemplateID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("EmailLogID");
@@ -691,9 +685,6 @@ namespace Voyager.API.Migrations
                     b.Property<string>("RuleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
 
                     b.Property<string>("TriggerEvent")
                         .IsRequired()

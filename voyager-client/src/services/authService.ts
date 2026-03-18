@@ -11,6 +11,8 @@ export interface RegisterDTO extends LoginDTO {
   lastName: string;
   userName: string;
   role: string;
+  subscriptionPlan?: string;
+  tenantIdEntry?: number;
 }
 
 export interface AuthResponse {
@@ -21,6 +23,8 @@ export interface AuthResponse {
   displayName?: string;
   email: string;
   role: string;
+  subscriptionPlan?: string;
+  tenantId: number;
   expiry: string;
 }
 

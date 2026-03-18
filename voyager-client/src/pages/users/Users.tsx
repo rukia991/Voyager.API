@@ -86,6 +86,21 @@ const Users: React.FC = () => {
     fetchData();
   };
 
+  const copyInviteLink = () => {
+    if (!user?.tenantId) return;
+    const link = `${window.location.origin}/register?tid=${user.tenantId}`;
+    navigator.clipboard.writeText(link);
+    alert('Invitation link copied to clipboard!');
+  };
+
+  const shareViaEmail = () => {
+    if (!user?.tenantId) return;
+    const link = `${window.location.origin}/register?tid=${user.tenantId}`;
+    const subject = encodeURIComponent('Invitation to Join Our Travel Portal');
+    const body = encodeURIComponent(`Hello!\n\nYou're invited to join our travel portal at Voyager. Click the link below to create your account and start planning your next adventure with us.\n\nRegister here: ${link}\n\nWe look forward to having you!`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+
   const sorted = users
     .filter(u => {
       const matchSearch = `${u.firstName} ${u.lastName} ${u.email}`.toLowerCase().includes(search.toLowerCase());
@@ -118,7 +133,19 @@ const Users: React.FC = () => {
           <h1>User Management</h1>
           <p>Manage accounts, roles, and access across the system.</p>
         </div>
-        <Button variant="primary" onClick={() => setIsModalOpen(true)}>+ Add User</Button>
+        <div className="flex gap-2">
+          {isAdmin && (
+            <>
+              <Button variant="ghost" onClick={copyInviteLink}>
+                <span className="mr-2">🔗</span> Copy Invite Link
+              </Button>
+              <Button variant="ghost" onClick={shareViaEmail}>
+                <span className="mr-2">✉️</span> Share via Email
+              </Button>
+            </>
+          )}
+          <Button variant="primary" onClick={() => setIsModalOpen(true)}>+ Add User</Button>
+        </div>
       </div>
 
       {/* Filters */}

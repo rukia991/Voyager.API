@@ -3,6 +3,7 @@
     public class Lead
     {
         public int LeadID { get; set; }
+        public int TenantId { get; set; }
         public int? UserID { get; set; }
         public int CampaignID { get; set; }
         public string? Email { get; set; }
@@ -18,6 +19,7 @@
         public DateTime? LastContactDate { get; set; }
 
         // Navigation
+        public Tenant Tenant { get; set; } = null!;
         public User? User { get; set; }
         public User? Archiver { get; set; }
         public Campaign Campaign { get; set; } = null!;

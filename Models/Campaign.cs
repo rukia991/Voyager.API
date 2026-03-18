@@ -3,6 +3,7 @@
     public class Campaign
     {
         public int CampaignID { get; set; }
+        public int TenantId { get; set; }
         public string CampaignName { get; set; } = string.Empty;
         public string? Description { get; set; }
         public DateTime StartDate { get; set; }
@@ -21,6 +22,7 @@
         public int LocationID { get; set; }
 
         // Navigation
+        public Tenant Tenant { get; set; } = null!;
         public User Creator { get; set; } = null!;
         public User? Archiver { get; set; }
         public CampaignLocation Location { get; set; } = null!;

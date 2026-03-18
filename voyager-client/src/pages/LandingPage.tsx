@@ -579,6 +579,53 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* ── PRICING PLANS ── */}
+      <section id="pricing" style={{ padding: 'clamp(64px, 10vw, 120px) clamp(16px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 700, color: '#667eea', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '12px' }}>Pricing</div>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.5px', lineHeight: 1.1 }}>Choose the perfect plan</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+            {[
+              { name: 'Basic', price: 'Free', desc: 'Perfect for independent agents starting out.', color: '#64748b', features: ['Up to 100 Leads', 'Basic Analytics', '1 Team Member'] },
+              { name: 'Pro', price: '₱2,999/mo', desc: 'For growing travel agencies.', color: '#667eea', features: ['Unlimited Leads', 'Advanced Analytics', 'Email Automation', '5 Team Members'], popular: true },
+              { name: 'Enterprise', price: 'Custom', desc: 'Full-scale solution for large operators.', color: '#10b981', features: ['Custom Reporting', 'Dedicated Manager', 'Unlimited Team Members', 'API Access'] }
+            ].map((plan, i) => (
+              <div key={i} style={{
+                background: plan.popular ? '#0f172a' : 'white', borderRadius: '24px', padding: '40px 32px',
+                border: plan.popular ? 'none' : '1px solid #e2e8f0',
+                boxShadow: plan.popular ? '0 24px 60px rgba(15,23,42,0.2)' : '0 12px 30px rgba(0,0,0,0.03)',
+                color: plan.popular ? 'white' : '#0f172a',
+                transform: plan.popular ? 'scale(1.05)' : 'scale(1)',
+                zIndex: plan.popular ? 2 : 1, position: 'relative'
+              }}>
+                {plan.popular && <div style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: '4px 16px', fontSize: '12px', fontWeight: 800, borderRadius: '999px', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
+                <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '8px', color: plan.popular ? 'white' : plan.color }}>{plan.name}</h3>
+                <div style={{ fontSize: '36px', fontWeight: 900, marginBottom: '16px' }}>{plan.price}</div>
+                <p style={{ fontSize: '14px', color: plan.popular ? '#94a3b8' : '#64748b', marginBottom: '32px', lineHeight: 1.6 }}>{plan.desc}</p>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 40px 0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {plan.features.map((f, j) => (
+                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: 500, color: plan.popular ? '#e2e8f0' : '#475569' }}>
+                      <span style={{ color: plan.popular ? '#34d399' : '#10b981', fontSize: '16px' }}>✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={() => navigate(`/register?plan=${plan.name}`)} style={{
+                  width: '100%', padding: '16px', borderRadius: '14px', fontWeight: 800, fontSize: '15px', cursor: 'pointer', transition: 'all 0.2s',
+                  background: plan.popular ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#f8fafc',
+                  color: plan.popular ? 'white' : '#0f172a',
+                  border: plan.popular ? 'none' : '1.5px solid #e2e8f0',
+                }}
+                  onMouseEnter={e => { if(!plan.popular) { e.currentTarget.style.borderColor = '#667eea'; e.currentTarget.style.color = '#667eea'; } else { e.currentTarget.style.transform = 'translateY(-2px)'; } }}
+                  onMouseLeave={e => { if(!plan.popular) { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#0f172a'; } else { e.currentTarget.style.transform = 'translateY(0)'; } }}
+                >{plan.popular ? 'Get Started' : 'Start Free'}</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── TESTIMONIALS ── */}
       <section style={{ padding: 'clamp(64px, 10vw, 120px) clamp(16px, 5vw, 64px)', background: '#f8fafc' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>

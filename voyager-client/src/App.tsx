@@ -21,8 +21,8 @@ import CustomerSubscriptionsPage from "./pages/portal/CustomerSubscriptionsPage"
 import CustomerFeedbackPage from "./pages/portal/CustomerFeedbackPage";
 import Settings from "./pages/settings/Settings";
 import ArchivedItems from "./pages/archived/ArchivedItems";
-
 import Locations from "./pages/locations/Locations";
+import Tenants from "./pages/superadmin/Tenants";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -57,6 +57,7 @@ function App() {
           <Route path="/portal/feedback" element={<ProtectedRoute><CustomerFeedbackPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
           <Route path="/archived" element={<ProtectedRoute><ArchivedItems /></ProtectedRoute>} />
+          <Route path="/superadmin/tenants" element={<ProtectedRoute><Tenants /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

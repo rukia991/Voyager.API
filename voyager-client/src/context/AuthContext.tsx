@@ -9,6 +9,8 @@ interface User {
   role: string;
   token: string;
   expiry: string;
+  tenantId: number;
+  subscriptionPlan?: string;
 }
 
 interface AuthContextType {

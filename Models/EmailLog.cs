@@ -3,6 +3,7 @@
     public class EmailLog
     {
         public int EmailLogID { get; set; }
+        public int TenantId { get; set; }
         public int CampaignID { get; set; }
         public int LeadID { get; set; }
         public int TemplateID { get; set; }
