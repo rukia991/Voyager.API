@@ -305,7 +305,7 @@ const Campaigns: React.FC = () => {
                 <div className="grid-2" style={{ gap: '16px', marginBottom: '20px' }}>
                   <div>
                     <div style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '2px' }}>Budget</div>
-                    <div style={{ fontSize: '15px', fontWeight: '700', color: 'white' }}>${c.budget.toLocaleString()}</div>
+                    <div style={{ fontSize: '15px', fontWeight: '700', color: 'white' }}>₱{c.budget.toLocaleString()}</div>
                   </div>
                   <div>
                     <div style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '2px' }}>Ends</div>

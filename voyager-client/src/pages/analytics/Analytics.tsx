@@ -108,7 +108,7 @@ const Analytics: React.FC = () => {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
                 <XAxis dataKey="date" stroke="#4b5563" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis stroke="#4b5563" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis stroke="#4b5563" fontSize={10} tickLine={false} axisLine={false} label={{ value: 'Total Count', angle: -90, position: 'insideLeft', fill: '#9ca3af', dy: 30 }} />
                 <Tooltip contentStyle={{ background: "#0d1117", border: "1px solid var(--border)", borderRadius: "10px", color: "#f0f2f7", fontSize: "12px" }} />
                 <Area type="monotone" dataKey="leads" stroke="#667eea" strokeWidth={2} fillOpacity={1} fill="url(#gLeads)" />
                 <Area type="monotone" dataKey="conversions" stroke="#f093fb" strokeWidth={2} fillOpacity={0} />
@@ -124,7 +124,7 @@ const Analytics: React.FC = () => {
               <BarChart data={summary?.performanceOverTime}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
                 <XAxis dataKey="date" stroke="#4b5563" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis stroke="#4b5563" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis stroke="#4b5563" fontSize={10} tickLine={false} axisLine={false} label={{ value: 'Total Count', angle: -90, position: 'insideLeft', fill: '#9ca3af', dy: 30 }} />
                 <Tooltip contentStyle={{ background: "#0d1117", border: "1px solid var(--border)", borderRadius: "10px", color: "#f0f2f7", fontSize: "12px" }} />
                 <Bar dataKey="emailsSent" fill="#667eea" radius={[4,4,0,0]} barSize={16} />
                 <Bar dataKey="leads" fill="#f093fb" radius={[4,4,0,0]} barSize={16} />

@@ -105,12 +105,20 @@ namespace Voyager.API.Controllers
                 }
 
                 // Personalize template body
-                var personalizedBody = template.Body
+                var rawBody = template.Body
                     .Replace("{{firstName}}", lead.User?.FirstName ?? recipientName.Split(' ')[0])
                     .Replace("{{lastName}}", lead.User?.LastName ?? "")
                     .Replace("{{fullName}}", recipientName)
                     .Replace("{{campaignName}}", campaign.CampaignName)
                     .Replace("{{email}}", recipientEmail);
+
+                var formattedHtml = rawBody.Replace("\n", "<br/>");
+                var personalizedBody = $@"
+<div style=""font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; padding: 32px; border: 1px solid #e2e8f0; border-radius: 16px; background: #ffffff;"">
+  <h2 style=""color: #6366f1; margin-top: 0; font-size: 24px;"">New Message from Voyager</h2>
+  <div style=""font-size: 15px; line-height: 1.6;"">{formattedHtml}</div>
+</div>";
+
 
                 var personalizedSubject = template.Subject
                     .Replace("{{campaignName}}", campaign.CampaignName)

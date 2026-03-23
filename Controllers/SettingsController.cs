@@ -32,5 +32,26 @@ namespace Voyager.API.Controllers
                 EmailSender = _config["Email:Sender"] ?? "noreply@voyager.com"
             });
         }
+
+        [HttpPost("my-plan")]
+        public async Task<IActionResult> UpdateMyPlan([FromBody] MyPlanDTO dto, [FromServices] Voyager.API.Data.VoyagerDbContext context)
+        {
+            var tenantIdClaim = User.FindFirst("TenantId")?.Value;
+            if (string.IsNullOrEmpty(tenantIdClaim) || !int.TryParse(tenantIdClaim, out int tenantId))
+                return Unauthorized();
+
+            var tenant = await context.Tenants.FindAsync(tenantId);
+            if (tenant == null) return NotFound("Tenant not found.");
+
+            tenant.SubscriptionPlan = dto.Plan;
+            await context.SaveChangesAsync();
+
+            return Ok(new { message = $"Plan successfully updated to {dto.Plan}" });
+        }
+    }
+
+    public class MyPlanDTO
+    {
+        public string Plan { get; set; } = "Basic";
     }
 }

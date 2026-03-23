@@ -80,7 +80,7 @@ namespace Voyager.API.Data
                     TenantId = tenantId,
                     TemplateName = "Welcome Series - Premium",
                     Subject = "Welcome to Voyager: Your Next Journey Awaits ✈️",
-                    Body = "<h1>Hello!</h1><p>We are thrilled to have you join our exclusive travel community.</p>",
+                    Body = "Hello!We are thrilled to have you join our exclusive travel community.",
                     IsApproved = "Approved",
                     CreatedBy = admin.Id
                 });

@@ -20,6 +20,7 @@ import CustomerProfilePage from "./pages/portal/CustomerProfilePage";
 import CustomerSubscriptionsPage from "./pages/portal/CustomerSubscriptionsPage";
 import CustomerFeedbackPage from "./pages/portal/CustomerFeedbackPage";
 import Settings from "./pages/settings/Settings";
+import Profile from "./pages/settings/Profile";
 import ArchivedItems from "./pages/archived/ArchivedItems";
 import Locations from "./pages/locations/Locations";
 import Tenants from "./pages/superadmin/Tenants";
@@ -30,6 +31,14 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : <Navigate to="/login" />;
 };
 
+const DashboardWrapper = () => {
+  const { user } = useAuth();
+  if (user?.role === 'Marketing Staff') {
+    return <Navigate to="/campaigns" replace />;
+  }
+  return <Dashboard />;
+};
+
 function App() {
   return (
     <AuthProvider>
@@ -38,7 +47,11 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <DashboardWrapper />
+            </ProtectedRoute>
+          } />
           <Route path="/campaigns" element={<ProtectedRoute><Campaigns /></ProtectedRoute>} />
           <Route path="/campaigns/:id" element={<ProtectedRoute><CampaignDetails /></ProtectedRoute>} />
           <Route path="/leads" element={<ProtectedRoute><Leads /></ProtectedRoute>} />
@@ -56,6 +69,7 @@ function App() {
           <Route path="/portal/subscriptions" element={<ProtectedRoute><CustomerSubscriptionsPage /></ProtectedRoute>} />
           <Route path="/portal/feedback" element={<ProtectedRoute><CustomerFeedbackPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/archived" element={<ProtectedRoute><ArchivedItems /></ProtectedRoute>} />
           <Route path="/superadmin/tenants" element={<ProtectedRoute><Tenants /></ProtectedRoute>} />
         </Routes>

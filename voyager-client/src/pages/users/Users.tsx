@@ -26,6 +26,7 @@ const Users: React.FC = () => {
   const [auditLogs, setAuditLogs] = useState<AuditLogDTO[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createError, setCreateError] = useState('');
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
   const [sortKey, setSortKey] = useState<keyof UserDTO>('id');
@@ -66,12 +67,30 @@ const Users: React.FC = () => {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setCreateError('');
     try {
       await userService.createUser(formData);
       setIsModalOpen(false);
       setFormData({ userName: '', email: '', firstName: '', lastName: '', role: 'Marketing Staff', password: '' });
       fetchData();
-    } catch (_) { console.error("Error fetching data"); }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) { 
+      console.error("Error creating user", err);
+      let errorMsg = 'Failed to create user. Please try again.';
+      if (err.response?.data) {
+        if (Array.isArray(err.response.data)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          errorMsg = err.response.data.map((e: any) => e.description || e.code).join(' ');
+        } else if (err.response.data.message) {
+          errorMsg = err.response.data.message;
+        } else if (typeof err.response.data === 'string') {
+          errorMsg = err.response.data;
+        }
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
+      setCreateError(errorMsg);
+    }
     finally { setIsSubmitting(false); }
   };
 
@@ -93,13 +112,7 @@ const Users: React.FC = () => {
     alert('Invitation link copied to clipboard!');
   };
 
-  const shareViaEmail = () => {
-    if (!user?.tenantId) return;
-    const link = `${window.location.origin}/register?tid=${user.tenantId}`;
-    const subject = encodeURIComponent('Invitation to Join Our Travel Portal');
-    const body = encodeURIComponent(`Hello!\n\nYou're invited to join our travel portal at Voyager. Click the link below to create your account and start planning your next adventure with us.\n\nRegister here: ${link}\n\nWe look forward to having you!`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-  };
+
 
   const sorted = users
     .filter(u => {
@@ -133,18 +146,13 @@ const Users: React.FC = () => {
           <h1>User Management</h1>
           <p>Manage accounts, roles, and access across the system.</p>
         </div>
-        <div className="flex gap-2">
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           {isAdmin && (
-            <>
-              <Button variant="ghost" onClick={copyInviteLink}>
-                <span className="mr-2">🔗</span> Copy Invite Link
-              </Button>
-              <Button variant="ghost" onClick={shareViaEmail}>
-                <span className="mr-2">✉️</span> Share via Email
-              </Button>
-            </>
+            <Button variant="ghost" onClick={copyInviteLink} style={{ padding: '8px 18px', borderRadius: '8px' }}>
+              <span className="mr-2">🔗</span> Copy Invite Link
+            </Button>
           )}
-          <Button variant="primary" onClick={() => setIsModalOpen(true)}>+ Add User</Button>
+          <Button variant="primary" onClick={() => setIsModalOpen(true)} style={{ padding: '8px 24px', borderRadius: '8px' }}>+ Add User</Button>
         </div>
       </div>
 
@@ -239,7 +247,7 @@ const Users: React.FC = () => {
           </table>
 
           {/* Pagination */}
-          <div className="p-4 border-t border-white/5 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between sm:items-center text-xs text-slate-400">
+          <div className="p-4 border-t border-main flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between sm:items-center text-xs text-secondary">
             <div>Page {page} of {totalPages || 1}</div>
             <div className="flex gap-2">
               <button disabled={page === 1} onClick={() => setPage(p => p - 1)} className="btn btn-ghost px-3 py-1">Previous</button>
@@ -259,20 +267,20 @@ const Users: React.FC = () => {
 
       {/* Audit Log — Super Admin only */}
       {isSuperAdmin && (
-        <div className="glass-card overflow-hidden">
-          <div className="px-6 py-4 border-b border-white/5 flex items-center gap-4">
+        <div className="card overflow-hidden mt-10">
+          <div className="px-6 py-5 border-b border-main flex items-center gap-4">
             <span className="text-xl">🛡️</span>
             <div className="flex flex-col">
-              <span className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-secondary">
                 Security &amp; Audit
               </span>
-              <h2 className="text-lg font-bold text-white leading-tight">System Audit Log</h2>
+              <h2 className="text-lg font-bold text-primary leading-tight">System Audit Log</h2>
             </div>
             <div className="ml-auto flex items-center gap-2">
               <span className="text-[10px] bg-purple-500/20 text-purple-200 px-2.5 py-0.5 rounded-full border border-purple-500/40">
                 Super Admin Only
               </span>
-              <span className="text-[10px] bg-white/5 text-slate-200 px-2.5 py-0.5 rounded-full border border-white/10">
+              <span className="text-[10px] bg-card text-secondary px-2.5 py-0.5 rounded-full border border-main">
                 {auditLogs.length} events
               </span>
               <button
@@ -286,32 +294,32 @@ const Users: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/5 bg-white/5 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                  <th className="px-6 py-3">User</th>
-                  <th className="px-6 py-3">Action</th>
-                  <th className="px-6 py-3">Module</th>
-                  <th className="px-6 py-3">Details</th>
-                  <th className="px-6 py-3 text-right">Timestamp</th>
+                <tr className="border-b border-main bg-accent-soft text-[10px] font-semibold text-secondary uppercase tracking-widest">
+                  <th className="px-6 py-4">User</th>
+                  <th className="px-6 py-4">Action</th>
+                  <th className="px-6 py-4">Module</th>
+                  <th className="px-6 py-4">Details</th>
+                  <th className="px-6 py-4 text-right">Timestamp</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y border-main">
                 {auditLogs.map(log => (
-                  <tr key={log.id} className="hover:bg-white/5">
-                    <td className="px-6 py-3 text-sm text-slate-100 font-semibold">@{log.userName}</td>
-                    <td className="px-6 py-3">
-                      <span className="text-[11px] bg-blue-500/15 text-blue-200 px-2.5 py-1 rounded-md font-semibold">
+                  <tr key={log.id} className="hover:bg-accent-soft transition-colors">
+                    <td className="px-6 py-4 text-sm text-primary font-semibold">@{log.userName}</td>
+                    <td className="px-6 py-4">
+                      <span className="text-[11px] bg-blue-500/15 text-blue-200 px-2.5 py-1 rounded-md font-semibold tracking-wide">
                         {log.action}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-[11px] text-slate-300">
-                      <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
+                    <td className="px-6 py-4 text-[11px] text-secondary">
+                      <span className="px-3 py-1.5 rounded-full bg-card border border-main font-medium">
                         {log.module}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-[11px] text-slate-400 max-w-sm truncate">
+                    <td className="px-6 py-4 text-[11px] text-muted max-w-sm truncate leading-relaxed">
                       {log.details}
                     </td>
-                    <td className="px-6 py-3 text-[11px] text-slate-500 text-right font-mono">
+                    <td className="px-6 py-4 text-[11px] text-muted text-right font-mono">
                       {new Date(log.timestamp).toLocaleString()}
                     </td>
                   </tr>
@@ -334,43 +342,53 @@ const Users: React.FC = () => {
 
       {/* Add User Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg p-8 shadow-2xl border-white/20">
-            <h2 className="text-2xl font-bold text-white mb-6">Add New User</h2>
-            <form onSubmit={handleCreate} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm shadow-xl">
+          <div className="w-full max-w-2xl p-8 shadow-2xl border border-main rounded-2xl bg-card relative">
+            <h2 className="text-2xl font-bold text-primary mb-6">Add New User</h2>
+            
+            {createError && (
+              <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm font-semibold flex items-start gap-3 shadow-inner">
+                <span className="text-lg">⚠️</span>
+                <span>{createError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleCreate} style={{ display: 'grid', gap: '24px' }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">First Name</label>
-                  <input required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white" value={formData.firstName} onChange={e => setFormData(f => ({ ...f, firstName: e.target.value }))} />
+                  <label className="block text-sm font-medium text-secondary mb-2">First Name</label>
+                  <input required className="w-full bg-card border border-main rounded-xl px-4 py-3 text-primary focus:border-purple-500 focus:outline-none transition-colors" value={formData.firstName} onChange={e => setFormData(f => ({ ...f, firstName: e.target.value }))} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
-                  <input required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white" value={formData.lastName} onChange={e => setFormData(f => ({ ...f, lastName: e.target.value }))} />
+                  <label className="block text-sm font-medium text-secondary mb-2">Last Name</label>
+                  <input required className="w-full bg-card border border-main rounded-xl px-4 py-3 text-primary focus:border-purple-500 focus:outline-none transition-colors" value={formData.lastName} onChange={e => setFormData(f => ({ ...f, lastName: e.target.value }))} />
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Username</label>
-                <input required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white" value={formData.userName} onChange={e => setFormData(f => ({ ...f, userName: e.target.value }))} />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
-                <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white" value={formData.email} onChange={e => setFormData(f => ({ ...f, email: e.target.value }))} />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Role</label>
-                  <select required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white" value={formData.role} onChange={e => setFormData(f => ({ ...f, role: e.target.value }))}>
-                    {assignableRoles.map(r => <option key={r} value={r} className="bg-slate-900">{r}</option>)}
+                  <label className="block text-sm font-medium text-secondary mb-2">Username</label>
+                  <input required className="w-full bg-card border border-main rounded-xl px-4 py-3 text-primary focus:border-purple-500 focus:outline-none transition-colors" value={formData.userName} onChange={e => setFormData(f => ({ ...f, userName: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-secondary mb-2">Email</label>
+                  <input required type="email" className="w-full bg-card border border-main rounded-xl px-4 py-3 text-primary focus:border-purple-500 focus:outline-none transition-colors" value={formData.email} onChange={e => setFormData(f => ({ ...f, email: e.target.value }))} />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-secondary mb-2">Role</label>
+                  <select required className="w-full bg-card border border-main rounded-xl px-4 py-3 text-primary focus:border-purple-500 focus:outline-none transition-colors" value={formData.role} onChange={e => setFormData(f => ({ ...f, role: e.target.value }))}>
+                    {assignableRoles.map(r => <option key={r} value={r} className="bg-card text-primary">{r}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
-                  <input required type="password" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white" value={formData.password} onChange={e => setFormData(f => ({ ...f, password: e.target.value }))} />
+                  <label className="block text-sm font-medium text-secondary mb-2">Password</label>
+                  <input required type="password" className="w-full bg-card border border-main rounded-xl px-4 py-3 text-primary focus:border-purple-500 focus:outline-none transition-colors" value={formData.password} onChange={e => setFormData(f => ({ ...f, password: e.target.value }))} />
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row justify-end gap-3 mt-2">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-2.5 bg-white/5 text-slate-300 rounded-xl border border-white/10 font-semibold">Cancel</button>
-                <button type="submit" disabled={isSubmitting} className="px-8 py-2.5 btn-gradient text-white rounded-xl font-semibold shadow-lg shadow-purple-500/20 disabled:opacity-50">
+              <div className="flex justify-end gap-3 mt-4">
+                <button type="button" onClick={() => { setIsModalOpen(false); setCreateError(''); }} className="px-6 py-3 bg-card text-secondary rounded-xl border border-main font-semibold hover:bg-accent-soft transition-colors">Cancel</button>
+                <button type="submit" disabled={isSubmitting} className="px-8 py-3 btn-gradient text-white rounded-xl font-semibold shadow-lg shadow-purple-500/20 disabled:opacity-50">
                   {isSubmitting ? 'Creating...' : 'Create User'}
                 </button>
               </div>

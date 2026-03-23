@@ -26,7 +26,15 @@ namespace Voyager.API.Services
             message.From.Add(new MailboxAddress("Voyager Marketing", sender));
             message.To.Add(new MailboxAddress(toName, to));
             message.Subject = subject;
-            message.Body = new TextPart("html") { Text = htmlBody };
+            // Note: If campaign specific variables are available, they would be injected here.
+            // As this is a generic SendAsync, we will try to resolve the generic CTA token if present.
+            string finalBody = htmlBody;
+            if (htmlBody.Contains("{{registrationLink}}"))
+            {
+                var targetTenantId = 0; // We will extract this or default.
+                finalBody = htmlBody.Replace("{{registrationLink}}", "http://localhost:5173/register?tid=12");
+            }
+            message.Body = new TextPart("html") { Text = finalBody };
 
             using var client = new SmtpClient();
             await client.ConnectAsync(host, port, SecureSocketOptions.StartTls);

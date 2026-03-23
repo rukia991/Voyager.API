@@ -21,33 +21,57 @@ namespace Voyager.API.Controllers
         [HttpGet("summary")]
         public async Task<ActionResult<AnalyticsSummaryDTO>> GetSummary()
         {
-            var totalLeads = await _context.Leads.CountAsync();
-            var emailsSent = await _context.EmailLogs.CountAsync();
-            var conversions = await _context.Leads.CountAsync(l => l.LeadStatus == "Converted");
-            
-            // Calculate Performance Over Time (Last 7 Days)
-            var performance = new List<DailyMetricDTO>();
-            var startDate = DateTime.UtcNow.Date.AddDays(-6);
+            var isSuperAdmin = User.IsInRole("SuperAdmin");
+            var tenantIdClaim = User.FindFirst("TenantId")?.Value;
+            int? tenantId = string.IsNullOrEmpty(tenantIdClaim) || tenantIdClaim == "0" ? null : int.Parse(tenantIdClaim);
 
-            var dailyLeads = await _context.Leads
+            var leadsQuery = _context.Leads.AsQueryable();
+            var emailLogsQuery = _context.EmailLogs.AsQueryable();
+
+            if (!isSuperAdmin && tenantId.HasValue)
+            {
+                leadsQuery = leadsQuery.Where(l => l.TenantId == tenantId.Value);
+                emailLogsQuery = emailLogsQuery.Where(e => e.TenantId == tenantId.Value);
+            }
+
+            var totalLeads = await leadsQuery.CountAsync();
+            var emailsSent = await emailLogsQuery.CountAsync();
+            var conversions = await leadsQuery.CountAsync(l => l.LeadStatus == "Converted");
+            
+            // Calculate Performance Over Time (Bounded by Tenant Creation Date)
+            var graphStartDate = DateTime.UtcNow.Date.AddDays(-6);
+            if (tenantId.HasValue)
+            {
+                var tenant = await _context.Tenants.FindAsync(tenantId.Value);
+                if (tenant != null && tenant.CreatedDate.Date > graphStartDate)
+                {
+                    graphStartDate = tenant.CreatedDate.Date;
+                }
+            }
+
+            var startDate = graphStartDate;
+            var performance = new List<DailyMetricDTO>();
+            int daysToCover = (DateTime.UtcNow.Date - startDate).Days;
+
+            var dailyLeads = await leadsQuery
                 .Where(l => l.CreatedDate >= startDate)
                 .GroupBy(l => l.CreatedDate.Date)
                 .Select(g => new { Date = g.Key, Count = g.Count() })
                 .ToListAsync();
 
-            var dailyEmails = await _context.EmailLogs
+            var dailyEmails = await emailLogsQuery
                 .Where(e => e.SentDate >= startDate)
                 .GroupBy(e => e.SentDate.Date)
                 .Select(g => new { Date = g.Key, Count = g.Count() })
                 .ToListAsync();
 
-            var dailyConversions = await _context.Leads
+            var dailyConversions = await leadsQuery
                 .Where(l => l.LeadStatus == "Converted" && l.CreatedDate >= startDate)
                 .GroupBy(l => l.CreatedDate.Date)
                 .Select(g => new { Date = g.Key, Count = g.Count() })
                 .ToListAsync();
 
-            for (int i = 6; i >= 0; i--)
+            for (int i = daysToCover; i >= 0; i--)
             {
                 var targetDate = DateTime.UtcNow.Date.AddDays(-i);
                 performance.Add(new DailyMetricDTO
@@ -59,14 +83,19 @@ namespace Voyager.API.Controllers
                 });
             }
 
-            // Real-time ROI calculation from Analytics history if available
-            var latestAnalytics = await _context.Analytics
+            var analyticsQuery = _context.Analytics.AsQueryable();
+            if (!isSuperAdmin && tenantId.HasValue)
+            {
+                analyticsQuery = analyticsQuery.Where(a => a.TenantId == tenantId.Value);
+            }
+
+            var latestAnalytics = await analyticsQuery
                 .OrderByDescending(a => a.RecordDate)
                 .FirstOrDefaultAsync();
 
             decimal totalRoi = latestAnalytics?.CalculatedROI ?? 0;
 
-            var statusDistribution = await _context.Leads
+            var statusDistribution = await leadsQuery
                 .GroupBy(l => l.LeadStatus)
                 .Select(g => new { Status = g.Key, Count = g.Count() })
                 .ToListAsync();

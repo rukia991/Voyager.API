@@ -25,9 +25,10 @@ builder.Services.AddDbContext<VoyagerDbContext>(options =>
 // Identity
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 {
-    options.Password.RequireDigit = true;
-    options.Password.RequiredLength = 8;
-    options.Password.RequireUppercase = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
 })
 .AddEntityFrameworkStores<VoyagerDbContext>()

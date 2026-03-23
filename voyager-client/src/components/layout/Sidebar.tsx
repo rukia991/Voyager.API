@@ -13,17 +13,19 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const isAdmin = user?.role === 'SuperAdmin' || user?.role === 'Admin';
   const isCustomer = user?.role === 'Customer';
+  const isMarketingStaff = user?.role === 'Marketing Staff';
+  const isMarketingManager = user?.role === 'Marketing Manager';
 
   const nav = [
-    !isCustomer && { icon: 'D', label: 'Dashboard', path: '/dashboard' },
+    !isCustomer && !isMarketingStaff && { icon: 'D', label: 'Dashboard', path: '/dashboard' },
     isCustomer && { icon: 'H', label: 'Home', path: '/portal/home' },
     !isCustomer && { icon: 'C', label: 'Campaigns', path: '/campaigns' },
-    !isCustomer && { icon: 'L', label: 'Leads', path: '/leads' },
+    !isCustomer && !isMarketingStaff && { icon: 'L', label: 'Leads', path: '/leads' },
     !isCustomer && user?.subscriptionPlan !== 'Basic' && { icon: 'E', label: 'Email Marketing', path: '/email' },
-    !isCustomer && { icon: 'A', label: 'Analytics', path: '/analytics' },
+    !isCustomer && user?.role !== 'Staff' && !isMarketingStaff && { icon: 'A', label: 'Analytics', path: '/analytics' },
     !isCustomer && { icon: 'P', label: 'Locations', path: '/locations' },
-    !isCustomer && { icon: 'R', label: 'Archived Items', path: '/archived' },
-    !isCustomer && user?.subscriptionPlan !== 'Basic' && { icon: 'W', label: 'Automation', path: '/automation' },
+    !isCustomer && user?.role !== 'Staff' && !isMarketingStaff && { icon: 'R', label: 'Archived Items', path: '/archived' },
+    !isCustomer && user?.subscriptionPlan !== 'Basic' && !isMarketingStaff && !isMarketingManager && { icon: 'W', label: 'Automation', path: '/automation' },
     user?.role === 'SuperAdmin' && { icon: 'T', label: 'Tenants', path: '/superadmin/tenants' },
     isAdmin && { icon: 'U', label: 'Users', path: '/users' },
     user?.role === 'SuperAdmin' && { icon: 'S', label: 'Settings', path: '/settings' },
@@ -112,7 +114,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </div>
           </div>
 
-          <button onClick={() => { logout(); navigate('/login'); }} className="btn btn-danger" style={{ width: '100%', justifyContent: 'center', fontSize: '12px', padding: '7px' }}>
+          <button onClick={() => { logout(); navigate('/'); }} className="btn btn-danger" style={{ width: '100%', justifyContent: 'center', fontSize: '12px', padding: '7px' }}>
             Sign Out
           </button>
         </div>

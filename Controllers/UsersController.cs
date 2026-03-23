@@ -31,7 +31,17 @@ namespace Voyager.API.Controllers
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var isSuperAdmin = User.IsInRole("SuperAdmin");
-            var users = await _userManager.Users.ToListAsync();
+            var tenantIdClaim = User.FindFirst("TenantId")?.Value;
+            int? tenantId = string.IsNullOrEmpty(tenantIdClaim) || tenantIdClaim == "0" ? null : int.Parse(tenantIdClaim);
+
+            var usersQuery = _userManager.Users.IgnoreQueryFilters();
+
+            if (!isSuperAdmin && tenantId.HasValue)
+            {
+                usersQuery = usersQuery.Where(u => u.TenantId == tenantId.Value);
+            }
+
+            var users = await usersQuery.ToListAsync();
 
             var visible = isSuperAdmin
                 ? users
@@ -64,8 +74,35 @@ namespace Voyager.API.Controllers
             if (!isSuperAdmin && ProtectedRoles.Contains(dto.Role))
                 return Forbid();
 
+            // Guard: Enforce Subscription Plan Team Member Limits (Excluding Customers)
+            var tenantIdClaim = User.FindFirst("TenantId")?.Value;
+            int currentTenantId = 0;
+            if (!isSuperAdmin && !string.IsNullOrEmpty(tenantIdClaim) && int.TryParse(tenantIdClaim, out currentTenantId))
+            {
+                if (dto.Role != "Customer")
+                {
+                    var tenant = await _context.Tenants.FindAsync(currentTenantId);
+                    if (tenant != null)
+                    {
+                        var plan = (tenant.SubscriptionPlan ?? "Basic").Trim();
+                        int maxUsers = 1;
+
+                        if (plan.Equals("Enterprise", StringComparison.OrdinalIgnoreCase)) maxUsers = int.MaxValue;
+                        else if (plan.Equals("Pro", StringComparison.OrdinalIgnoreCase)) maxUsers = 5;
+                        else if (plan.Equals("Basic", StringComparison.OrdinalIgnoreCase)) maxUsers = 1;
+
+                        int currentTeamCount = await _context.Users.CountAsync(u => u.TenantId == currentTenantId && u.Role != "Customer");
+                        if (currentTeamCount >= maxUsers)
+                        {
+                            return BadRequest(new { message = $"Your {plan} plan is limited to {maxUsers} team member(s). Please upgrade your subscription to add more staff." });
+                        }
+                    }
+                }
+            }
+
             var user = new User
             {
+                TenantId = !isSuperAdmin ? currentTenantId : 0, // Explicitly set tenant for Admins
                 UserName = dto.UserName,
                 Email = dto.Email,
                 FirstName = dto.FirstName,

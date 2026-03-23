@@ -63,6 +63,15 @@ namespace Voyager.API.Controllers
         {
             var query = _context.Campaigns.AsQueryable();
 
+            var isSuperAdmin = User.IsInRole("SuperAdmin");
+            var tenantIdClaim = User.FindFirst("TenantId")?.Value;
+            int? tenantId = string.IsNullOrEmpty(tenantIdClaim) || tenantIdClaim == "0" ? null : int.Parse(tenantIdClaim);
+
+            if (!isSuperAdmin && tenantId.HasValue)
+            {
+                query = query.Where(c => c.TenantId == tenantId.Value);
+            }
+
             if (!showArchived)
                 query = query.Where(c => !c.IsArchived);
 
@@ -162,6 +171,24 @@ namespace Voyager.API.Controllers
                 return BadRequest(new { message = "Selected location is invalid or archived." });
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var tenantIdString = User.FindFirst("TenantId")?.Value;
+            var plan = User.FindFirst("SubscriptionPlan")?.Value ?? "Basic";
+
+            if (int.TryParse(tenantIdString, out int tId))
+            {
+                int maxCampaigns = plan switch
+                {
+                    "Enterprise" => int.MaxValue,
+                    "Pro" => 20,
+                    _ => 3
+                };
+
+                var currentCount = await _context.Campaigns.CountAsync(c => c.TenantId == tId && !c.IsArchived);
+                if (currentCount >= maxCampaigns)
+                {
+                    return BadRequest(new { message = $"Your {plan} plan is limited to {maxCampaigns} active campaigns. Please upgrade to create more." });
+                }
+            }
 
             var campaign = new Campaign
             {

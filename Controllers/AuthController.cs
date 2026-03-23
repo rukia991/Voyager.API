@@ -17,17 +17,20 @@ namespace Voyager.API.Controllers
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly Voyager.API.Data.VoyagerDbContext _context;
+        private readonly Voyager.API.Services.IEmailService _emailService;
 
         public AuthController(
             UserManager<User> userManager,
             RoleManager<IdentityRole<int>> roleManager,
             IConfiguration configuration,
-            Voyager.API.Data.VoyagerDbContext context)
+            Voyager.API.Data.VoyagerDbContext context,
+            Voyager.API.Services.IEmailService emailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _context = context;
+            _emailService = emailService;
         }
 
         [HttpPost("register")]
@@ -43,23 +46,34 @@ namespace Voyager.API.Controllers
 
             if (dto.TenantIdEntry.HasValue && dto.TenantIdEntry > 0)
             {
-                // Joins an existing agency as a Customer
+                // Joins an existing agency as a Customer via explicit link
                 targetTenantId = dto.TenantIdEntry.Value;
                 finalRole = "Customer";
             }
             else
             {
-                // Creates a new Agency (Admin)
-                var tenant = new Tenant
+                // Check if this user exists as a Lead in any existing Tenant
+                var existingLead = _context.Leads.FirstOrDefault(l => l.Email == dto.Email);
+                if (existingLead != null)
                 {
-                    CompanyName = dto.FirstName + "'s Company",
-                    SubscriptionPlan = string.IsNullOrWhiteSpace(dto.SubscriptionPlan) ? "Basic" : dto.SubscriptionPlan,
-                    CreatedDate = DateTime.UtcNow
-                };
-                _context.Tenants.Add(tenant);
-                await _context.SaveChangesAsync();
-                targetTenantId = tenant.TenantId;
-                finalRole = "Admin";
+                    // Implicitly connect them to the Tenant that holds their Lead profile
+                    targetTenantId = existingLead.TenantId;
+                    finalRole = "Customer";
+                }
+                else
+                {
+                    // Truly new user - Creates a new Agency (Admin)
+                    var tenant = new Tenant
+                    {
+                        CompanyName = dto.FirstName + "'s Company",
+                        SubscriptionPlan = string.IsNullOrWhiteSpace(dto.SubscriptionPlan) ? "Basic" : dto.SubscriptionPlan,
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    _context.Tenants.Add(tenant);
+                    await _context.SaveChangesAsync();
+                    targetTenantId = tenant.TenantId;
+                    finalRole = "Admin";
+                }
             }
 
             var user = new User
@@ -82,6 +96,27 @@ namespace Voyager.API.Controllers
             var roleExists = await _roleManager.RoleExistsAsync(finalRole);
             if (roleExists)
                 await _userManager.AddToRoleAsync(user, finalRole);
+
+            // Send Welcome Email
+            try
+            {
+                string subject = "Welcome to Voyager ✨";
+                string htmlBody = $@"
+                    <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;'>
+                        <h2 style='color: #667eea;'>Welcome to Voyager, {dto.FirstName}!</h2>
+                        <p>We are thrilled to have you join our platform. Voyager is designed to help you automate your marketing and grow your business seamlessly.</p>
+                        <p>To get started, log in to your dashboard and create your first campaign.</p>
+                        <br/>
+                        <p>Best regards,<br/>The Voyager Team</p>
+                    </div>
+                ";
+                await _emailService.SendAsync(dto.Email, $"{dto.FirstName} {dto.LastName}", subject, htmlBody);
+            }
+            catch (Exception ex)
+            {
+                // In production, log this properly using ILogger
+                Console.WriteLine($"Welcome email sending failed: {ex.Message}");
+            }
 
             return Ok(new { message = "User registered successfully." });
         }

@@ -349,18 +349,18 @@ const LandingPage: React.FC = () => {
 
             <div className="fade-up-4" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '44px' }}>
               <button onClick={() => navigate('/register')} style={{
-                padding: '14px 28px',
+                padding: '16px 32px',
                 background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                border: 'none', color: 'white', fontWeight: 800, fontSize: '15px',
-                cursor: 'pointer', borderRadius: '14px',
-                boxShadow: '0 8px 28px rgba(102,126,234,0.4)',
-                transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '8px',
+                border: 'none', color: 'white', fontWeight: 700, fontSize: '16px',
+                cursor: 'pointer', borderRadius: '12px',
+                boxShadow: '0 8px 24px rgba(102,126,234,0.3)',
+                transition: 'all 0.25s', display: 'flex', alignItems: 'center', gap: '10px',
               }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 14px 40px rgba(102,126,234,0.5)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(102,126,234,0.4)'; }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(102,126,234,0.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(102,126,234,0.3)'; }}
               >
-                <span>Start for Free</span>
-                <span style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '6px', padding: '2px 8px', fontSize: '12px' }}>No CC needed</span>
+                <span>Get Started for Free</span>
+                <span style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '6px', padding: '3px 8px', fontSize: '11px' }}>No CC</span>
               </button>
               <button onClick={() => navigate('/login')} style={{
                 padding: '14px 28px', background: 'white', border: '2px solid #e2e8f0',

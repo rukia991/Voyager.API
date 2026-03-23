@@ -10,10 +10,10 @@ import type { LeadDTO } from '../../services/leadService';
 
 const emptyTemplate: CreateEmailTemplateDTO = { templateName: '', subject: '', body: '' };
 const templateSnippets = [
-  { label: 'Header', value: '<h1 style="margin:0 0 12px;">{{campaignName}}</h1>' },
-  { label: 'Greeting', value: '<p>Hello {{fullName}},</p>' },
-  { label: 'CTA Link', value: '<p><a href="https://example.com" target="_blank" rel="noopener">View details</a></p>' },
-  { label: 'Footer', value: '<p style="font-size:12px;color:#64748b;">You received this because you subscribed to Voyager campaigns.</p>' },
+  { label: 'Welcome Theme', value: 'Welcome to Voyager!\nWe are thrilled to embark on this journey with you.\nYour details and custom portal are now accessible.\n\nBest regards,\nThe Voyager Team' },
+  { label: 'Greeting', value: 'Hello {{fullName}},\n\n' },
+  { label: 'CTA Link', value: 'Join now: {{registrationLink}}\n\n' },
+  { label: 'Footer Note', value: '\n\n---\nYou received this because you subscribed to our campaign updates.' },
 ];
 
 const EmailMarketing: React.FC = () => {
@@ -35,7 +35,19 @@ const EmailMarketing: React.FC = () => {
 
   useEffect(() => { fetchData(); }, []);
   useEffect(() => {
-    setPreviewHtml(templateData.body || '<p style=\"color:#64748b\">Template preview appears here.</p>');
+    let text = templateData.body || 'Template preview appears here.';
+    text = text.replace(/{{campaignName}}/g, 'Sample Campaign');
+    text = text.replace(/{{fullName}}/g, 'John Doe');
+    text = text.replace(/{{registrationLink}}/g, 'http://example.com/register');
+    
+    // Auto-wrap pure text inside the requested Welcome HTML envelope
+    const formattedHtml = text.replace(/\n/g, '<br/>');
+    const finalHtml = `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; padding: 32px; border: 1px solid #e2e8f0; border-radius: 16px; background: #ffffff;">
+      <h2 style="color: #6366f1; margin-top: 0; font-size: 24px;">Message Preview</h2>
+      <div style="font-size: 15px; line-height: 1.6;">${formattedHtml}</div>
+    </div>`;
+
+    setPreviewHtml(finalHtml);
   }, [templateData.body]);
 
   const fetchData = async () => {

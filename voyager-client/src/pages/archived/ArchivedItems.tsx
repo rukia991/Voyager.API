@@ -100,7 +100,7 @@ export default function ArchivedItems() {
                         <div style={{ fontWeight: "600", color: "white" }}>{c.campaignName}</div>
                         <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>#{c.campaignID}</div>
                       </td>
-                      <td style={{ padding: "12px" }}>{c.status} • Budget: ${c.budget}</td>
+                      <td style={{ padding: "12px" }}>{c.status} • Budget: ₱{c.budget}</td>
                       <td style={{ padding: "12px" }}>{c.archivedDate ? new Date(c.archivedDate).toLocaleString() : '-'}</td>
                       <td style={{ padding: "12px" }}>{c.archivedByUserName || '-'}</td>
                       <td style={{ padding: "12px", textAlign: "right" }}>

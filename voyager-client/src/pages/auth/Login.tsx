@@ -22,7 +22,10 @@ const Login: React.FC = () => {
         try {
             const response = await authService.login({ email: usernameOrEmail.trim(), password });
             login(response);
-            navigate(response.role === 'Customer' ? '/portal/home' : '/dashboard');
+            const destination = response.role === 'Customer' 
+                ? '/portal/home' 
+                : (response.role === 'Marketing Staff' ? '/campaigns' : '/dashboard');
+            navigate(destination);
         } catch (err: any) {
             setError(err.response?.data?.message || 'Invalid email/username or password.');
         } finally {

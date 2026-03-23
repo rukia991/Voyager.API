@@ -96,6 +96,8 @@ namespace Voyager.API.Controllers
                 lead = new Lead
                 {
                     UserID = userId,
+                    TenantId = campaign.TenantId,
+                    CampaignID = campaignId,
                     Email = currentUser?.Email,
                     FullName = currentUser != null ? $"{currentUser.FirstName} {currentUser.LastName}".Trim() : null,
                     LeadStatus = "New",

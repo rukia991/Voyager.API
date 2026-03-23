@@ -54,8 +54,38 @@ const Tenants: React.FC = () => {
       <div className="page-header anim-slide-up">
         <div className="page-header-left">
           <div className="eyebrow">SuperAdmin</div>
-          <h1>Tenants Management</h1>
-          <p>Manage SaaS companies and their active subscriptions.</p>
+          <h1>Platform Overview</h1>
+          <p>Manage SaaS companies and oversee platform health.</p>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px", marginBottom: "32px" }} className="anim-slide-up">
+        <div className="stat-card">
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+            <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase" }}>Estimated MRR <span title="Monthly Recurring Revenue (Gross total from active software subscriptions)" style={{ cursor: "help", color: "#667eea" }}>(?)</span></span>
+            <span>💰</span>
+          </div>
+          <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--text-primary)" }}>
+            ₱{tenants.reduce((acc, t) => acc + (!t.isActive ? 0 : t.subscriptionPlan === 'Enterprise' ? 299 : t.subscriptionPlan === 'Pro' ? 99 : 29), 0).toLocaleString()}/mo
+          </div>
+        </div>
+        <div className="stat-card delay-1">
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+            <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase" }}>Active Tenants</span>
+            <span>🏢</span>
+          </div>
+          <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--text-primary)" }}>
+            {tenants.filter(t => t.isActive).length} <span style={{ fontSize: "14px", color: "var(--text-muted)", fontWeight: 500 }}>/ {tenants.length}</span>
+          </div>
+        </div>
+        <div className="stat-card delay-2">
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+            <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase" }}>Enterprise Installs</span>
+            <span>🚀</span>
+          </div>
+          <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--text-primary)" }}>
+            {tenants.filter(t => t.isActive && t.subscriptionPlan === 'Enterprise').length}
+          </div>
         </div>
       </div>
 
