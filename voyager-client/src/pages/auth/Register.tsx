@@ -114,20 +114,14 @@ const Register: React.FC = () => {
                     flexShrink: 0,
                 }}>
                     {/* Logo */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginBottom: '24px' }}>
                         <div style={{
-                            width: '36px', height: '36px', borderRadius: '10px',
-                            background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                            width: '80px', height: 'auto', 
+                            background: 'transparent',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            flexShrink: 0, boxShadow: '0 4px 12px rgba(102,126,234,0.4)',
+                            flexShrink: 0, overflow: 'hidden',
                         }}>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 2 11 13" /><path d="m22 2-7 20-4-9-9-4Z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4b5563' }}>Voyager</div>
-                            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f0f2f7', lineHeight: 1 }}>Get Started</div>
+                            <img src="/logo.png" alt="Voyager Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         </div>
                     </div>
 
@@ -148,18 +142,18 @@ const Register: React.FC = () => {
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} autoComplete="off">
                         {/* First + Last */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
                             <div>
                                 <label style={labelStyle}>First Name</label>
-                                <input name="firstName" required autoComplete="given-name" value={formData.firstName} onChange={handleChange} placeholder="Jane" style={inputStyle}
+                                <input name="firstName" required autoComplete="off" value={formData.firstName} onChange={handleChange} placeholder="First name" style={inputStyle}
                                     onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
                                     onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }} />
                             </div>
                             <div>
                                 <label style={labelStyle}>Last Name</label>
-                                <input name="lastName" required autoComplete="family-name" value={formData.lastName} onChange={handleChange} placeholder="Doe" style={inputStyle}
+                                <input name="lastName" required autoComplete="off" value={formData.lastName} onChange={handleChange} placeholder="Last name" style={inputStyle}
                                     onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
                                     onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }} />
                             </div>
@@ -169,13 +163,13 @@ const Register: React.FC = () => {
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
                             <div>
                                 <label style={labelStyle}>Username</label>
-                                <input name="userName" required autoComplete="username" value={formData.userName} onChange={handleChange} placeholder="janedoe" style={inputStyle}
+                                <input name="userName" required autoComplete="off" value={formData.userName} onChange={handleChange} placeholder="Username" style={inputStyle}
                                     onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
                                     onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }} />
                             </div>
                             <div>
                                 <label style={labelStyle}>Work Email</label>
-                                <input name="email" type="email" required autoComplete="email" value={formData.email} onChange={handleChange} placeholder="jane@company.com" style={inputStyle}
+                                <input name="email" type="email" required autoComplete="off" value={formData.email} onChange={handleChange} placeholder="Email address" style={inputStyle}
                                     onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
                                     onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }} />
                             </div>
@@ -185,14 +179,14 @@ const Register: React.FC = () => {
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
                             <div>
                                 <label style={labelStyle}>Password</label>
-                                <input name="password" type={showPassword ? 'text' : 'password'} required autoComplete="new-password" value={formData.password} onChange={handleChange} placeholder="Create password" style={inputStyle}
+                                <input name="password" type={showPassword ? 'text' : 'password'} required autoComplete="off" value={formData.password} onChange={handleChange} placeholder="Create password" style={inputStyle}
                                     onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
                                     onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }} />
                             </div>
                             <div>
                                 <label style={labelStyle}>Confirm</label>
                                 <div style={{ position: 'relative' }}>
-                                    <input type={showPassword ? 'text' : 'password'} required autoComplete="new-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm password"
+                                    <input type={showPassword ? 'text' : 'password'} required autoComplete="off" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm password"
                                         style={{ ...inputStyle, paddingRight: '40px' }}
                                         onFocus={e => { e.target.style.borderColor = '#7c5cbf'; e.target.style.boxShadow = '0 0 0 3px rgba(124,92,191,0.15)'; }}
                                         onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; }} />

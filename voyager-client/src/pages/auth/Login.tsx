@@ -88,20 +88,14 @@ const Login: React.FC = () => {
                     flexShrink: 0,
                 }}>
                     {/* Logo */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '32px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginBottom: '32px' }}>
                         <div style={{
-                            width: '38px', height: '38px', borderRadius: '10px',
-                            background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                            width: '100px', height: 'auto', 
+                            background: 'transparent',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            flexShrink: 0, boxShadow: '0 4px 12px rgba(102,126,234,0.4)',
+                            flexShrink: 0, overflow: 'hidden',
                         }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 2 11 13" /><path d="m22 2-7 20-4-9-9-4Z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4b5563' }}>Voyager</div>
-                            <div style={{ fontSize: '14px', fontWeight: 800, color: '#f0f2f7', letterSpacing: '-0.2px', lineHeight: 1 }}>Control Center</div>
+                            <img src="/logo.png" alt="Voyager Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         </div>
                     </div>
 
@@ -119,14 +113,14 @@ const Login: React.FC = () => {
                     )}
 
                     {/* Form */}
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <form onSubmit={handleSubmit} autoComplete="off" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {/* Email */}
                         <div>
                             <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#6b7280', marginBottom: '6px', letterSpacing: '0.05em' }}>
                                 Email or Username
                             </label>
                             <input
-                                type="text" required autoComplete="username"
+                                type="text" required autoComplete="off"
                                 value={usernameOrEmail}
                                 onChange={e => setUsernameOrEmail(e.target.value)}
                                 placeholder="Enter email or username"
@@ -148,7 +142,7 @@ const Login: React.FC = () => {
                             </div>
                             <div style={{ position: 'relative' }}>
                                 <input
-                                    type={showPassword ? 'text' : 'password'} required autoComplete="current-password"
+                                    type={showPassword ? 'text' : 'password'} required autoComplete="off"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     placeholder="Enter your password"

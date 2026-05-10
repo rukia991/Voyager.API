@@ -53,11 +53,13 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div style={{ padding: '16px 16px 14px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
-              width: '32px', height: '32px', flexShrink: 0,
-              background: 'var(--gradient)', borderRadius: '9px',
+              width: '42px', height: '42px', flexShrink: 0,
+              background: 'transparent', borderRadius: '9px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '15px', color: 'white', fontWeight: 700
-            }}>V</div>
+              overflow: 'hidden'
+            }}>
+              <img src="/logo.png" alt="Voyager Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            </div>
             <div>
               <div style={{ fontWeight: '800', fontSize: '14px', background: 'var(--gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Voyager</div>
               <div style={{ fontSize: '9px', color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Marketing Suite</div>
