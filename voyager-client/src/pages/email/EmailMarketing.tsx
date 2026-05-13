@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import emailService from '../../services/emailService';
 import type { EmailTemplateDTO, CreateEmailTemplateDTO, EmailLogDTO } from '../../services/emailService';
 import campaignService from '../../services/campaignService';
@@ -15,6 +15,9 @@ const templateSnippets = [
   { label: 'CTA Link', value: '<p><a href="https://example.com" target="_blank" rel="noopener">View details</a></p>' },
   { label: 'Footer', value: '<p style="font-size:12px;color:#64748b;">You received this because you subscribed to Voyager campaigns.</p>' },
 ];
+
+const isLeadEnrolledInCampaign = (lead: LeadDTO, campaignID: number) =>
+  lead.enrollmentHistory?.some((entry) => entry.campaignID === campaignID) ?? lead.campaignID === campaignID;
 
 const EmailMarketing: React.FC = () => {
   const { user } = useAuth();
@@ -35,7 +38,7 @@ const EmailMarketing: React.FC = () => {
 
   useEffect(() => { fetchData(); }, []);
   useEffect(() => {
-    setPreviewHtml(templateData.body || '<p style=\"color:#64748b\">Template preview appears here.</p>');
+    setPreviewHtml(templateData.body || '<p style="color:#64748b">Template preview appears here.</p>');
   }, [templateData.body]);
 
   const fetchData = async () => {
@@ -111,7 +114,7 @@ const EmailMarketing: React.FC = () => {
   };
 
   const campaignLeads = useMemo(
-    () => leads.filter(l => l.campaignID === sendData.campaignID),
+    () => leads.filter((lead) => isLeadEnrolledInCampaign(lead, sendData.campaignID)),
     [leads, sendData.campaignID]
   );
 
@@ -326,3 +329,5 @@ const EmailMarketing: React.FC = () => {
 };
 
 export default EmailMarketing;
+
+

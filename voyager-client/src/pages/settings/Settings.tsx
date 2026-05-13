@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import automationService from '../../services/automationService';
 import type { IntegrationSettingsDTO } from '../../services/automationService';
 
@@ -42,7 +42,7 @@ const Settings: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 800));
       setSaveStatus('success');
       setTimeout(() => setSaveStatus('idle'), 3000);
-    } catch (_) {
+    } catch {
       setSaveStatus('error');
     } finally {
       setIsSaving(false);
@@ -155,7 +155,7 @@ const Settings: React.FC = () => {
                                 try {
                                   await automationService.downloadBackup();
                                   setLastBackup(new Date());
-                                } catch (_) { alert('Backup failed.'); }
+                                } catch { alert('Backup failed.'); }
                             }}
                         >
                             Export Backup
@@ -222,3 +222,5 @@ const Settings: React.FC = () => {
 };
 
 export default Settings;
+
+

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import campaignService from '../../services/campaignService';
 import type { CampaignDTO, CreateCampaignDTO } from '../../services/campaignService';
 import locationService from '../../services/locationService';
 import type { LocationDTO } from '../../services/locationService';
+import { getApiErrorMessage } from '../../utils/apiError';
 
 const todayIso = new Date().toISOString().slice(0, 10);
 
@@ -22,6 +23,10 @@ const defaultCampaign: CreateCampaignDTO = {
 };
 
 const toDateOnly = (value: string): Date => new Date(`${value}T00:00:00`);
+const normalizeOptionalText = (value?: string) => {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+};
 
 const deriveAutoStatus = (startDate: string, endDate: string): 'Upcoming' | 'Active' | 'Completed' => {
   const start = toDateOnly(startDate);
@@ -38,17 +43,6 @@ const badgeVariant = (status: string) => {
   if (status === 'Paused') return 'gray';
   if (status === 'Completed') return 'blue';
   return 'amber';
-};
-
-const getApiErrorMessage = (err: any, fallback: string) => {
-  const responseData = err?.response?.data;
-  if (typeof responseData === 'string' && responseData.trim()) {
-    return responseData;
-  }
-  const message = responseData?.message || responseData?.title || err?.message;
-  if (!message) return fallback;
-  const status = err?.response?.status;
-  return status ? `${message} (HTTP ${status})` : message;
 };
 
 const Campaigns: React.FC = () => {
@@ -75,10 +69,6 @@ const Campaigns: React.FC = () => {
   const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Admin' || user.role === 'Marketing Manager');
 
   useEffect(() => {
-    fetchData();
-  }, [search]);
-
-  useEffect(() => {
     if (!isCreateOpen) return;
     if (locations.length === 0) return;
     if (formData.locationID > 0) return;
@@ -92,7 +82,7 @@ const Campaigns: React.FC = () => {
     setEditFormData(prev => ({ ...prev, locationID: locations[0].locationID }));
   }, [isEditOpen, locations, editFormData.locationID]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const [campaignData, locationData] = await Promise.all([
@@ -108,12 +98,16 @@ const Campaigns: React.FC = () => {
       if (activeCampaigns.length > 0 && (!selectedCampaign || selectedCampaign.isArchived)) {
         setSelectedCampaign(activeCampaigns[0]);
       }
-    } catch (e) {
-      console.error('Failed to fetch campaigns', e);
+    } catch (error) {
+      console.error('Failed to fetch campaigns', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, selectedCampaign]);
+
+  useEffect(() => {
+    void fetchData();
+  }, [fetchData]);
 
   const loadLocations = async (): Promise<LocationDTO[]> => {
     setIsLoadingLocations(true);
@@ -126,7 +120,7 @@ const Campaigns: React.FC = () => {
         setLocationLoadError('No active locations found. Add one in Locations page first.');
       }
       return active;
-    } catch (e) {
+    } catch {
       setLocationLoadError('Failed to load locations. Check API and try again.');
       return [];
     } finally {
@@ -155,7 +149,7 @@ const Campaigns: React.FC = () => {
       setCampaigns(prev => prev.filter(c => c.campaignID !== id));
       if (selectedCampaign?.campaignID === id) setSelectedCampaign(null);
       await fetchData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       alert(getApiErrorMessage(err, 'Failed to archive campaign.'));
     }
   };
@@ -190,7 +184,7 @@ const Campaigns: React.FC = () => {
 
   useEffect(() => {
     if (!isEditOpen) return;
-    loadLocations();
+    void loadLocations();
   }, [isEditOpen]);
 
   const handleCreateCampaign = async (e: React.FormEvent) => {
@@ -207,14 +201,17 @@ const Campaigns: React.FC = () => {
       const payload: CreateCampaignDTO = {
         ...formData,
         campaignName: formData.campaignName.trim(),
+        description: normalizeOptionalText(formData.description),
+        imageUrl: normalizeOptionalText(formData.imageUrl),
         budget: Number(budgetInput),
+        targetGoal: normalizeOptionalText(formData.targetGoal),
         status: deriveAutoStatus(formData.startDate, formData.endDate),
       };
 
       await campaignService.createCampaign(payload);
       setIsCreateOpen(false);
       await fetchData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       alert(getApiErrorMessage(err, 'Failed to create campaign.'));
     } finally {
       setIsSubmitting(false);
@@ -240,14 +237,17 @@ const Campaigns: React.FC = () => {
       const payload: CreateCampaignDTO = {
         ...editFormData,
         campaignName: editFormData.campaignName.trim(),
+        description: normalizeOptionalText(editFormData.description),
+        imageUrl: normalizeOptionalText(editFormData.imageUrl),
         budget: Number(editBudgetInput),
+        targetGoal: normalizeOptionalText(editFormData.targetGoal),
         status: pauseOnEdit ? 'Paused' : deriveAutoStatus(editFormData.startDate, editFormData.endDate),
       };
 
       await campaignService.updateCampaign(selectedCampaign.campaignID, payload);
       setIsEditOpen(false);
       await fetchData();
-    } catch (err: any) {
+    } catch (err: unknown) {
       alert(getApiErrorMessage(err, 'Failed to update campaign.'));
     } finally {
       setIsSubmitting(false);
@@ -417,3 +417,5 @@ const Campaigns: React.FC = () => {
 };
 
 export default Campaigns;
+
+

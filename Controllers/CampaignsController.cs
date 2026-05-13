@@ -5,19 +5,22 @@ using System.Security.Claims;
 using Voyager.API.Data;
 using Voyager.API.DTOs;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager,Marketing Staff")]
     [ApiController]
     [Route("api/[controller]")]
     public class CampaignsController : ControllerBase
     {
         private readonly VoyagerDbContext _context;
+        private readonly IAuditService _auditService;
 
-        public CampaignsController(VoyagerDbContext context)
+        public CampaignsController(VoyagerDbContext context, IAuditService auditService)
         {
             _context = context;
+            _auditService = auditService;
         }
 
         private static string ResolveCampaignStatus(string? requestedStatus, DateTime startDate, DateTime endDate)
@@ -151,20 +154,28 @@ namespace Voyager.API.Controllers
         {
             var validationError = ValidateCampaignInput(dto);
             if (validationError != null)
-                return BadRequest(new { message = validationError });
+                return ApiBadRequest(validationError, "VALIDATION_ERROR");
 
             if (string.Equals(dto.Status, "Paused", StringComparison.OrdinalIgnoreCase))
-                return BadRequest(new { message = "Campaign can only be paused after creation." });
+                return ApiBadRequest("Campaign can only be paused after creation.", "INVALID_STATUS");
 
             var locationExists = await _context.CampaignLocations
                 .AnyAsync(l => l.LocationID == dto.LocationID && !l.IsArchived);
             if (!locationExists)
-                return BadRequest(new { message = "Selected location is invalid or archived." });
+                return ApiBadRequest("Selected location is invalid or archived.", "INVALID_LOCATION");
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+            var tenantId = await _context.Tenants
+                .OrderBy(t => t.TenantId)
+                .Select(t => t.TenantId)
+                .FirstOrDefaultAsync();
+
+            if (tenantId == 0)
+                return StatusCode(500, new ApiErrorResponse { Message = "No tenant is configured for campaign creation.", Code = "TENANT_NOT_CONFIGURED" });
 
             var campaign = new Campaign
             {
+                TenantId = tenantId,
                 CampaignName = dto.CampaignName.Trim(),
                 Description = dto.Description,
                 StartDate = dto.StartDate,
@@ -186,7 +197,7 @@ namespace Voyager.API.Controllers
             catch (DbUpdateException ex)
             {
                 var detail = ex.InnerException?.Message ?? ex.Message;
-                return BadRequest(new { message = $"Failed to save campaign. {detail}" });
+                return ApiBadRequest($"Failed to save campaign. {detail}", "CAMPAIGN_CREATE_FAILED");
             }
 
             var created = await _context.Campaigns
@@ -194,7 +205,15 @@ namespace Voyager.API.Controllers
                 .FirstOrDefaultAsync(c => c.CampaignID == campaign.CampaignID);
 
             if (created == null)
-                return StatusCode(500, new { message = "Campaign was created but could not be reloaded." });
+                return StatusCode(500, new ApiErrorResponse { Message = "Campaign was created but could not be reloaded.", Code = "CAMPAIGN_RELOAD_FAILED" });
+
+            await _auditService.LogAsync(
+                userId,
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "CreateCampaign",
+                "Campaigns",
+                $"Created campaign {created.CampaignName} (ID: {created.CampaignID})",
+                GetRequestIpAddress());
 
             return CreatedAtAction(nameof(GetCampaign), new { id = created.CampaignID }, new CampaignDTO
             {
@@ -224,12 +243,12 @@ namespace Voyager.API.Controllers
         {
             var validationError = ValidateCampaignInput(dto);
             if (validationError != null)
-                return BadRequest(new { message = validationError });
+                return ApiBadRequest(validationError, "VALIDATION_ERROR");
 
             var campaign = await _context.Campaigns.FindAsync(id);
 
             if (campaign == null)
-                return NotFound();
+                return NotFound(new ApiErrorResponse { Message = "Campaign not found.", Code = "CAMPAIGN_NOT_FOUND" });
 
             campaign.CampaignName = dto.CampaignName.Trim();
             campaign.Description = dto.Description;
@@ -242,6 +261,13 @@ namespace Voyager.API.Controllers
             campaign.LocationID = dto.LocationID;
 
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "UpdateCampaign",
+                "Campaigns",
+                $"Updated campaign {campaign.CampaignName} (ID: {campaign.CampaignID})",
+                GetRequestIpAddress());
 
             return NoContent();
         }
@@ -253,16 +279,23 @@ namespace Voyager.API.Controllers
             var campaign = await _context.Campaigns.FindAsync(id);
 
             if (campaign == null)
-                return NotFound();
+                return NotFound(new ApiErrorResponse { Message = "Campaign not found.", Code = "CAMPAIGN_NOT_FOUND" });
 
             if (!campaign.IsArchived)
-                return BadRequest(new { message = "Campaign must be archived before deletion." });
+                return ApiBadRequest("Campaign must be archived before deletion.", "CAMPAIGN_NOT_ARCHIVED");
 
             if (!campaign.ArchivedDate.HasValue || campaign.ArchivedDate.Value > DateTime.UtcNow.AddDays(-30))
-                return BadRequest(new { message = "Campaign can only be permanently deleted after 30 days in archive." });
+                return ApiBadRequest("Campaign can only be permanently deleted after 30 days in archive.", "CAMPAIGN_RETENTION_PERIOD");
 
             _context.Campaigns.Remove(campaign);
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "DeleteCampaign",
+                "Campaigns",
+                $"Deleted campaign {campaign.CampaignName} (ID: {campaign.CampaignID})",
+                GetRequestIpAddress());
 
             return NoContent();
         }
@@ -271,7 +304,7 @@ namespace Voyager.API.Controllers
         public async Task<IActionResult> ArchiveCampaign(int id)
         {
             var campaign = await _context.Campaigns.FindAsync(id);
-            if (campaign == null) return NotFound();
+            if (campaign == null) return NotFound(new ApiErrorResponse { Message = "Campaign not found.", Code = "CAMPAIGN_NOT_FOUND" });
 
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int.TryParse(userIdClaim, out var userId);
@@ -285,8 +318,15 @@ namespace Voyager.API.Controllers
             catch (DbUpdateException ex)
             {
                 var detail = ex.InnerException?.Message ?? ex.Message;
-                return BadRequest(new { message = $"Failed to archive campaign. {detail}" });
+                return ApiBadRequest($"Failed to archive campaign. {detail}", "CAMPAIGN_ARCHIVE_FAILED");
             }
+            await _auditService.LogAsync(
+                userId > 0 ? userId : null,
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "ArchiveCampaign",
+                "Campaigns",
+                $"Archived campaign {campaign.CampaignName} (ID: {campaign.CampaignID})",
+                GetRequestIpAddress());
             return NoContent();
         }
 
@@ -295,11 +335,42 @@ namespace Voyager.API.Controllers
         public async Task<IActionResult> RestoreCampaign(int id)
         {
             var campaign = await _context.Campaigns.FindAsync(id);
-            if (campaign == null) return NotFound();
+            if (campaign == null) return NotFound(new ApiErrorResponse { Message = "Campaign not found.", Code = "CAMPAIGN_NOT_FOUND" });
 
             campaign.IsArchived = false;
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "RestoreCampaign",
+                "Campaigns",
+                $"Restored campaign {campaign.CampaignName} (ID: {campaign.CampaignID})",
+                GetRequestIpAddress());
             return NoContent();
+        }
+
+        private BadRequestObjectResult ApiBadRequest(string message, string code)
+        {
+            return BadRequest(new ApiErrorResponse { Message = message, Code = code });
+        }
+
+        private int? GetCurrentUserId()
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.TryParse(userIdClaim, out var userId) ? userId : null;
+        }
+
+        private string GetRequestIpAddress()
+        {
+            var forwardedFor = Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(forwardedFor))
+            {
+                return forwardedFor.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+                    ?? HttpContext.Connection.RemoteIpAddress?.ToString()
+                    ?? "Unknown";
+            }
+
+            return HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
         }
     }
 }

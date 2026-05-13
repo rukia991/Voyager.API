@@ -171,9 +171,11 @@ namespace Voyager.API.Controllers
                 .Select(l => new AuditLogDTO
                 {
                     Id = l.Id,
-                    UserName = l.User.UserName ?? string.Empty,
+                    UserName = l.User == null ? string.Empty : l.User.UserName ?? string.Empty,
+                    Email = l.Email,
                     Action = l.Action,
                     Module = l.Module,
+                    IpAddress = l.IpAddress,
                     Timestamp = l.Timestamp,
                     Details = l.Details
                 })

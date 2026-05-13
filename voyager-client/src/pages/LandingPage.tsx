@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
 
+const FEATURE_ROTATION_COUNT = 6;
+
 /* ── tiny hook: is element visible? ── */
 function useVisible(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -12,7 +14,7 @@ function useVisible(threshold = 0.15) {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold });
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [threshold]);
   return { ref, visible };
 }
 
@@ -57,7 +59,7 @@ const LandingPage: React.FC = () => {
 
   // Auto-rotate features
   useEffect(() => {
-    const t = setInterval(() => setActiveFeature(f => (f + 1) % features.length), 3000);
+    const t = setInterval(() => setActiveFeature(f => (f + 1) % FEATURE_ROTATION_COUNT), 3000);
     return () => clearInterval(t);
   }, []);
 
@@ -679,3 +681,4 @@ const LandingPage: React.FC = () => {
 };
 
 export default LandingPage;
+

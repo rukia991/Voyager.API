@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import campaignService from '../../services/campaignService';
 import type { CampaignDTO, CreateCampaignDTO } from '../../services/campaignService';
 import locationService from '../../services/locationService';
 import type { LocationDTO } from '../../services/locationService';
 import MapboxMap from '../../components/common/MapboxMap';
+import { getApiErrorMessage } from '../../utils/apiError';
 
 const toDateOnly = (value: string): Date => new Date(`${value}T00:00:00`);
 
@@ -18,17 +19,6 @@ const deriveAutoStatus = (startDate: string, endDate: string): 'Upcoming' | 'Act
   if (today < start) return 'Upcoming';
   if (today > end) return 'Completed';
   return 'Active';
-};
-
-const getApiErrorMessage = (err: any, fallback: string) => {
-  const responseData = err?.response?.data;
-  if (typeof responseData === 'string' && responseData.trim()) {
-    return responseData;
-  }
-  const message = responseData?.message || responseData?.title || err?.message;
-  if (!message) return fallback;
-  const status = err?.response?.status;
-  return status ? `${message} (HTTP ${status})` : message;
 };
 
 const CampaignDetails: React.FC = () => {
@@ -60,7 +50,7 @@ const CampaignDetails: React.FC = () => {
 
   const isManager = user?.role === 'SuperAdmin' || user?.role === 'Marketing Manager';
 
-  const fetchCampaign = async () => {
+  const fetchCampaign = useCallback(async () => {
     if (!id) return;
 
     try {
@@ -70,25 +60,12 @@ const CampaignDetails: React.FC = () => {
         return;
       }
       setCampaign(data);
-    } catch (_) {
+    } catch {
       console.error('Failed to fetch campaign details');
     }
-  };
+  }, [id, navigate]);
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        setLoading(true);
-        await Promise.all([fetchCampaign(), loadLocations()]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    load();
-  }, [id]);
-
-  const loadLocations = async () => {
+  const loadLocations = useCallback(async () => {
     setIsLoadingLocations(true);
     setLocationLoadError('');
     try {
@@ -103,7 +80,20 @@ const CampaignDetails: React.FC = () => {
     } finally {
       setIsLoadingLocations(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        await Promise.all([fetchCampaign(), loadLocations()]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void load();
+  }, [fetchCampaign, loadLocations]);
 
   useEffect(() => {
     if (!isEditOpen) return;
@@ -129,7 +119,7 @@ const CampaignDetails: React.FC = () => {
     setBudgetInput(String(campaign.budget));
     setPauseOnEdit(campaign.status === 'Paused');
     setIsEditOpen(true);
-    loadLocations();
+    void loadLocations();
   };
 
   const validateForm = (): string | null => {
@@ -168,7 +158,7 @@ const CampaignDetails: React.FC = () => {
       await campaignService.updateCampaign(campaign.campaignID, payload);
       setIsEditOpen(false);
       await fetchCampaign();
-    } catch (err: any) {
+    } catch (err: unknown) {
       alert(getApiErrorMessage(err, 'Failed to update campaign.'));
     } finally {
       setIsSubmitting(false);
@@ -337,3 +327,5 @@ const CampaignDetails: React.FC = () => {
 };
 
 export default CampaignDetails;
+
+

@@ -16,10 +16,14 @@ namespace Voyager.API.DTOs
     public class CreateWorkflowRuleDTO
     {
         [Required]
+        [StringLength(150, MinimumLength = 3)]
         public string RuleName { get; set; } = string.Empty;
         [Required]
+        [StringLength(100, MinimumLength = 2)]
         public string TriggerEvent { get; set; } = string.Empty;
+        [StringLength(1000)]
         public string? Condition { get; set; }
+        [StringLength(1000)]
         public string? Action { get; set; }
         public bool IsActive { get; set; } = true;
     }

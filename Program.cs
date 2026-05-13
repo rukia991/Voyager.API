@@ -1,15 +1,21 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 using Voyager.API.Data;
+using Voyager.API.DTOs;
+using Voyager.API.Middleware;
 using Voyager.API.Models;
 using Voyager.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var maxFailedAccessAttempts = builder.Configuration.GetValue("Security:MaxFailedAccessAttempts", 5);
+var lockoutMinutes = builder.Configuration.GetValue("Security:LockoutMinutes", 30);
 
 // Serilog
 Log.Logger = new LoggerConfiguration()
@@ -25,11 +31,18 @@ builder.Services.AddDbContext<VoyagerDbContext>(options =>
 // Identity
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 {
+    // Password
     options.Password.RequireDigit = true;
-    options.Password.RequiredLength = 8;
+    options.Password.RequiredLength = 12;
     options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireNonAlphanumeric = true;
+
+    // Lockout
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(lockoutMinutes);
+    options.Lockout.MaxFailedAccessAttempts = maxFailedAccessAttempts;
+    options.Lockout.AllowedForNewUsers = true;
 })
+
 .AddEntityFrameworkStores<VoyagerDbContext>()
 .AddDefaultTokenProviders();
 
@@ -57,9 +70,40 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+            .Where(entry => entry.Value?.Errors.Count > 0)
+            .ToDictionary(
+                entry => entry.Key,
+                entry => entry.Value!.Errors.Select(error => error.ErrorMessage).ToArray());
+
+        return new BadRequestObjectResult(new ApiErrorResponse
+        {
+            Message = "Validation failed.",
+            Code = "VALIDATION_ERROR",
+            Errors = errors
+        });
+    };
+});
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 builder.Services.AddControllers();
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient();
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddScoped<IRecaptchaService, RecaptchaService>();
+builder.Services.AddScoped<IEncryptionService, AesEncryptionService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddScoped<ILoginTwoFactorService, LoginTwoFactorService>();
 
 // Swagger with JWT support
 builder.Services.AddEndpointsApiExplorer();
@@ -101,7 +145,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("VoyagerCors", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(
+            "http://localhost:5173",
+            "https://voyager.runasp.net"
+            )
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -109,6 +156,10 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseForwardedHeaders();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<SecurityHeadersMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -121,10 +172,11 @@ using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    await RoleSeeder.SeedRolesAndSuperAdminAsync(roleManager, userManager);
-
     var context = scope.ServiceProvider.GetRequiredService<VoyagerDbContext>();
-    await DataSeeder.SeedDataAsync(context);
+    await RoleSeeder.SeedRolesAndSuperAdminAsync(roleManager, userManager, context);
+
+    var encryptionService = scope.ServiceProvider.GetRequiredService<IEncryptionService>();
+    await DataSeeder.SeedDataAsync(context, encryptionService);
 }
 
 app.UseCors("VoyagerCors");

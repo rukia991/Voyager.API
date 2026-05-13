@@ -1,11 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Data
 {
     public static class DataSeeder
     {
-        public static async Task SeedDataAsync(VoyagerDbContext context)
+        public static async Task SeedDataAsync(VoyagerDbContext context, IEncryptionService encryptionService)
         {
+            await BackfillEncryptedUserProfileDataAsync(context, encryptionService);
+            var defaultTenant = await EnsureDefaultTenantAsync(context);
+
             if (!context.CampaignLocations.Any())
             {
                 var locations = new List<CampaignLocation>
@@ -28,6 +33,7 @@ namespace Voyager.API.Data
                     {
                         new Campaign
                         {
+                            TenantId = defaultTenant.TenantId,
                             CampaignName = "Boracay Summer Bliss",
                             Description = "Experience the best white sand beach in the world.",
                             StartDate = DateTime.UtcNow,
@@ -41,6 +47,7 @@ namespace Voyager.API.Data
                         },
                         new Campaign
                         {
+                            TenantId = defaultTenant.TenantId,
                             CampaignName = "Palawan Island Hopping",
                             Description = "Discover the hidden lagoons of El Nido.",
                             StartDate = DateTime.UtcNow,
@@ -54,6 +61,7 @@ namespace Voyager.API.Data
                         },
                         new Campaign
                         {
+                            TenantId = defaultTenant.TenantId,
                             CampaignName = "Siargao Surf Safari",
                             Description = "Catch the world-famous Cloud 9 waves.",
                             StartDate = DateTime.UtcNow,
@@ -73,6 +81,7 @@ namespace Voyager.API.Data
                 {
                     context.EmailTemplates.Add(new EmailTemplate
                     {
+                        TenantId = defaultTenant.TenantId,
                         TemplateName = "Welcome Series - Premium",
                         Subject = "Welcome to Voyager: Your Next Journey Awaits ✈️",
                         Body = "<h1>Hello!</h1><p>We are thrilled to have you join our exclusive travel community.</p>",
@@ -82,6 +91,52 @@ namespace Voyager.API.Data
                     await context.SaveChangesAsync();
                 }
             }
+        }
+
+        private static async Task<Tenant> EnsureDefaultTenantAsync(VoyagerDbContext context)
+        {
+            var defaultTenant = await context.Tenants
+                .FirstOrDefaultAsync(t => t.CompanyName == "Voyager System Inc.");
+
+            if (defaultTenant != null)
+            {
+                return defaultTenant;
+            }
+
+            defaultTenant = new Tenant
+            {
+                CompanyName = "Voyager System Inc.",
+                SubscriptionPlan = "Default",
+                IsActive = true,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            context.Tenants.Add(defaultTenant);
+            await context.SaveChangesAsync();
+            return defaultTenant;
+        }
+
+        private static async Task BackfillEncryptedUserProfileDataAsync(
+            VoyagerDbContext context,
+            IEncryptionService encryptionService)
+        {
+            var usersNeedingPhoneBackfill = await context.Users
+                .Where(u => !string.IsNullOrWhiteSpace(u.PhoneNumber)
+                    && string.IsNullOrWhiteSpace(u.EncryptedPhoneNumber))
+                .ToListAsync();
+
+            if (usersNeedingPhoneBackfill.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var user in usersNeedingPhoneBackfill)
+            {
+                user.EncryptedPhoneNumber = encryptionService.Encrypt(user.PhoneNumber!.Trim());
+                user.PhoneNumber = null;
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

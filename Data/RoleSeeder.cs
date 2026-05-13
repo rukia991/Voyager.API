@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Voyager.API.Models;
 
 namespace Voyager.API.Data
@@ -7,9 +8,11 @@ namespace Voyager.API.Data
     {
         public static async Task SeedRolesAndSuperAdminAsync(
             RoleManager<IdentityRole<int>> roleManager,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            VoyagerDbContext context)
         {
-            // Seed Roles
+            var defaultTenantId = await EnsureDefaultTenantAsync(context);
+
             string[] roles = new[]
             {
                 "SuperAdmin",
@@ -27,7 +30,6 @@ namespace Voyager.API.Data
                 }
             }
 
-            // Seed 5 Specific Test Accounts
             var seedUsers = new List<(string Username, string Email, string Password, string Role, string FirstName, string LastName)>
             {
                 ("superadmin", "superadmin@voyagerplus.com", "SuperAdmin@123", "SuperAdmin", "Super", "Admin"),
@@ -44,6 +46,7 @@ namespace Voyager.API.Data
                 {
                     var user = new User
                     {
+                        TenantId = defaultTenantId,
                         UserName = seed.Username,
                         Email = seed.Email,
                         FirstName = seed.FirstName,
@@ -60,6 +63,30 @@ namespace Voyager.API.Data
                     }
                 }
             }
+        }
+
+        private static async Task<int> EnsureDefaultTenantAsync(VoyagerDbContext context)
+        {
+            var tenant = await context.Tenants
+                .OrderBy(t => t.TenantId)
+                .FirstOrDefaultAsync(t => t.CompanyName == "Voyager System Inc.");
+
+            if (tenant != null)
+            {
+                return tenant.TenantId;
+            }
+
+            tenant = new Tenant
+            {
+                CompanyName = "Voyager System Inc.",
+                SubscriptionPlan = "Default",
+                IsActive = true,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            context.Tenants.Add(tenant);
+            await context.SaveChangesAsync();
+            return tenant.TenantId;
         }
     }
 }

@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import customerPortalService from '../../services/customerPortalService';
 import type { CampaignOfferDTO, CustomerProfileDTO, CampaignFeedbackDTO, CustomerPreferencesDTO } from '../../services/customerPortalService';
 import MapboxMap from '../../components/common/MapboxMap';
+import { getApiErrorMessage } from '../../utils/apiError';
 
 export type PortalSection = 'offers' | 'map' | 'campaigns' | 'profile' | 'subscriptions' | 'feedback';
 
@@ -40,7 +41,7 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
   const location = useLocation();
 
   const [offers, setOffers] = useState<CampaignOfferDTO[]>([]);
-  const [profile, setProfile] = useState<CustomerProfileDTO>({ userName: '', firstName: '', lastName: '', email: '', phoneNumber: '' });
+  const [profile, setProfile] = useState<CustomerProfileDTO>({ userName: '', firstName: '', lastName: '', email: '', phoneNumber: '', address: '' });
   const [prefs, setPrefs] = useState<CustomerPreferencesDTO>(() => {
     const raw = localStorage.getItem('voyager_customer_prefs');
     if (raw) {
@@ -87,7 +88,7 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
       setProfile(profileData);
       const firstEnrolledWithCoords = offerData.find(o => o.isEnrolled && o.status === 'Active' && o.latitude && o.longitude);
       setSelectedMapCampaignId(firstEnrolledWithCoords?.campaignID ?? null);
-    } catch (_) {
+    } catch {
       console.error('Failed to fetch portal data');
     }
   };
@@ -110,8 +111,8 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
       if (offer.status === 'Active' && offer.latitude && offer.longitude) {
         setSelectedMapCampaignId(offer.campaignID);
       }
-    } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to enroll in campaign.');
+    } catch (err: unknown) {
+      alert(getApiErrorMessage(err, 'Failed to enroll in campaign.'));
     } finally {
       setEnrollingCampaignId(null);
     }
@@ -134,8 +135,8 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
       await customerPortalService.submitFeedback(feedback);
       setIsFeedbackOpen(false);
       setFeedbackSubmitted(prev => ({ ...prev, [feedback.campaignID]: true }));
-    } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to submit feedback.');
+    } catch (err: unknown) {
+      alert(getApiErrorMessage(err, 'Failed to submit feedback.'));
     }
   };
 
@@ -377,6 +378,10 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
                 <label className="block text-xs font-medium text-slate-400 mb-1.5">Phone Number</label>
                 <input className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" value={profile.phoneNumber} onChange={e => setProfile(p => ({ ...p, phoneNumber: e.target.value }))} placeholder="+1 (555) 000-0000" />
               </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Address</label>
+                <textarea className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm min-h-[110px]" value={profile.address} onChange={e => setProfile(p => ({ ...p, address: e.target.value }))} placeholder="Street, city, province, postal code" />
+              </div>
               <button type="submit" className={`w-full py-2.5 rounded-xl font-semibold text-sm transition-all ${profileSaved ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'btn-gradient text-white shadow-lg shadow-purple-500/20'}`}>
                 {profileSaved ? 'Saved' : 'Save Changes'}
               </button>
@@ -497,3 +502,5 @@ const CustomerPortal: React.FC<CustomerPortalProps> = ({ forcedSection }) => {
 };
 
 export default CustomerPortal;
+
+

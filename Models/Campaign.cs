@@ -19,11 +19,14 @@
         // Foreign Keys
         public int CreatedBy { get; set; }
         public int LocationID { get; set; }
+        public int TenantId { get; set; }
 
         // Navigation
         public User Creator { get; set; } = null!;
         public User? Archiver { get; set; }
         public CampaignLocation Location { get; set; } = null!;
+
+        public Tenant Tenant { get; set; } = null!;
         public ICollection<CampaignLead> CampaignLeads { get; set; } = new List<CampaignLead>();
         public ICollection<EmailLog> EmailLogs { get; set; } = new List<EmailLog>();
         public ICollection<Analytics> Analytics { get; set; } = new List<Analytics>();

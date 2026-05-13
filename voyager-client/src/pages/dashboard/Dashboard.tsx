@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../components/layout/MainLayout";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import analyticsService from "../../services/analyticsService";
 import type { AnalyticsSummaryDTO } from "../../services/analyticsService";
+import { isClientRole } from "../../services/rbac";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState<AnalyticsSummaryDTO | null>(null);
   const [loading, setLoading] = useState(true);
-  const isCustomer = user?.role === 'Customer';
+  const isCustomer = isClientRole(user?.role);
 
   useEffect(() => {
     fetchStats();
@@ -166,3 +167,5 @@ export default function Dashboard() {
     </MainLayout>
   );
 }
+
+

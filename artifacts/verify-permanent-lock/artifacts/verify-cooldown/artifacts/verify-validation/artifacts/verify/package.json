@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "framer-motion": "^12.35.1",
+    "react-google-recaptcha-v3": "^1.11.0"
+  }
+}

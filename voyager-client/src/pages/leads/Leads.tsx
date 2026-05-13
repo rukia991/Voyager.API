@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import leadService from '../../services/leadService';
 import type { LeadDTO, CreateLeadDTO, LeadEnrollmentDTO } from '../../services/leadService';
 import campaignService from '../../services/campaignService';
 import type { CampaignDTO } from '../../services/campaignService';
+import { maskEmail } from '../../utils/masking';
 
 const Leads: React.FC = () => {
   const { user } = useAuth();
@@ -33,12 +34,7 @@ const Leads: React.FC = () => {
 
   const isManager = !!user && (user.role === 'SuperAdmin' || user.role === 'Admin' || user.role === 'Marketing Manager');
 
-  useEffect(() => { 
-    fetchLeads(); 
-    fetchCampaigns(); 
-  }, [search]);
-
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     try { 
       const data = await leadService.getLeads({ search, showArchived: false });
       const active = data.filter(l => !l.isArchived).sort((a, b) => b.leadID - a.leadID);
@@ -46,20 +42,25 @@ const Leads: React.FC = () => {
       if (active.length > 0 && (!selectedLead || selectedLead.isArchived)) {
         setSelectedLead(active[0]);
       }
-    } catch (_) { 
+    } catch { 
       console.error("Error fetching leads"); 
     }
-  };
+  }, [search, selectedLead]);
 
   const fetchCampaigns = async () => {
     try {
       const data = await campaignService.getCampaigns();
       setCampaigns(data);
       if (data.length > 0) setFormData((f: CreateLeadDTO) => ({ ...f, campaignID: data[0].campaignID }));
-    } catch (_) { 
+    } catch { 
       console.error("Error fetching campaigns"); 
     }
   };
+
+  useEffect(() => { 
+    void fetchLeads(); 
+    void fetchCampaigns(); 
+  }, [fetchLeads, search]);
 
   const handleArchive = async (id: number) => {
     if (!window.confirm("Are you sure you want to archive this lead? It will be moved to the Archived Items page.")) return;
@@ -67,7 +68,7 @@ const Leads: React.FC = () => {
       await leadService.archiveLead(id); 
       fetchLeads(); 
       if (selectedLead?.leadID === id) setSelectedLead(null);
-    } catch (_) { 
+    } catch { 
       console.error('Failed to archive lead'); 
     }
   };
@@ -88,7 +89,7 @@ const Leads: React.FC = () => {
         source: '', 
         notes: '' 
       });
-    } catch (_) { 
+    } catch { 
       console.error("Error creating lead"); 
     } finally { 
       setIsSubmitting(false); 
@@ -108,7 +109,7 @@ const Leads: React.FC = () => {
       });
       setIsEditModalOpen(false);
       fetchLeads();
-    } catch (_) { 
+    } catch { 
       console.error("Error updating lead"); 
     } finally { 
       setIsSubmitting(false); 
@@ -165,7 +166,7 @@ const Leads: React.FC = () => {
                     >
                       <td style={{ padding: "16px" }}>
                         <div style={{ fontWeight: "700", color: "white", fontSize: "15px" }}>{l.fullName || l.userName || `Lead #${l.leadID}`}</div>
-                        <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>{l.email || 'No email associated'}</div>
+                        <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>{l.email ? maskEmail(l.email) : 'No email associated'}</div>
                       </td>
                       <td style={{ padding: "16px", textAlign: "right" }}>
                         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
@@ -329,3 +330,5 @@ const Leads: React.FC = () => {
 };
 
 export default Leads;
+
+

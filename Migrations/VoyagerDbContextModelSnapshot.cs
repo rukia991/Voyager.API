@@ -218,9 +218,37 @@ namespace Voyager.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSuccess")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSuspicious")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
 
                     b.Property<string>("Module")
                         .IsRequired()
@@ -229,7 +257,7 @@ namespace Voyager.API.Migrations
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -291,6 +319,9 @@ namespace Voyager.API.Migrations
                     b.Property<string>("TargetGoal")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
                     b.HasKey("CampaignID");
 
                     b.HasIndex("ArchivedBy");
@@ -298,6 +329,8 @@ namespace Voyager.API.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("LocationID");
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Campaigns");
                 });
@@ -512,6 +545,77 @@ namespace Voyager.API.Migrations
                     b.ToTable("Leads");
                 });
 
+            modelBuilder.Entity("Voyager.API.Models.PasswordResetOtp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CodeHash")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("ExpiresAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FailedAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RequestedIpAddress")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("UsedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordResetOtps");
+                });
+
+            modelBuilder.Entity("Voyager.API.Models.Tenant", b =>
+                {
+                    b.Property<int>("TenantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TenantId"));
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SubscriptionPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TenantId");
+
+                    b.ToTable("Tenants");
+                });
+
             modelBuilder.Entity("Voyager.API.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -540,6 +644,12 @@ namespace Voyager.API.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("EncryptedAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EncryptedPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -702,8 +812,7 @@ namespace Voyager.API.Migrations
                     b.HasOne("Voyager.API.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -727,11 +836,19 @@ namespace Voyager.API.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Voyager.API.Models.Tenant", "Tenant")
+                        .WithMany("Campaigns")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Archiver");
 
                     b.Navigation("Creator");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("Voyager.API.Models.CampaignLead", b =>
@@ -834,6 +951,17 @@ namespace Voyager.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Voyager.API.Models.PasswordResetOtp", b =>
+                {
+                    b.HasOne("Voyager.API.Models.User", "User")
+                        .WithMany("PasswordResetOtps")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Voyager.API.Models.Campaign", b =>
                 {
                     b.Navigation("Analytics");
@@ -860,11 +988,18 @@ namespace Voyager.API.Migrations
                     b.Navigation("EmailLogs");
                 });
 
+            modelBuilder.Entity("Voyager.API.Models.Tenant", b =>
+                {
+                    b.Navigation("Campaigns");
+                });
+
             modelBuilder.Entity("Voyager.API.Models.User", b =>
                 {
                     b.Navigation("CreatedCampaigns");
 
                     b.Navigation("Leads");
+
+                    b.Navigation("PasswordResetOtps");
                 });
 #pragma warning restore 612, 618
         }

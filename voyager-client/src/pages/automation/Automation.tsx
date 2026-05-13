@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import automationService from '../../services/automationService';
 import type { WorkflowRuleDTO, CreateWorkflowRuleDTO, IntegrationSettingsDTO } from '../../services/automationService';
 
@@ -40,28 +40,29 @@ const Automation: React.FC = () => {
   const isSuperAdmin = user?.role === 'SuperAdmin';
   const isManager    = isSuperAdmin || user?.role === 'Marketing Manager';
 
-  useEffect(() => { fetchData(); }, []);
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const r = await automationService.getRules(); setRules(r);
       if (isSuperAdmin) { const s = await automationService.getSettings(); setSettings(s); }
-    } catch (_) { console.error("Failed to fetch automation data"); }
-  };
+    } catch { console.error("Failed to fetch automation data"); }
+  }, [isSuperAdmin]);
+
+  useEffect(() => { void fetchData(); }, [fetchData]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault(); setIsSubmitting(true);
     try { await automationService.createRule(formData); setIsModalOpen(false); fetchData(); }
-    catch (_) { console.error("Error saving data"); } finally { setIsSubmitting(false); }
+    catch { console.error("Error saving data"); } finally { setIsSubmitting(false); }
   };
 
   const handleToggle = async (id: number) => {
     try { await automationService.toggleRule(id); setRules(rules.map(r => r.ruleID === id ? { ...r, isActive: !r.isActive } : r)); }
-    catch (_) { console.error("Error toggling status"); }
+    catch { console.error("Error toggling status"); }
   };
 
   const handleDelete = async (id: number) => {
     if (!confirm('Delete this rule?')) return;
-    try { await automationService.deleteRule(id); fetchData(); } catch (_) { console.error("Failed to delete rule"); }
+    try { await automationService.deleteRule(id); fetchData(); } catch { console.error("Failed to delete rule"); }
   };
 
   const createPresetRule = async (preset: CreateWorkflowRuleDTO) => {
@@ -292,3 +293,5 @@ const Automation: React.FC = () => {
 };
 
 export default Automation;
+
+

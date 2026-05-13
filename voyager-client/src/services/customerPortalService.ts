@@ -22,6 +22,7 @@ export interface CustomerProfileDTO {
   lastName: string;
   email: string;
   phoneNumber: string;
+  address: string;
 }
 
 export interface CustomerPreferencesDTO {

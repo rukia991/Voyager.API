@@ -17,7 +17,7 @@ api.interceptors.request.use(
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
-      } catch (e) {
+      } catch {
         // Silently fail if JSON is malformed
       }
     }

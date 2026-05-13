@@ -1,9 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import locationService from '../../services/locationService';
 import type { LocationDTO } from '../../services/locationService';
 import MapboxMap from '../../components/common/MapboxMap';
+import { getApiErrorMessage } from '../../utils/apiError';
+
+type MapboxContextItem = {
+  id: string;
+  text: string;
+};
+
+type MapboxFeature = {
+  center?: [number, number];
+  text?: string;
+  context?: MapboxContextItem[];
+};
+
+type MapboxGeocodingResponse = {
+  features?: MapboxFeature[];
+};
+
+declare global {
+  interface Window {
+    mapboxToken?: string;
+  }
+}
+
+const DEFAULT_LOCATION_FORM: Omit<LocationDTO, 'locationID'> = {
+  locationName: '',
+  latitude: 0,
+  longitude: 0,
+  country: 'Philippines',
+};
 
 const Locations: React.FC = () => {
   const { user } = useAuth();
@@ -11,9 +40,7 @@ const Locations: React.FC = () => {
   const [search, setSearch] = useState('');
   const [selectedLocation, setSelectedLocation] = useState<LocationDTO | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState<Omit<LocationDTO, 'locationID'>>({
-    locationName: '', latitude: 0, longitude: 0, country: 'Philippines'
-  });
+  const [formData, setFormData] = useState<Omit<LocationDTO, 'locationID'>>(DEFAULT_LOCATION_FORM);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
@@ -26,7 +53,7 @@ const Locations: React.FC = () => {
     try { 
       const data = await locationService.getLocations({ showArchived: false });
       setLocations(data.filter(l => !l.isArchived).sort((a, b) => b.locationID - a.locationID)); 
-    } catch (_) { 
+    } catch { 
       console.error("Error occurred"); 
     }
   };
@@ -37,8 +64,8 @@ const Locations: React.FC = () => {
       await locationService.archiveLocation(id);
       fetchLocations();
       if (selectedLocation?.locationID === id) setSelectedLocation(null);
-    } catch (e: any) {
-      alert(getApiErrorMessage(e, "Failed to archive location"));
+    } catch (error: unknown) {
+      alert(getApiErrorMessage(error, "Failed to archive location"));
     }
   };
 
@@ -46,12 +73,14 @@ const Locations: React.FC = () => {
     if (!searchQuery.trim()) return;
     setIsSearching(true);
     try {
-      const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?access_token=${(window as any).mapboxToken || ''}`);
-      const data = await response.json();
-      if (data.features && data.features.length > 0) {
-        const [lng, lat] = data.features[0].center;
-        const name = data.features[0].text;
-        const country = data.features[0].context?.find((c: any) => c.id.startsWith('country'))?.text || 'Philippines';
+      const token = window.mapboxToken ?? '';
+      const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?access_token=${token}`);
+      const data: MapboxGeocodingResponse = await response.json();
+      const firstFeature = data.features?.[0];
+      if (firstFeature?.center && typeof firstFeature.text === 'string') {
+        const [lng, lat] = firstFeature.center;
+        const name = firstFeature.text;
+        const country = firstFeature.context?.find((c) => c.id.startsWith('country'))?.text || 'Philippines';
         setFormData(prev => ({ ...prev, latitude: lat, longitude: lng, locationName: name, country }));
       }
     } catch (e) {
@@ -68,9 +97,9 @@ const Locations: React.FC = () => {
       setIsModalOpen(false);
       fetchLocations();
       setSelectedLocation(newLoc);
-      setFormData({ locationName: '', latitude: 0, longitude: 0, country: 'Philippines' });
+      setFormData(DEFAULT_LOCATION_FORM);
       setSearchQuery('');
-    } catch (_) { 
+    } catch { 
       console.error("Error creating location"); 
     }
   };
@@ -226,8 +255,4 @@ const Locations: React.FC = () => {
 };
 
 export default Locations;
-  const getApiErrorMessage = (err: any, fallback: string) => {
-    const responseData = err?.response?.data;
-    if (typeof responseData === 'string' && responseData.trim()) return responseData;
-    return responseData?.message || responseData?.title || err?.message || fallback;
-  };
+

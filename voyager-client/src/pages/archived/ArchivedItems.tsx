@@ -43,7 +43,8 @@ export default function ArchivedItems() {
       if (type === 'lead') await leadService.restoreLead(id);
       if (type === 'location') await locationService.restoreLocation(id);
       fetchAll();
-    } catch (e) {
+    } catch (error) {
+      console.error("Failed to restore item", error);
       alert("Failed to restore item");
     }
   };
@@ -152,3 +153,4 @@ export default function ArchivedItems() {
     </MainLayout>
   );
 }
+

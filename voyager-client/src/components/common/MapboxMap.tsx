@@ -30,13 +30,23 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
   const onSelectRef = useRef(onLocationSelect);
   useEffect(() => { onSelectRef.current = onLocationSelect; }, [onLocationSelect]);
 
+  const computeTravelHours = (userLoc: [number, number], targetLat: number, targetLng: number) => {
+    const toRad = (degrees: number) => degrees * Math.PI / 180;
+    const dLat = toRad(targetLat - userLoc[1]);
+    const dLon = toRad(targetLng - userLoc[0]);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+      + Math.cos(toRad(userLoc[1])) * Math.cos(toRad(targetLat))
+      * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const distanceKm = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return distanceKm / 50;
+  };
+
   // Fetch token
   useEffect(() => {
     const fetchToken = async () => {
       try {
         const settings = await automationService.getSettings();
-        const rawToken = (settings as any).mapboxAccessToken ?? (settings as any).MapboxAccessToken ?? '';
-        const normalizedToken = typeof rawToken === 'string' ? rawToken.trim() : '';
+        const normalizedToken = settings.mapboxAccessToken.trim();
 
         if (!normalizedToken) {
           setTokenError("Missing Mapbox Access Token.");
@@ -44,10 +54,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
           return;
         }
 
-        (mapboxgl as any).accessToken = normalizedToken;
-        (window as any).mapboxToken = normalizedToken;
+        mapboxgl.accessToken = normalizedToken;
         setToken(normalizedToken);
-      } catch (e) {
+      } catch {
         setTokenError("Failed to fetch map settings.");
         setIsLoading(false);
       }
@@ -115,15 +124,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
                 id: 'route', type: 'line', source: 'route',
                 paint: { 'line-color': '#a78bfa', 'line-width': 4, 'line-opacity': 0.7, 'line-dasharray': [2, 1] }
               });
-            } catch (err) {}
+            } catch {
+              // Route source may already exist after a fast remount.
+            }
 
             if (showTravelInfo) {
-              const toRad = (d: number) => d * Math.PI / 180;
-              const dLat = toRad(lat - userLoc[1]);
-              const dLon = toRad(lng - userLoc[0]);
-              const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(toRad(userLoc[1])) * Math.cos(toRad(lat)) * Math.sin(dLon/2) * Math.sin(dLon/2);
-              const d = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-              setTravelHours(d / 50);
+              setTravelHours(computeTravelHours(userLoc, lat, lng));
             }
           });
         }
@@ -137,7 +143,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
 
     } catch (e) {
       console.error("Map initialization failed", e);
-      setIsLoading(false);
+      window.setTimeout(() => setIsLoading(false), 0);
     }
 
     return () => {
@@ -147,7 +153,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
         markerRef.current = null;
       }
     };
-  }, [token, isModalExpanded]); // ONLY re-init on token or expansion change
+  }, [description, isModalExpanded, lat, lng, showRoute, showTravelInfo, title, token]); // ONLY re-init on token or expansion change
 
   // Sync Marker & View
   useEffect(() => {
@@ -179,14 +185,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({ lat, lng, title, description, sho
       }
 
       if (showTravelInfo) {
-        const toRad = (d: number) => d * Math.PI / 180;
-        const dLat = toRad(lat - userLoc[1]);
-        const dLon = toRad(lng - userLoc[0]);
-        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-          + Math.cos(toRad(userLoc[1])) * Math.cos(toRad(lat))
-          * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const d = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        setTravelHours(d / 50);
+        setTravelHours(computeTravelHours(userLoc, lat, lng));
       }
     }
   }, [lat, lng, token, showRoute, showTravelInfo]);

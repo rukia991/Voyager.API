@@ -5,19 +5,22 @@ using System.Security.Claims;
 using Voyager.API.Data;
 using Voyager.API.DTOs;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager,Marketing Staff")]
     [ApiController]
     [Route("api/[controller]")]
     public class LocationsController : ControllerBase
     {
         private readonly VoyagerDbContext _context;
+        private readonly IAuditService _auditService;
 
-        public LocationsController(VoyagerDbContext context)
+        public LocationsController(VoyagerDbContext context, IAuditService auditService)
         {
             _context = context;
+            _auditService = auditService;
         }
 
         [HttpGet]
@@ -84,6 +87,13 @@ namespace Voyager.API.Controllers
             
             _context.CampaignLocations.Add(location);
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "CreateLocation",
+                "Locations",
+                $"Created location {location.LocationName} (ID: {location.LocationID})",
+                GetRequestIpAddress());
             return CreatedAtAction(nameof(GetLocation), new { id = location.LocationID }, new LocationDTO
             {
                 LocationID = location.LocationID,
@@ -98,12 +108,26 @@ namespace Voyager.API.Controllers
 
         [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateLocation(int id, CampaignLocation location)
+        public async Task<IActionResult> UpdateLocation(int id, CreateLocationDTO dto)
         {
-            if (id != location.LocationID) return BadRequest();
-            _context.Entry(location).State = EntityState.Modified;
-            try { await _context.SaveChangesAsync(); }
-            catch (DbUpdateConcurrencyException) { if (!_context.CampaignLocations.Any(e => e.LocationID == id)) return NotFound(); else throw; }
+            var location = await _context.CampaignLocations.FindAsync(id);
+            if (location == null)
+                return NotFound(new ApiErrorResponse { Message = "Location not found.", Code = "LOCATION_NOT_FOUND" });
+
+            location.LocationName = dto.LocationName;
+            location.Description = dto.Description;
+            location.Latitude = dto.Latitude;
+            location.Longitude = dto.Longitude;
+            location.Country = dto.Country;
+
+            await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "UpdateLocation",
+                "Locations",
+                $"Updated location {location.LocationName} (ID: {location.LocationID})",
+                GetRequestIpAddress());
             return NoContent();
         }
 
@@ -112,10 +136,17 @@ namespace Voyager.API.Controllers
         public async Task<IActionResult> DeleteLocation(int id)
         {
             var location = await _context.CampaignLocations.FindAsync(id);
-            if (location == null) return NotFound();
-            if (await _context.Campaigns.AnyAsync(c => c.LocationID == id)) return BadRequest("Location is in use by a campaign.");
+            if (location == null) return NotFound(new ApiErrorResponse { Message = "Location not found.", Code = "LOCATION_NOT_FOUND" });
+            if (await _context.Campaigns.AnyAsync(c => c.LocationID == id)) return BadRequest(new ApiErrorResponse { Message = "Location is in use by a campaign.", Code = "LOCATION_IN_USE" });
             _context.CampaignLocations.Remove(location);
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "DeleteLocation",
+                "Locations",
+                $"Deleted location {location.LocationName} (ID: {location.LocationID})",
+                GetRequestIpAddress());
             return NoContent();
         }
 
@@ -139,8 +170,15 @@ namespace Voyager.API.Controllers
             catch (DbUpdateException ex)
             {
                 var detail = ex.InnerException?.Message ?? ex.Message;
-                return BadRequest(new { message = $"Failed to archive location. {detail}" });
+                return BadRequest(new ApiErrorResponse { Message = $"Failed to archive location. {detail}", Code = "LOCATION_ARCHIVE_FAILED" });
             }
+            await _auditService.LogAsync(
+                userId > 0 ? userId : null,
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "ArchiveLocation",
+                "Locations",
+                $"Archived location {location.LocationName} (ID: {location.LocationID})",
+                GetRequestIpAddress());
             return NoContent();
         }
 
@@ -149,10 +187,36 @@ namespace Voyager.API.Controllers
         public async Task<IActionResult> RestoreLocation(int id)
         {
             var location = await _context.CampaignLocations.FindAsync(id);
-            if (location == null) return NotFound();
+            if (location == null) return NotFound(new ApiErrorResponse { Message = "Location not found.", Code = "LOCATION_NOT_FOUND" });
             location.IsArchived = false;
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "RestoreLocation",
+                "Locations",
+                $"Restored location {location.LocationName} (ID: {location.LocationID})",
+                GetRequestIpAddress());
             return NoContent();
+        }
+
+        private int? GetCurrentUserId()
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.TryParse(userIdClaim, out var userId) ? userId : null;
+        }
+
+        private string GetRequestIpAddress()
+        {
+            var forwardedFor = Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(forwardedFor))
+            {
+                return forwardedFor.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+                    ?? HttpContext.Connection.RemoteIpAddress?.ToString()
+                    ?? "Unknown";
+            }
+
+            return HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
         }
     }
 }

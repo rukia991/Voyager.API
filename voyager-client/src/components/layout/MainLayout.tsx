@@ -1,7 +1,8 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
+import { isClientRole, normalizeRole, Roles, roleLabel } from "../../services/rbac";
 
 const getGreeting = () => {
   const h = new Date().getHours();
@@ -17,7 +18,8 @@ export default function MainLayout({ children }: { children: ReactNode }) {
 
   const displayName = user?.userName || "User";
   const initials = (user?.userName?.[0] ?? "?").toUpperCase();
-  const profilePath = user?.role === "Customer" ? "/portal/profile" : user?.role === "SuperAdmin" ? "/settings" : "/dashboard";
+  const normalizedRole = normalizeRole(user?.role);
+  const profilePath = isClientRole(user?.role) ? "/portal/profile" : normalizedRole === Roles.SuperAdmin ? "/settings" : "/dashboard";
 
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('voyager-theme') || 'dark');
@@ -99,7 +101,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
               </div>
             )}
 
-            <span className="top-header-role">{user?.role}</span>
+            <span className="top-header-role">{roleLabel(user?.role)}</span>
             <button
               type="button"
               onClick={() => navigate(profilePath)}
@@ -118,3 +120,4 @@ export default function MainLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+

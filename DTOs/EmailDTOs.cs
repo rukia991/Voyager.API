@@ -17,10 +17,13 @@ namespace Voyager.API.DTOs
     public class CreateEmailTemplateDTO
     {
         [Required]
+        [StringLength(150, MinimumLength = 3)]
         public string TemplateName { get; set; } = string.Empty;
         [Required]
+        [StringLength(200, MinimumLength = 3)]
         public string Subject { get; set; } = string.Empty;
         [Required]
+        [StringLength(20000, MinimumLength = 10)]
         public string Body { get; set; } = string.Empty;
     }
 
@@ -40,16 +43,20 @@ namespace Voyager.API.DTOs
     public class BulkSendDTO
     {
         [Required]
+        [Range(1, int.MaxValue)]
         public int CampaignID { get; set; }
         [Required]
+        [Range(1, int.MaxValue)]
         public int TemplateID { get; set; }
         [Required]
+        [MinLength(1, ErrorMessage = "Select at least one lead.")]
         public List<int> LeadIDs { get; set; } = new List<int>();
     }
 
     public class UpdateEmailLogStatusDTO
     {
         [Required]
+        [RegularExpression("^(Pending|Sent|Failed)$", ErrorMessage = "Status must be Pending, Sent, or Failed.")]
         public string Status { get; set; } = string.Empty;
     }
 }

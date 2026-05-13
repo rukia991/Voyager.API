@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
+import { isAdminRole, isClientRole, normalizeRole, Roles } from '../../services/rbac';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -11,8 +12,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
   const { user, logout } = useAuth();
 
-  const isAdmin = user?.role === 'SuperAdmin' || user?.role === 'Admin';
-  const isCustomer = user?.role === 'Customer';
+  const isAdmin = isAdminRole(user?.role);
+  const isCustomer = isClientRole(user?.role);
+  const isSuperAdmin = normalizeRole(user?.role) === Roles.SuperAdmin;
 
   const nav = [
     !isCustomer && { icon: 'D', label: 'Dashboard', path: '/dashboard' },
@@ -24,8 +26,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     !isCustomer && { icon: 'P', label: 'Locations', path: '/locations' },
     !isCustomer && { icon: 'R', label: 'Archived Items', path: '/archived' },
     !isCustomer && { icon: 'W', label: 'Automation', path: '/automation' },
+    isAdmin && { icon: 'G', label: 'Security', path: '/security' },
     isAdmin && { icon: 'U', label: 'Users', path: '/users' },
-    user?.role === 'SuperAdmin' && { icon: 'S', label: 'Settings', path: '/settings' },
+    isSuperAdmin && { icon: 'S', label: 'Settings', path: '/settings' },
     isCustomer && { icon: 'M', label: 'Destination Map', path: '/portal/map' },
     isCustomer && { icon: 'Y', label: 'My Campaigns', path: '/portal/campaigns' },
     isCustomer && { icon: 'P', label: 'Profile', path: '/portal/profile' },
@@ -119,3 +122,4 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     </>
   );
 }
+

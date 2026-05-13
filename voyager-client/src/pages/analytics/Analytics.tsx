@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from '../../components/layout/MainLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 import analyticsService from '../../services/analyticsService';
 import type { AnalyticsSummaryDTO, CampaignMetricDTO } from '../../services/analyticsService';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
@@ -25,7 +25,7 @@ const Analytics: React.FC = () => {
       const [s, m] = await Promise.all([analyticsService.getSummary(), analyticsService.getCampaignMetrics()]);
       setSummary(s); setCampaignMetrics(m);
       setLastUpdated(new Date());
-    } catch (_) { console.error("Error fetching analytics"); } finally { setLoading(false); }
+    } catch { console.error("Error fetching analytics"); } finally { setLoading(false); }
   };
 
   if (loading) return <MainLayout><div style={{ padding: "40px", textAlign: "center", color: "var(--text-muted)" }}>Loading analytics…</div></MainLayout>;
@@ -142,7 +142,7 @@ const Analytics: React.FC = () => {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={summary?.leadStatusDistribution} cx="50%" cy="50%" innerRadius={50} outerRadius={70} paddingAngle={4} dataKey="count" nameKey="status">
-                  {summary?.leadStatusDistribution.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                  {summary?.leadStatusDistribution.map((item, i) => <Cell key={`${item.status}-${i}`} fill={COLORS[i % COLORS.length]} />)}
                 </Pie>
                 <Tooltip contentStyle={{ background: "#0d1117", border: "1px solid var(--border)", borderRadius: "10px", fontSize: "12px" }} />
                 <Legend verticalAlign="bottom" height={28} iconSize={8} wrapperStyle={{ fontSize: "10px", color: "var(--text-muted)" }} />
@@ -189,3 +189,5 @@ const Analytics: React.FC = () => {
 };
 
 export default Analytics;
+
+

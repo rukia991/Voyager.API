@@ -35,23 +35,36 @@ namespace Voyager.API.DTOs
 
     public class CreateLeadDTO
     {
+        [EmailAddress]
         public string? Email { get; set; }
+        [StringLength(150, MinimumLength = 2)]
         public string? FullName { get; set; }
         [Required]
+        [Range(1, int.MaxValue)]
         public int CampaignID { get; set; }
+        [Required]
+        [RegularExpression("^(New|Contacted|Qualified|Lost|Converted|Enrolled)$", ErrorMessage = "Lead status is invalid.")]
         public string LeadStatus { get; set; } = "New";
+        [Range(0, 100)]
         public int LeadScore { get; set; } = 0;
+        [StringLength(100)]
         public string? Source { get; set; }
+        [StringLength(2000)]
         public string? Notes { get; set; }
+        [Range(1, int.MaxValue)]
         public int? UserID { get; set; }
     }
 
     public class UpdateLeadDTO
     {
         [Required]
+        [RegularExpression("^(New|Contacted|Qualified|Lost|Converted|Enrolled)$", ErrorMessage = "Lead status is invalid.")]
         public string LeadStatus { get; set; } = "New";
+        [Range(0, 100)]
         public int LeadScore { get; set; }
+        [StringLength(2000)]
         public string? Notes { get; set; }
+        [StringLength(100)]
         public string? Source { get; set; }
         public DateTime? LastContactDate { get; set; }
     }

@@ -23,8 +23,10 @@ export interface CreateUserDTO {
 export interface AuditLogDTO {
   id: number;
   userName: string;
+  email: string;
   action: string;
   module: string;
+  ipAddress: string;
   timestamp: string;
   details: string;
 }

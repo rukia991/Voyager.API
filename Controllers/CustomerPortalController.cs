@@ -5,21 +5,27 @@ using Microsoft.EntityFrameworkCore;
 using Voyager.API.Data;
 using Voyager.API.DTOs;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Customer")]
     [ApiController]
     [Route("api/[controller]")]
     public class CustomerPortalController : ControllerBase
     {
         private readonly VoyagerDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly IEncryptionService _encryptionService;
 
-        public CustomerPortalController(VoyagerDbContext context, UserManager<User> userManager)
+        public CustomerPortalController(
+            VoyagerDbContext context,
+            UserManager<User> userManager,
+            IEncryptionService encryptionService)
         {
             _context = context;
             _userManager = userManager;
+            _encryptionService = encryptionService;
         }
 
         // GET available campaign offers for any authenticated user
@@ -71,7 +77,10 @@ namespace Voyager.API.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email ?? string.Empty,
-                PhoneNumber = user.PhoneNumber ?? string.Empty
+                PhoneNumber = !string.IsNullOrWhiteSpace(user.EncryptedPhoneNumber)
+                    ? _encryptionService.Decrypt(user.EncryptedPhoneNumber)
+                    : user.PhoneNumber ?? string.Empty,
+                Address = user.EncryptedAddress == null ? string.Empty : _encryptionService.Decrypt(user.EncryptedAddress)
             });
         }
 
@@ -93,9 +102,13 @@ namespace Voyager.API.Controllers
 
             if (lead == null)
             {
+                var tenantId = currentUser?.TenantId ?? campaign.TenantId;
+
                 lead = new Lead
                 {
+                    TenantId = tenantId,
                     UserID = userId,
+                    CampaignID = campaignId,
                     Email = currentUser?.Email,
                     FullName = currentUser != null ? $"{currentUser.FirstName} {currentUser.LastName}".Trim() : null,
                     LeadStatus = "New",
@@ -167,7 +180,13 @@ namespace Voyager.API.Controllers
             user.UserName = trimmedUserName;
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
-            user.PhoneNumber = dto.PhoneNumber;
+            user.EncryptedPhoneNumber = string.IsNullOrWhiteSpace(dto.PhoneNumber)
+                ? null
+                : _encryptionService.Encrypt(dto.PhoneNumber.Trim());
+            user.PhoneNumber = null;
+            user.EncryptedAddress = string.IsNullOrWhiteSpace(dto.Address)
+                ? null
+                : _encryptionService.Encrypt(dto.Address.Trim());
             await _userManager.UpdateAsync(user);
             return NoContent();
         }

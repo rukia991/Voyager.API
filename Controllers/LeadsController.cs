@@ -5,19 +5,22 @@ using System.Security.Claims;
 using Voyager.API.Data;
 using Voyager.API.DTOs;
 using Voyager.API.Models;
+using Voyager.API.Services;
 
 namespace Voyager.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin,Marketing Manager,Marketing Staff")]
     [ApiController]
     [Route("api/[controller]")]
     public class LeadsController : ControllerBase
     {
         private readonly VoyagerDbContext _context;
+        private readonly IAuditService _auditService;
 
-        public LeadsController(VoyagerDbContext context)
+        public LeadsController(VoyagerDbContext context, IAuditService auditService)
         {
             _context = context;
+            _auditService = auditService;
         }
 
         [HttpGet]
@@ -181,8 +184,23 @@ namespace Voyager.API.Controllers
                 return CreatedAtAction(nameof(GetLead), new { id = existingLead.LeadID }, existingLead);
             }
 
+            var tenantId = await _context.Campaigns
+                .Where(c => c.CampaignID == dto.CampaignID)
+                .Select(c => c.TenantId)
+                .FirstOrDefaultAsync();
+
+            if (tenantId == 0)
+            {
+                return BadRequest(new ApiErrorResponse
+                {
+                    Message = "No tenant is configured for the selected campaign.",
+                    Code = "TENANT_NOT_CONFIGURED"
+                });
+            }
+
             var lead = new Lead
             {
+                TenantId = tenantId,
                 UserID = dto.UserID,
                 Email = dto.Email,
                 FullName = dto.FullName,
@@ -196,6 +214,13 @@ namespace Voyager.API.Controllers
 
             _context.Leads.Add(lead);
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "CreateLead",
+                "Leads",
+                $"Created lead {lead.Email ?? lead.FullName ?? lead.LeadID.ToString()} (ID: {lead.LeadID})",
+                GetRequestIpAddress());
 
             return CreatedAtAction(nameof(GetLead), new { id = lead.LeadID }, lead);
         }
@@ -215,6 +240,13 @@ namespace Voyager.API.Controllers
             lead.LastContactDate = dto.LastContactDate;
 
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "UpdateLead",
+                "Leads",
+                $"Updated lead {lead.Email ?? lead.FullName ?? lead.LeadID.ToString()} (ID: {lead.LeadID})",
+                GetRequestIpAddress());
 
             return NoContent();
         }
@@ -229,13 +261,20 @@ namespace Voyager.API.Controllers
                 return NotFound();
 
             if (!lead.IsArchived)
-                return BadRequest(new { message = "Lead must be archived before deletion." });
+                return BadRequest(new ApiErrorResponse { Message = "Lead must be archived before deletion.", Code = "LEAD_NOT_ARCHIVED" });
 
             if (!lead.ArchivedDate.HasValue || lead.ArchivedDate.Value > DateTime.UtcNow.AddDays(-30))
-                return BadRequest(new { message = "Lead can only be permanently deleted after 30 days in archive." });
+                return BadRequest(new ApiErrorResponse { Message = "Lead can only be permanently deleted after 30 days in archive.", Code = "LEAD_RETENTION_PERIOD" });
 
             _context.Leads.Remove(lead);
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "DeleteLead",
+                "Leads",
+                $"Deleted lead {lead.Email ?? lead.FullName ?? lead.LeadID.ToString()} (ID: {lead.LeadID})",
+                GetRequestIpAddress());
 
             return NoContent();
         }
@@ -252,6 +291,13 @@ namespace Voyager.API.Controllers
             lead.ArchivedDate = DateTime.UtcNow;
             lead.ArchivedBy = userId;
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                userId == 0 ? null : userId,
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "ArchiveLead",
+                "Leads",
+                $"Archived lead {lead.Email ?? lead.FullName ?? lead.LeadID.ToString()} (ID: {lead.LeadID})",
+                GetRequestIpAddress());
             return NoContent();
         }
 
@@ -264,7 +310,33 @@ namespace Voyager.API.Controllers
 
             lead.IsArchived = false;
             await _context.SaveChangesAsync();
+            await _auditService.LogAsync(
+                GetCurrentUserId(),
+                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
+                "RestoreLead",
+                "Leads",
+                $"Restored lead {lead.Email ?? lead.FullName ?? lead.LeadID.ToString()} (ID: {lead.LeadID})",
+                GetRequestIpAddress());
             return NoContent();
+        }
+
+        private int? GetCurrentUserId()
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.TryParse(userIdClaim, out var userId) ? userId : null;
+        }
+
+        private string GetRequestIpAddress()
+        {
+            var forwardedFor = Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(forwardedFor))
+            {
+                return forwardedFor.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+                    ?? HttpContext.Connection.RemoteIpAddress?.ToString()
+                    ?? "Unknown";
+            }
+
+            return HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
         }
     }
 }
